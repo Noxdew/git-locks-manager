@@ -113,7 +113,7 @@ async function createWindow() {
       await installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS])
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log("An error occurred: ", err))
-        .finally(() => {          
+        .finally(() => {
           require("electron-debug")(); // https://github.com/sindresorhus/electron-debug
           win.webContents.openDevTools();
         });
@@ -131,7 +131,7 @@ async function createWindow() {
   // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
   const ses = session;
   const partition = "default";
-  ses.fromPartition(partition) /* eng-disable PERMISSION_REQUEST_HANDLER_JS_CHECK */    
+  ses.fromPartition(partition) /* eng-disable PERMISSION_REQUEST_HANDLER_JS_CHECK */
     .setPermissionRequestHandler((webContents, permission, permCallback) => {
       let allowedPermissions = []; // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
 

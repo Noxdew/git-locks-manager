@@ -10,14 +10,14 @@
     "translate": "node ./app/localization/translateMissing.js",
     "dev-server": "cross-env NODE_ENV=development webpack serve --config ./webpack.development.js > dev-scripts/webpack-dev-server.log 2> dev-scripts/webpack-dev-server-error.log",
     "dev": "concurrently --success first \"node dev-scripts/prepareDevServer.js\" \"node dev-scripts/launchDevServer.js\" -k",
-    "prod-build": "cross-env NODE_ENV=production npx webpack --mode=production --config ./webpack.production.js",
-    "prod": "npm run prod-build && electron .",
+    "build": "cross-env NODE_ENV=production npx webpack --mode=production --config ./webpack.production.js",
+    "prod": "npm run build && electron .",
     "pack": "electron-builder --dir",
-    "dist": "npm run prod-build && electron-builder",
-    "dist-mac": "npm run prod-build && electron-builder --mac",
-    "dist-linux": "npm run prod-build && electron-builder --linux",
-    "dist-windows": "npm run prod-build && electron-builder --windows",
-    "dist-all": "npm run prod-build && electron-builder --mac --linux --windows"
+    "dist": "npm run build && electron-builder",
+    "dist-mac": "npm run build && electron-builder --mac",
+    "dist-linux": "npm run build && electron-builder --linux",
+    "dist-windows": "npm run build && electron-builder --windows",
+    "dist-all": "npm run build && electron-builder --mac --linux --windows"
   },
   "build": {
     "productName": "Git Locker",
