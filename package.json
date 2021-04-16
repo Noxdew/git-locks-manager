@@ -1,0 +1,123 @@
+{
+  "name": "secure-electron-template",
+  "version": "9.4.2",
+  "description": "The best way to build Electron apps with security in mind.",
+  "private": true,
+  "main": "app/electron/main.js",
+  "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "audit-app": "npx electronegativity -i ./ -x LimitNavigationGlobalCheck,PermissionRequestHandlerGlobalCheck",
+    "translate": "node ./app/localization/translateMissing.js",
+    "dev-server": "cross-env NODE_ENV=development webpack serve --config ./webpack.development.js > dev-scripts/webpack-dev-server.log 2> dev-scripts/webpack-dev-server-error.log",
+    "dev": "concurrently --success first \"node dev-scripts/prepareDevServer.js\" \"node dev-scripts/launchDevServer.js\" -k",
+    "prod-build": "cross-env NODE_ENV=production npx webpack --mode=production --config ./webpack.production.js",
+    "prod": "npm run prod-build && electron .",
+    "pack": "electron-builder --dir",
+    "dist": "npm run prod-build && electron-builder",
+    "dist-mac": "npm run prod-build && electron-builder --mac",
+    "dist-linux": "npm run prod-build && electron-builder --linux",
+    "dist-windows": "npm run prod-build && electron-builder --windows",
+    "dist-all": "npm run prod-build && electron-builder --mac --linux --windows"
+  },
+  "build": {
+    "productName": "YourProductName",
+    "appId": "com.yourcompany|electron.yourproductname",
+    "directories": {
+      "buildResources": "resources"
+    },
+    "extraFiles": [
+      "app/localization/locales/**/*"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "msi"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "rpm",
+        "snap",
+        "AppImage"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reZach/secure-electron-template.git"
+  },
+  "keywords": [
+    "electron",
+    "security",
+    "template",
+    "react",
+    "redux",
+    "webpack",
+    "i18next",
+    "boilerplate"
+  ],
+  "author": "reZach",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://github.com/reZach/secure-electron-template/issues"
+  },
+  "homepage": "https://github.com/reZach/secure-electron-template#readme",
+  "browserslist": [
+    "last 2 Chrome versions"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-transform-react-jsx": "^7.12.16",
+    "@babel/preset-env": "^7.12.16",
+    "@babel/preset-react": "^7.12.13",
+    "@doyensec/electronegativity": "^1.8.1",
+    "@google-cloud/translate": "^6.1.0",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "buffer": "^6.0.3",
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.3",
+    "crypto-browserify": "^3.12.0",
+    "csp-html-webpack-plugin": "^5.1.0",
+    "css-loader": "^5.0.2",
+    "electron": "^11.2.3",
+    "electron-builder": "^22.9.1",
+    "electron-debug": "^3.2.0",
+    "html-loader": "^1.3.2",
+    "html-webpack-plugin": "^5.1.0",
+    "mini-css-extract-plugin": "^1.3.7",
+    "path-browserify": "^1.0.1",
+    "stream-browserify": "^3.0.0",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.22.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
+  },
+  "dependencies": {
+    "@loadable/component": "^5.14.1",
+    "@reduxjs/toolkit": "^1.5.0",
+    "bulma": "^0.9.2",
+    "connected-react-router": "^6.8.0",
+    "easy-redux-undo": "^1.0.2",
+    "electron-devtools-installer": "^3.1.1",
+    "i18next": "^19.8.7",
+    "i18next-electron-fs-backend": "^1.3.5",
+    "i18next-fs-backend": "^1.0.8",
+    "lodash": "4.17.20",
+    "lodash.merge": "^4.6.2",
+    "process": "^0.11.10",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-i18next": "^11.8.6",
+    "react-redux": "^7.2.2",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5",
+    "secure-electron-context-menu": "^1.2.2",
+    "secure-electron-store": "^1.3.3"
+  }
+}
