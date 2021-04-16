@@ -1,7 +1,7 @@
 {
-  "name": "secure-electron-template",
-  "version": "9.4.2",
-  "description": "The best way to build Electron apps with security in mind.",
+  "name": "git-locker",
+  "version": "0.0.1",
+  "description": "Git LFS Locking GUI",
   "private": true,
   "main": "app/electron/main.js",
   "scripts": {
@@ -57,7 +57,7 @@
     "i18next",
     "boilerplate"
   ],
-  "author": "reZach",
+  "author": "Georgi Tsaklev <team@noxdew.com>",
   "license": "GPL-2.0-or-later",
   "bugs": {
     "url": "https://github.com/reZach/secure-electron-template/issues"
