@@ -20,8 +20,8 @@
     "dist-all": "npm run prod-build && electron-builder --mac --linux --windows"
   },
   "build": {
-    "productName": "YourProductName",
-    "appId": "com.yourcompany|electron.yourproductname",
+    "productName": "Git Locker",
+    "appId": "com.noxdew.git-locker",
     "directories": {
       "buildResources": "resources"
     },
@@ -45,7 +45,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reZach/secure-electron-template.git"
+    "url": "git+https://github.com/Noxdew/git-locker.git"
   },
   "keywords": [
     "electron",
@@ -60,9 +60,9 @@
   "author": "Georgi Tsaklev <team@noxdew.com>",
   "license": "GPL-2.0-or-later",
   "bugs": {
-    "url": "https://github.com/reZach/secure-electron-template/issues"
+    "url": "https://github.com/Noxdew/git-locker/issues"
   },
-  "homepage": "https://github.com/reZach/secure-electron-template#readme",
+  "homepage": "https://github.com/Noxdew/git-locker#readme",
   "browserslist": [
     "last 2 Chrome versions"
   ],
