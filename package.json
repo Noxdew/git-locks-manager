@@ -20,7 +20,7 @@
     "dist-all": "npm run build && electron-builder --mac --linux --windows"
   },
   "build": {
-    "productName": "Git Locker",
+    "productName": "Git Locks Manager",
     "appId": "com.noxdew.git-locks-manager",
     "directories": {
       "buildResources": "resources"
