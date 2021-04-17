@@ -1,5 +1,5 @@
 {
-  "name": "git-locker",
+  "name": "git-locks-manager",
   "version": "0.0.1",
   "description": "Git LFS Locking GUI",
   "private": true,
@@ -21,7 +21,7 @@
   },
   "build": {
     "productName": "Git Locker",
-    "appId": "com.noxdew.git-locker",
+    "appId": "com.noxdew.git-locks-manager",
     "directories": {
       "buildResources": "resources"
     },
@@ -30,22 +30,23 @@
     ],
     "win": {
       "target": [
-        "nsis",
-        "msi"
+        "nsis"
       ]
     },
     "linux": {
       "target": [
-        "deb",
-        "rpm",
-        "snap",
-        "AppImage"
+        "deb"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg"
       ]
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Noxdew/git-locker.git"
+    "url": "git+https://github.com/Noxdew/git-locks-manager.git"
   },
   "keywords": [
     "electron",
@@ -60,9 +61,9 @@
   "author": "Georgi Tsaklev <team@noxdew.com>",
   "license": "GPL-2.0-or-later",
   "bugs": {
-    "url": "https://github.com/Noxdew/git-locker/issues"
+    "url": "https://github.com/Noxdew/git-locks-manager/issues"
   },
-  "homepage": "https://github.com/Noxdew/git-locker#readme",
+  "homepage": "https://github.com/Noxdew/git-locks-manager#readme",
   "browserslist": [
     "last 2 Chrome versions"
   ],
