@@ -7,22 +7,16 @@ import loadable from "@loadable/component";
 const Welcome = loadable(() =>
   import(/* webpackChunkName: "WelcomeChunk" */ "Pages/welcome/welcome")
 );
-const About = loadable(() =>
-  import(/* webpackChunkName: "AboutChunk" */ "Pages/about/about")
+const Repo = loadable(() =>
+  import(/* webpackChunkName: "RepoChunk" */ "Pages/about/about")
 );
-const Motd = loadable(() =>
-  import(/* webpackChunkName: "MotdChunk" */ "Pages/motd/motd")
+const RepoAttributes = loadable(() =>
+  import(/* webpackChunkName: "GitAttributesChunk" */ "Pages/motd/motd")
 );
-const Localization = loadable(() =>
+const LFSConfig = loadable(() =>
   import(
-    /* webpackChunkName: "LocalizationChunk" */ "Pages/localization/localization"
+    /* webpackChunkName: "LFSConfigChunk" */ "Pages/localization/localization"
   )
-);
-const UndoRedo = loadable(() =>
-  import(/* webpackChunkName: "UndoRedoChunk" */ "Pages/undoredo/undoredo")
-);
-const ContextMenu = loadable(() =>
-  import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/contextmenu/contextmenu")
 );
 
 class Routes extends React.Component {
@@ -30,11 +24,9 @@ class Routes extends React.Component {
     return (
       <Switch>
         <Route exact path={ROUTES.WELCOME} component={Welcome}></Route>
-        <Route path={ROUTES.ABOUT} component={About}></Route>
-        <Route path={ROUTES.MOTD} component={Motd}></Route>
-        <Route path={ROUTES.LOCALIZATION} component={Localization}></Route>
-        <Route path={ROUTES.UNDOREDO} component={UndoRedo}></Route>
-        <Route path={ROUTES.CONTEXTMENU} component={ContextMenu}></Route>
+        <Route path={ROUTES.REPO} component={Repo}></Route>
+        <Route path={ROUTES.REPO_ATTRIBUTES} component={RepoAttributes}></Route>
+        <Route path={ROUTES.REPO_LFS_CONFIG} component={LFSConfig}></Route>
       </Switch>
     );
   }

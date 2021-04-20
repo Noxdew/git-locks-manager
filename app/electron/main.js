@@ -19,6 +19,8 @@ const Store = require("secure-electron-store").default;
 const ContextMenu = require("secure-electron-context-menu").default;
 const path = require("path");
 const fs = require("fs");
+const { autoUpdater } = require("electron-updater");
+const debounce = require('lodash/debounce');
 const isDev = process.env.NODE_ENV === "development";
 const port = 40992; // Hardcoded; needs to match webpack.development.js and package.json
 const selfHost = `http://localhost:${port}`;
@@ -28,12 +30,13 @@ const selfHost = `http://localhost:${port}`;
 let win;
 let menuBuilder;
 
-async function createWindow() {
+app.setName("Git Locks Manager");
 
+async function createWindow() {
   // If you'd like to set up auto-updating for your app,
   // I'd recommend looking at https://github.com/iffy/electron-updater-example
   // to use the method most suitable for you.
-  // eg. autoUpdater.checkForUpdatesAndNotify();
+  autoUpdater.checkForUpdatesAndNotify();
 
   if (!isDev) {
     // Needs to happen before creating/loading the browser window;
@@ -42,19 +45,35 @@ async function createWindow() {
   }
 
   const store = new Store({
-    path: app.getPath("userData")
+    path: app.getPath("userData"),
   });
 
   // Use saved config values for configuring your
   // BrowserWindow, for instance.
   // NOTE - this config is not passcode protected
   // and stores plaintext values
-  //let savedConfig = store.mainInitialStore(fs);
+  let savedConfig;
+  try {
+    savedConfig = store.mainInitialStore(fs);
+    console.log(savedConfig);
+
+    if (typeof savedConfig === 'string') {
+      savedConfig = {};
+    }
+  } catch (e) {
+    console.error(e);
+    savedConfig = {};
+  }
+
+  const minWidth = 950;
+  const minHeight = 650;
 
   // Create the browser window.
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: savedConfig.width || minWidth,
+    height: savedConfig.height || minHeight,
+    minWidth,
+    minHeight,
     title: "Application is currently initializing...",
     webPreferences: {
       devTools: isDev,
@@ -79,7 +98,12 @@ async function createWindow() {
     console.log(initialStore); // {"key1": "value1", ... }
   };
 
-  store.mainBindings(ipcMain, win, fs, callback);
+  const callbackUnprotected = function (success, initialStore) {
+    console.log(`${!success ? "Un-s" : "S"}uccessfully retrieved unprotected store in main process.`);
+    console.log(initialStore); // {"key1": "value1", ... }
+  };
+
+  store.mainBindings(ipcMain, win, fs, callback, callbackUnprotected);
 
   // Sets up bindings for our custom context menu
   ContextMenu.mainBindings(ipcMain, win, Menu, isDev, {
@@ -101,12 +125,11 @@ async function createWindow() {
   }
 
   win.webContents.on("did-finish-load", () => {
-    win.setTitle(`Getting started with secure-electron-template (v${app.getVersion()})`);
+    win.setTitle(`Git Locks Manager (v${app.getVersion()})`);
   });
 
   // Only do these things when in development
   if (isDev) {
-
     // Errors are thrown if the dev tools are opened
     // before the DOM is ready
     win.webContents.once("dom-ready", async () => {
@@ -127,6 +150,11 @@ async function createWindow() {
     // when you should delete the corresponding element.
     win = null;
   });
+
+  win.on("resize", _.debounce(() => {
+    const [ width, height ] = win.getSize();
+    win.webContents.send('resize', { width, height });
+  }, 1000));
 
   // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
   const ses = session;
@@ -289,4 +317,8 @@ app.on("remote-get-current-window", (event, webContents) => {
 
 app.on("remote-get-current-web-contents", (event, webContents) => {
   event.preventDefault();
+});
+
+autoUpdater.on('update-downloaded', (info) => {
+  // TODO:
 });

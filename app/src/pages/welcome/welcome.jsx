@@ -3,6 +3,11 @@ import ROUTES from "Constants/routes";
 import { Link } from "react-router-dom";
 
 class Welcome extends React.Component {
+  constructor(props) {
+    super(props);
+    // window.api.git.list().then(console.log).catch(console.error);
+  }
+
   render() {
     return (
       <React.Fragment>

@@ -20,7 +20,7 @@ class Motd extends React.Component {
 
   componentDidMount() {
     // Request so that the main process can use the store
-    window.api.store.send(useConfigInMainRequest);
+    // window.api.store.send(useConfigInMainRequest);
   }
 
   onChangeMessage(event) {

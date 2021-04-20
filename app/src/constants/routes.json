@@ -1,8 +1,6 @@
 {
   "WELCOME": "/",
-  "ABOUT": "/about",
-  "MOTD": "/motd",
-  "LOCALIZATION": "/localization",
-  "UNDOREDO": "/undoredo",
-  "CONTEXTMENU": "/contextmenu"
+  "REPO": "/:repoid",
+  "REPO_ATTRIBUTES": "/:repoid/gitattributes",
+  "REPO_LFS_CONFIG": "/:repoid/lfsconfig"
 }
