@@ -18,9 +18,10 @@ const ArrowBox = styled(Box)`
 `;
 
 const TextBox = styled(Box)`
-  max-width: 250px;
+  width: 100%;
+  padding: ${themeGet('space.2')};
   display: flex;
-  justify-content: center;
+  justify-content: left;
   font-size: ${themeGet('fontSizes.3')};
 `;
 

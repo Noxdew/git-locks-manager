@@ -58,8 +58,8 @@ function readLfsconfig(repo) {
 }
 
 function createLfsconfig(repo, config) {
-  if (isEmpty(config)) {
-    return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    if (isEmpty(config)) {
       fs.unlink(path.join(repoRoot(repo), '.lfsconfig'), err => {
         if (err) {
           reject(err);
@@ -67,30 +67,28 @@ function createLfsconfig(repo, config) {
           resolve();
         }
       });
-    });
-  }
+    }
 
-  const obj = {
-    [`remote "${config.remote}"`]: {
-      lfsurl: config.url,
-    },
-    lfs: {
-      locksverify: true,
-    },
-  };
+    const obj = {
+      [`remote "${config.remote}"`]: {
+        lfsurl: config.url,
+      },
+      lfs: {
+        locksverify: true,
+      },
+    };
 
-  if (config.auth) {
-    const url = new URL(config.url);
-    const key = `lfs "${url.origin}"`;
-    let cursor = obj;
-    key.split('.').forEach(k => {
-      cursor[k] = {};
-      cursor = cursor[k];
-    });
-    cursor.access = "basic";
-  }
+    if (config.auth) {
+      const url = new URL(config.url);
+      const key = `lfs "${url.origin}"`;
+      let cursor = obj;
+      key.split('.').forEach(k => {
+        cursor[k] = {};
+        cursor = cursor[k];
+      });
+      cursor.access = "basic";
+    }
 
-  return new Promise((resolve, reject) => {
     fs.writeFile(path.join(repoRoot(repo), '.lfsconfig'), ini.stringify(obj), (err) => {
       if (err) {
         reject(err);
@@ -114,7 +112,6 @@ function readGitAttributes(repo) {
       }
       const attrs = new GitAttributes();
       attrs.parse(data.toString(), true);
-      console.log(attrs.rules);
       resolve(attrs.rules);
     });
   });
@@ -125,7 +122,6 @@ function createGitAttributes(repo, rules) {
     const attrsPath = GitAttributes.findAttributesFile(repo, false);
     const attrs = new GitAttributes();
     attrs.rules = rules;
-    console.log(attrs.serialize());
     fs.writeFile(attrsPath, attrs.serialize(), (err) => {
       if (err) {
         reject(err);

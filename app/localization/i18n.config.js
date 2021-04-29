@@ -17,7 +17,8 @@ i18n
     saveMissing: true,
     saveMissingTo: "current",
     fallbackLng: false, // set to false when generating translation files locally
-    whitelist: whitelist.langs
+    whitelist: whitelist.langs,
+    keySeparator: false,
   });
 
 window.api.i18nextElectronBackend.onLanguageChange((args) => {

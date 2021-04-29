@@ -190,8 +190,8 @@ function GitAttributes(props) {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
-                  {rules.map((rule, index) => (
-                    <Draggable key={rule.id} draggableId={rule.id} index={index}>
+                  {rules.map((rule, i) => (
+                    <Draggable key={rule.id} draggableId={rule.id} index={i}>
                       {(provided, snapshot) => {
                         if (typeof rule.pattern === 'string') {
                           return (
@@ -291,20 +291,6 @@ function GitAttributes(props) {
           }}>{t('Add Comment')}</ButtonPrimary>
           <ButtonPrimary disabled={isLoading} onClick={() => {
             setNeedsSaving(true);
-            console.log(update(rules, {
-              $push: [{
-                pattern: '',
-                attrs: {
-                  filter: 'lfs',
-                  diff: 'lfs',
-                  merge: 'lfs',
-                  text: false,
-                  lockable: true,
-                },
-                comment: null,
-                id: uuidv4(),
-              }]
-            }))
             setRules(update(rules, {
               $push: [{
                 pattern: '',

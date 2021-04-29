@@ -149,6 +149,11 @@ function LFSConfig(props) {
   const save = () => {
     const data = {};
     if (hasConfig) {
+      if (!url) {
+        dispatch(addError(t('The server URL is required')));
+        return;
+      }
+
       data.remote = remote;
       data.url = url;
       data.auth = useAuth;

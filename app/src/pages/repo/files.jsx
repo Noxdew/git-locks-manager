@@ -152,10 +152,12 @@ function Files(props) {
   const [filter, setFilter] = useState('');
   const repos = useSelector((state) => state.repos.list);
   const files = useSelector((state) => state.files.list);
+  const isRepoSelectorOpen = useSelector((state) => state.repos.selectorOpen);
   const history = useHistory();
   const dispatch = useDispatch();
   const searchLib = useRef(new QuickScore([], quickScoreOptions));
   const filterField = useRef();
+  const isRepoSelectorOpenRef = useRef();
 
   let repo;
   if (repoid) {
@@ -163,6 +165,10 @@ function Files(props) {
   } else {
     repo = undefined;
   }
+
+  useEffect(() => {
+    isRepoSelectorOpenRef.current = isRepoSelectorOpen;
+  }, [isRepoSelectorOpen]);
 
   useEffect(() => {
     refreshFiles();
@@ -200,7 +206,7 @@ function Files(props) {
   };
 
   const focusFilter = () => {
-    if (filterField.current) {
+    if (filterField.current && !isRepoSelectorOpenRef.current) {
       filterField.current.focus();
     }
   };
