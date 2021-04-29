@@ -1,4 +1,5 @@
-# secure-electron-template
+# Git Locks Manager
+
 A current electron app template with the most popular frameworks, designed and built with security in mind. (If you are curious about what makes an electron app secure, please check out [this page](https://github.com/reZach/secure-electron-template/blob/master/docs/secureapps.md)).
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=reZach_secure-electron-template&metric=alert_status)](https://sonarcloud.io/dashboard?id=reZach_secure-electron-template)
@@ -53,7 +54,7 @@ There are a number of additions that I'd like to implement in this repository, n
 For a more detailed view of the architecture of the template, please check out [here](https://github.com/reZach/secure-electron-template/blob/master/docs/architecture.md). I would _highly_ recommend reading this document to get yourself familiarized with this template.
 
 ## How to get started
-To get started, clone the repository by clicking the ![Use this template](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/usethistemplate.png "Use this template") button, or through the command line (`git clone https://github.com/reZach/secure-electron-template.git`). 
+To get started, clone the repository by clicking the ![Use this template](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/usethistemplate.png "Use this template") button, or through the command line (`git clone https://github.com/reZach/secure-electron-template.git`).
 
 Once cloned, install the dependencies for the repo by running the following commands (you do _not_ have to run the first command if your command line is already inside the newly cloned respository):
 
