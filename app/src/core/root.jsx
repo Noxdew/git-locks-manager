@@ -11,7 +11,7 @@ import SettingsSelector from "./settingsSelector";
 import Errors from "./errors";
 import { writeConfigRequest } from "secure-electron-store";
 import "./root.css";
-import 'fontsource-roboto';
+import '@fontsource/roboto';
 
 const BaseStylesFlex = styled(BaseStyles)`
   flex: 1;
