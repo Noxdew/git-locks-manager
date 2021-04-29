@@ -46,8 +46,14 @@ const translate = new Translate({
   projectId
 });
 
-async function updateTranslations() {
+function ourLocaleCodeToGoogleLocaleCode(locale) {
+  if (locale === 'fil') {
+    return 'tl';
+  }
+  return locale;
+}
 
+async function updateTranslations() {
   try {
     const root = "./app/localization/locales";
     const fromLanguage = "en";
@@ -62,73 +68,82 @@ async function updateTranslations() {
     // Get all language directories;
     // https://stackoverflow.com/a/35759360/1837080
     const getDirectories = p => readdirSync(p).filter(f => statSync(join(p, f)).isDirectory());
-    const languageDirectories = getDirectories(root).filter(d => googleLanguages.includes(d));
+    const languageDirectories = getDirectories(root).filter(d => googleLanguages.includes(ourLocaleCodeToGoogleLocaleCode(d)));
+
+    const missingTranslationFile = `${root}/${fromLanguage}/translation.missing.json`;
+    const translationMissingExists = fs.existsSync(missingTranslationFile);
+
+    if (!translationMissingExists) {
+      console.error(`Could not generate translations because ${missingTranslationFile} does not exist, skipping!`);
+      return;
+    }
+
+    const missing = JSON.parse(fs.readFileSync(missingTranslationFile, {
+      encoding: "utf8"
+    }));
+
+    const missingKeys = Object.keys(missing);
+
+    if (!missingKeys.length) {
+      console.log(`Skipped creating translations; none found!`);
+      return;
+    }
+
 
     // For each language, read in any missing translations
     // and translate
     for (let i = 0; i < languageDirectories.length; i++) {
-
       // Check to make sure each language has the proper files
       try {
         const languageRoot = `${root}/${languageDirectories[i]}`;
         const translationFile = `${languageRoot}/translation.json`;
-        const missingTranslationFile = `${languageRoot}/translation.missing.json`;
-
         const translationExists = fs.existsSync(translationFile);
-        const translationMissingExists = fs.existsSync(missingTranslationFile);
+        const missingTranslationFileForCurrentLanguage = `${languageRoot}/translation.missing.json`;
 
-        if (translationExists && translationMissingExists) {
-
+        if (translationExists) {
           // Read in contents of files
           let translations = JSON.parse(fs.readFileSync(translationFile, {
             encoding: "utf8"
           }));
-          const missing = JSON.parse(fs.readFileSync(missingTranslationFile, {
-            encoding: "utf8"
-          }));
 
-          // Only translate files with actual values
-          const missingKeys = Object.keys(missing);
-          if (missingKeys.length > 0){
-
+          if (languageDirectories[i] === fromLanguage) {
+            for (let j = 0; j < missingKeys.length; j++) {
+              translations[missingKeys[j]] = missingKeys[j];
+            }
+          } else {
             // Translate each of the missing keys to the target language
-            for (let j = 0; j < missingKeys.length; j++){
+            for (let j = 0; j < missingKeys.length; j++) {
               const googleTranslation = await translate.translate(missingKeys[j], {
                 from: fromLanguage,
-                to: languageDirectories[i]
+                to: ourLocaleCodeToGoogleLocaleCode(languageDirectories[i]),
               });
 
               // Only set if a value is returned
-              if (googleTranslation.length > 0){
+              if (googleTranslation.length > 0) {
                 translations[missingKeys[j]] = googleTranslation[0];
               }
             }
-
-            // Write output back to file
-            fs.writeFileSync(translationFile, JSON.stringify(translations, null, 2));
-            fs.writeFileSync(missingTranslationFile, JSON.stringify({}, null, 2));
-
-            console.log(`Successfully updated translations for ${languageDirectories[i]}`);
-          } else {
-            console.log(`Skipped creating translations for ${languageDirectories[i]}; none found!`);
           }
+
+          // Write output back to file
+          fs.writeFileSync(translationFile, JSON.stringify(translations, null, 2));
+          fs.writeFileSync(missingTranslationFileForCurrentLanguage, JSON.stringify({}, null, 2));
+
+          console.log(`Successfully updated translations for ${languageDirectories[i]}`);
         } else {
-
           // Log if we failed
-          if (!translationExists) {
-            console.error(`Could not generate translations for language '${languageDirectories[i]}' because ${translationFile} does not exist, skipping!`);
-          } else if (!translationMissingExists) {
-            console.error(`Could not generate translations for language '${languageDirectories[i]}' because ${missingTranslationFile} does not exist, skipping!`);
-          }
+          console.error(`Could not generate translations for language '${languageDirectories[i]}' because ${translationFile} does not exist, skipping!`);
         }
       } catch (error) {
         console.error("Failed due to fatal error");
         console.error(error);
       }
     }
+
+    fs.writeFileSync(missingTranslationFile, JSON.stringify({}, null, 2));
   } catch (e) {
     console.error("Failed due to fatal error");
-    console.error(error);
+    console.error(e);
   }
 }
 
