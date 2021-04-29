@@ -4,7 +4,8 @@ const {
   BrowserWindow,
   session,
   ipcMain,
-  Menu
+  Menu,
+  dialog,
 } = require("electron");
 const {
   default: installExtension,
@@ -29,6 +30,8 @@ const selfHost = `http://localhost:${port}`;
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 let menuBuilder;
+let store;
+let locale;
 
 app.setName("Git Locks Manager");
 
@@ -44,9 +47,11 @@ async function createWindow() {
     protocol.registerBufferProtocol(Protocol.scheme, Protocol.requestHandler); /* eng-disable PROTOCOL_HANDLER_JS_CHECK */
   }
 
-  const store = new Store({
-    path: app.getPath("userData"),
-  });
+  if (!store) {
+    store = new Store({
+      path: app.getPath("userData"),
+    });
+  }
 
   // Use saved config values for configuring your
   // BrowserWindow, for instance.
@@ -56,17 +61,15 @@ async function createWindow() {
   try {
     savedConfig = store.mainInitialStore(fs);
     console.log(savedConfig);
-
-    if (typeof savedConfig === 'string') {
-      savedConfig = {};
-    }
   } catch (e) {
-    console.error(e);
+    console.log(e);
+    fs.unlink(store.options.unprotectedPath, err => err && console.log(err));
     savedConfig = {};
   }
 
   const minWidth = 950;
   const minHeight = 650;
+  locale = savedConfig.locale || 'en';
 
   // Create the browser window.
   win = new BrowserWindow({
@@ -151,10 +154,21 @@ async function createWindow() {
     win = null;
   });
 
-  win.on("resize", _.debounce(() => {
+  win.on("resize", debounce(() => {
     const [ width, height ] = win.getSize();
     win.webContents.send('resize', { width, height });
   }, 1000));
+
+  ipcMain.on('select-repo', async () => {
+    dialog.showOpenDialog(win, {
+      title: i18nextMainBackend.t('Select a Git Repository'),
+      properties: ['openDirectory'],
+    }).then(({ filePaths: [ path ] }) => {
+      win.webContents.send('add-repo', { path });
+    }).catch((err) => {
+      console.log(err)
+    });
+  });
 
   // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
   const ses = session;
@@ -185,16 +199,12 @@ async function createWindow() {
   //   }
   // });
 
-  menuBuilder = MenuBuilder(win, app.name);
+  menuBuilder = MenuBuilder(app.name);
 
-  // Set up necessary bindings to update the menu items
-  // based on the current language selected
-  i18nextMainBackend.on("loaded", (loaded) => {
-    i18nextMainBackend.changeLanguage("en");
-    i18nextMainBackend.off("loaded");
-  });
+  i18nextMainBackend.changeLanguage(locale);
 
   i18nextMainBackend.on("languageChanged", (lng) => {
+    locale = lng;
     menuBuilder.buildMenu(i18nextMainBackend);
   });
 }
@@ -225,6 +235,8 @@ app.on("window-all-closed", () => {
   } else {
     i18nextBackend.clearMainBindings(ipcMain);
     ContextMenu.clearMainBindings(ipcMain);
+    store.clearMainBindings(ipcMain);
+    ipcMain.removeAllListeners('select-repo');
   }
 });
 
@@ -320,5 +332,5 @@ app.on("remote-get-current-web-contents", (event, webContents) => {
 });
 
 autoUpdater.on('update-downloaded', (info) => {
-  // TODO:
+  autoUpdater.quitAndInstall();
 });

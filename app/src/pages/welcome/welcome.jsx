@@ -1,44 +1,41 @@
 import React from "react";
-import ROUTES from "Constants/routes";
-import { Link } from "react-router-dom";
+import Box from "@primer/components/lib/Box";
+import styled from 'styled-components';
+import { ArrowUpIcon } from '@primer/octicons-react';
+import { get as themeGet } from '@primer/components/lib/constants';
+import { withTranslation } from "react-i18next";
 
-class Welcome extends React.Component {
-  constructor(props) {
-    super(props);
-    // window.api.git.list().then(console.log).catch(console.error);
-  }
+const Background = styled(Box)`
+  flex: 1;
+`;
 
-  render() {
-    return (
-      <React.Fragment>
-        <section className="section">
-          <div className="container">
-            <section className="hero is-info">
-              <div className="hero-body">
-                <p className="title">
-                  Thank you for trying out the secure-electron-template!
-                </p>
-                <p className="subtitle">
-                  Please navigate to view the features of this template.
-                </p>
-              </div>
-            </section>
-          </div>
-        </section>
-        <section className="section">
-          <div className="container">
-            <h2 className="title is-2">Samples</h2>
-            <div>
-              <Link to={ROUTES.MOTD}>Using the Electron store.</Link> <br />
-              <Link to={ROUTES.LOCALIZATION}>Changing locales.</Link> <br />
-              <Link to={ROUTES.UNDOREDO}>Undo/redoing actions.</Link> <br />
-              <Link to={ROUTES.CONTEXTMENU}>Custom context menu.</Link> <br />
-            </div>
-          </div>
-        </section>
-      </React.Fragment>
-    );
-  }
+const ArrowBox = styled(Box)`
+  max-width: 250px;
+  display: flex;
+  justify-content: center;
+  padding: ${themeGet('space.3')};
+  padding-bottom: ${themeGet('space.2')};
+`;
+
+const TextBox = styled(Box)`
+  max-width: 250px;
+  display: flex;
+  justify-content: center;
+  font-size: ${themeGet('fontSizes.3')};
+`;
+
+function Welcome(props) {
+  const { t } = props;
+  return (
+    <Background bg="bg.primary">
+      <ArrowBox>
+        <ArrowUpIcon size={24} />
+      </ArrowBox>
+      <TextBox>
+        {t("Add or Select a Repository")}
+      </TextBox>
+    </Background>
+  );
 }
 
-export default Welcome;
+export default withTranslation()(Welcome);

@@ -1,122 +1,247 @@
 const exec = require('child_process').exec;
 const isEmpty = require('lodash/isEmpty');
+const size = require('lodash/size');
+const remove = require('lodash/remove');
+const first = require('lodash/first');
 const fs = require('fs');
 const path = require('path');
+const ini = require('ini');
+const GitAttributes = require('git-attributes');
 
-function remotes(path) {
+function repoRoot(repoPath) {
+  let gitBaseDir = repoPath;
+
+  // Find the root of the repo
+  while (
+    !fs.existsSync(path.join(gitBaseDir, '.git')) ||
+    !fs.existsSync(path.join(gitBaseDir, '.git/config'))) {
+
+    let next = path.resolve(gitBaseDir, '..');
+    if (next === gitBaseDir) break;
+
+    gitBaseDir = next;
+  }
+
+  if (!fs.existsSync(path.join(gitBaseDir, '.git')) ||
+    !fs.existsSync(path.join(gitBaseDir, '.git/config'))) {
+    return null;
+  }
+  return gitBaseDir;
+}
+
+function remotes(repo) {
   return new Promise((resolve, reject) => {
     exec('git remote', {
-      cwd: path
+      cwd: repoRoot(repo)
     }, (err, stdout, stderr) => {
       if (err) {
         reject(err);
       } else if (stderr) {
         reject(stderr);
       } else {
-        resolve(stdout.split('\n'));
+        resolve(stdout.trim().split('\n'));
       }
+    });
+  });
+}
+
+function readLfsconfig(repo) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path.join(repoRoot(repo), '.lfsconfig'), (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(ini.decode(data.toString()));
     });
   });
 }
 
 function createLfsconfig(repo, config) {
   if (isEmpty(config)) {
-    // TODO: Promise
-    fs.unlink(path.join(repo, '.lfsconfig'));
-    return;
+    return new Promise((resolve, reject) => {
+      fs.unlink(path.join(repoRoot(repo), '.lfsconfig'), err => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 
-  let lfsconfig = `
-[remote "${config.remote}"]
-lfsurl = ${config.url}
-
-[lfs]
-locksverify = true
-`;
+  const obj = {
+    [`remote "${config.remote}"`]: {
+      lfsurl: config.url,
+    },
+    lfs: {
+      locksverify: true,
+    },
+  };
 
   if (config.auth) {
     const url = new URL(config.url);
-    lfsconfig += `
-[lfs "${url.origin}"]
-access = "basic"
-`;
+    const key = `lfs "${url.origin}"`;
+    let cursor = obj;
+    key.split('.').forEach(k => {
+      cursor[k] = {};
+      cursor = cursor[k];
+    });
+    cursor.access = "basic";
   }
 
-  // TODO: promise
-  fs.writeFile(path.join(repo, '.lfsconfig'), lfsconfig, function (err) {
-    if (err) return console.log(err);
+  return new Promise((resolve, reject) => {
+    fs.writeFile(path.join(repoRoot(repo), '.lfsconfig'), ini.stringify(obj), (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
   });
 }
 
-function createGitAttributes(path, config) {
-  // <the file regex> <filter=lfs diff=lfs merge=lfs -text if stored in lfs> <lockable>
-//   # 3D models
-// *.3dm filter=lfs diff=lfs merge=lfs -text lockable
-// *.3ds filter=lfs diff=lfs merge=lfs -text lockable
-// *.blend filter=lfs diff=lfs merge=lfs -text lockable
-// *.c4d filter=lfs diff=lfs merge=lfs -text lockable
-// *.collada filter=lfs diff=lfs merge=lfs -text lockable
-// *.dae filter=lfs diff=lfs merge=lfs -text lockable
-// *.dxf filter=lfs diff=lfs merge=lfs -text lockable
-// *.fbx filter=lfs diff=lfs merge=lfs -text lockable
-// *.jas filter=lfs diff=lfs merge=lfs -text lockable
-// *.lws filter=lfs diff=lfs merge=lfs -text lockable
-// *.lxo filter=lfs diff=lfs merge=lfs -text lockable
-// *.ma filter=lfs diff=lfs merge=lfs -text lockable
-// *.max filter=lfs diff=lfs merge=lfs -text lockable
-// *.mb filter=lfs diff=lfs merge=lfs -text lockable
-// *.obj filter=lfs diff=lfs merge=lfs -text lockable
-// *.ply filter=lfs diff=lfs merge=lfs -text lockable
-// *.skp filter=lfs diff=lfs merge=lfs -text lockable
-// *.stl filter=lfs diff=lfs merge=lfs -text lockable
-// *.ztl filter=lfs diff=lfs merge=lfs -text lockable
-// # Audio
-// *.aif filter=lfs diff=lfs merge=lfs -text lockable
-// *.aiff filter=lfs diff=lfs merge=lfs -text lockable
-// *.it filter=lfs diff=lfs merge=lfs -text lockable
-// *.mod filter=lfs diff=lfs merge=lfs -text lockable
-// *.mp3 filter=lfs diff=lfs merge=lfs -text lockable
-// *.ogg filter=lfs diff=lfs merge=lfs -text lockable
-// *.s3m filter=lfs diff=lfs merge=lfs -text lockable
-// *.wav filter=lfs diff=lfs merge=lfs -text lockable
-// *.xm filter=lfs diff=lfs merge=lfs -text lockable
-// # Fonts
-// *.otf filter=lfs diff=lfs merge=lfs -text lockable
-// *.ttf filter=lfs diff=lfs merge=lfs -text lockable
-// # Images
-// *.bmp filter=lfs diff=lfs merge=lfs -text lockable
-// *.exr filter=lfs diff=lfs merge=lfs -text lockable
-// *.gif filter=lfs diff=lfs merge=lfs -text lockable
-// *.hdr filter=lfs diff=lfs merge=lfs -text lockable
-// *.iff filter=lfs diff=lfs merge=lfs -text lockable
-// *.jpeg filter=lfs diff=lfs merge=lfs -text lockable
-// *.jpg filter=lfs diff=lfs merge=lfs -text lockable
-// *.pict filter=lfs diff=lfs merge=lfs -text lockable
-// *.png filter=lfs diff=lfs merge=lfs -text lockable
-// *.psd filter=lfs diff=lfs merge=lfs -text lockable
-// *.tga filter=lfs diff=lfs merge=lfs -text lockable
-// *.tif filter=lfs diff=lfs merge=lfs -text lockable
-// *.tiff filter=lfs diff=lfs merge=lfs -text lockable
+function readGitAttributes(repo) {
+  return new Promise((resolve, reject) => {
+    const attrsPath = GitAttributes.findAttributesFile(repo);
+    if (!attrsPath) {
+      return resolve([]);
+    }
+    fs.readFile(attrsPath, (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const attrs = new GitAttributes();
+      attrs.parse(data.toString(), true);
+      console.log(attrs.rules);
+      resolve(attrs.rules);
+    });
+  });
 }
 
-function getRepoName(path) {
-
+function createGitAttributes(repo, rules) {
+  return new Promise((resolve, reject) => {
+    const attrsPath = GitAttributes.findAttributesFile(repo, false);
+    const attrs = new GitAttributes();
+    attrs.rules = rules;
+    console.log(attrs.serialize());
+    fs.writeFile(attrsPath, attrs.serialize(), (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
 }
 
-function listLockableFiles(path) {
-    // exec('git ls-files | git check-attr --stdin lockable', {
-
-    // git lfs locks --json
+function getRepoName(repo) {
+  return new Promise((resolve, reject) => {
+    exec('git config --get remote.origin.url', {
+      cwd: repoRoot(repo),
+    }, (err, stdout, stderr) => {
+      if (err) {
+        reject(err);
+      } else if (stderr) {
+        reject(stderr);
+      } else {
+        resolve(path.basename(stdout.trim(), '.git'));
+      }
+    });
+  });
 }
 
-function lockFile(path, file) {
-
+function listLockableFiles(repo) {
+  return Promise.all([
+    new Promise((resolve, reject) => {
+      exec('git ls-files | git check-attr --stdin lockable', {
+        cwd: repoRoot(repo),
+      }, (err, stdout, stderr) => {
+        if (err) {
+          reject(err);
+        } else if (stderr) {
+          reject(stderr);
+        } else {
+          resolve(stdout
+            .trim()
+            .split('\n')
+            .map(f => f.split(': lockable: '))
+            .filter(f => size(f) === 2 && f[1] === 'set')
+            .map(f => f[0])
+          );
+        }
+      });
+    }),
+    new Promise((resolve, reject) => {
+      exec('git lfs locks --json', {
+        cwd: repoRoot(repo),
+      }, (err, stdout, stderr) => {
+        if (err) {
+          reject(err);
+        } else if (stderr) {
+          reject(stderr);
+        } else {
+          resolve(JSON.parse(stdout));
+        }
+      });
+    })
+  ])
+  .then(([files, locks]) => {
+    return files.map(f => {
+      const lock = remove(locks, lock => lock.path === f);
+      return {
+        path: f,
+        lock: first(lock),
+      };
+    }).concat(locks.map(lock => ({
+      path: lock.path,
+      lock,
+      isMissing: true,
+    })));
+  });
 }
 
-function unlockFile(path, file) {
+function lockFile(repo, file) {
+  return new Promise((resolve, reject) => {
+    exec(`git lfs lock "${file}" --json`, {
+      cwd: repoRoot(repo),
+    }, (err, stdout, stderr) => {
+      if (err) {
+        reject(err);
+      } else if (stderr) {
+        reject(stderr);
+      } else {
+        resolve(JSON.parse(stdout));
+      }
+    });
+  });
+}
 
+function unlockFile(repo, file) {
+  return new Promise((resolve, reject) => {
+    exec(`git lfs unlock "${file}" --json`, {
+      cwd: repoRoot(repo),
+    }, (err, stdout, stderr) => {
+      if (err) {
+        reject(err);
+      } else if (stderr) {
+        reject(stderr);
+      } else {
+        resolve(JSON.parse(stdout));
+      }
+    });
+  });
 }
 
 module.exports = {
+  getRepoName,
+  listLockableFiles,
+  lockFile,
+  unlockFile,
   remotes,
-}
+  readLfsconfig,
+  createLfsconfig,
+  readGitAttributes,
+  createGitAttributes,
+};

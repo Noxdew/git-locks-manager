@@ -9,4 +9,5 @@ body {
 
 #target {
   height: -webkit-fill-available;
+  display: flex;
 }

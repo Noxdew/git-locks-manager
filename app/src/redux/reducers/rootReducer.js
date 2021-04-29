@@ -1,20 +1,17 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
-import undoable from "easy-redux-undo";
-import homeReducer from "../components/home/homeSlice";
-import counterReducer from "../components/counter/counterSlice";
-import complexReducer from "../components/complex/complexSlice";
+import reposReducer from "../components/repos/reposSlice";
+import errorsReducer from "../components/errors/errorsSlice";
+import filesReducer from "../components/files/filesSlice";
+import settingsReducer from "../components/settings/settingsSlice";
 
 const rootReducer = (history) =>
   combineReducers({
     router: connectRouter(history),
-    home: homeReducer,
-    undoable: undoable(
-      combineReducers({
-        counter: counterReducer,
-        complex: complexReducer
-      })
-    )
+    repos: reposReducer,
+    errors: errorsReducer,
+    files: filesReducer,
+    settings: settingsReducer,
   });
 
 export default rootReducer;

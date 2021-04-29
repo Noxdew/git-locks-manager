@@ -3,8 +3,7 @@ const i18nBackend = require("i18next-electron-fs-backend");
 const whitelist = require("../localization/whitelist");
 const isMac = process.platform === "darwin";
 
-const MenuBuilder = function(mainWindow, appName) {
-
+const MenuBuilder = function(appName) {
   // https://electronjs.org/docs/api/menu#main-process
   const defaultTemplate = function(i18nextMainBackend) {
     return [
@@ -143,6 +142,30 @@ const MenuBuilder = function(mainWindow, appName) {
       {
         label: i18nextMainBackend.t("View"),
         submenu: [
+          {
+            label: i18nextMainBackend.t("System Theme"),
+            click: () => {
+              const mainWindow = BrowserWindow.getAllWindows()[0];
+              mainWindow.webContents.send('theme', 'auto');
+            }
+          },
+          {
+            label: i18nextMainBackend.t("Light Theme"),
+            click: () => {
+              const mainWindow = BrowserWindow.getAllWindows()[0];
+              mainWindow.webContents.send('theme', 'day');
+            }
+          },
+          {
+            label: i18nextMainBackend.t("Dark Theme"),
+            click: () => {
+              const mainWindow = BrowserWindow.getAllWindows()[0];
+              mainWindow.webContents.send('theme', 'night');
+            }
+          },
+          {
+            type: "separator"
+          },
           {
             role: "reload",
             label: i18nextMainBackend.t("Reload")

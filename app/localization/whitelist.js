@@ -2,7 +2,6 @@
 const whitelistMap = {
   af: "Afrikaans", //Afrikaans
   ar: "عربى", // Arabic
-  am: "አማርኛ", // Amharic
   bg: "български", // Bulgarian
   ca: "Català", // Catalan
   cs: "čeština", // Czech

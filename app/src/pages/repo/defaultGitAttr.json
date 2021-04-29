@@ -1,0 +1,495 @@
+[
+    {
+        "comment": " 3D models",
+        "pattern": null,
+        "attrs": null
+    },
+    {
+        "pattern": "*.3dm",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.3ds",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.blend",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.c4d",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.collada",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.dae",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.dxf",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.fbx",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.jas",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.lws",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.lxo",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.ma",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.max",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.mb",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.obj",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.ply",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.skp",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.stl",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.ztl",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "comment": " Audio",
+        "pattern": null,
+        "attrs": null
+    },
+    {
+        "pattern": "*.aif",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.aiff",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.it",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.mod",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.mp3",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.ogg",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.s3m",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.wav",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.xm",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "comment": " Fonts",
+        "pattern": null,
+        "attrs": null
+    },
+    {
+        "pattern": "*.otf",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.ttf",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "comment": " Images",
+        "pattern": null,
+        "attrs": null
+    },
+    {
+        "pattern": "*.bmp",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.exr",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.gif",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.hdr",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.iff",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.jpeg",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.jpg",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.pict",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.png",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.psd",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.tga",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.tif",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    },
+    {
+        "pattern": "*.tiff",
+        "attrs": {
+            "filter": "lfs",
+            "diff": "lfs",
+            "merge": "lfs",
+            "text": false,
+            "lockable": true
+        },
+        "comment": null
+    }
+]

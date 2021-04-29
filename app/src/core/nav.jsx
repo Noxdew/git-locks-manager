@@ -1,126 +1,256 @@
-import React from "react";
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import React, { useState, useEffect } from "react";
+import styled from 'styled-components'
+import Button from '@primer/components/lib/Button';
+import Box from '@primer/components/lib/Box';
+import { RepoIcon, GearIcon, SyncIcon, TriangleDownIcon, TriangleUpIcon } from '@primer/octicons-react'
+import { get as themeGet } from '@primer/components/lib/constants';
+import { withTranslation } from "react-i18next";
+import { useRouteMatch } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { toggle as reposToggle } from 'Redux/components/repos/reposSlice';
+import { toggle as settingsToggle } from 'Redux/components/settings/settingsSlice';
 import ROUTES from "Constants/routes";
+import get from 'lodash/get';
+import moment from 'moment';
 
-const useStyles = makeStyles((theme) => createStyles({
-  root: {
-    backgroundColor: 'red',
-    height: 50,
-  },
-}));
+const Toolbar = styled(Box)`
+  display: flex;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  background-color: ${themeGet('colors.globalNav.bg')};
 
-export default function Nav() {
-  const classes = useStyles();
+  & > *:first-child {
+    width: 250px;
+  }
 
-  return <div className={classes.root} />;
+  & > *:not(:first-child) {
+    border-left: none;
+  }
+
+  & > div {
+    flex: 1;
+  }
+
+  & > button, & > div {
+    border: 1px solid black;
+
+    &:not(:first-child) {
+      border-left: none;
+    }
+
+    &:active, &:focus, &:hover, &:disabled {
+      border: 1px solid black;
+
+      &:not(:first-child) {
+        border-left: none;
+      }
+    }
+  }
+`;
+
+const StyledButton = styled(Button)`
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  height: 100%;
+  max-width: 250px;
+  border-radius: 0;
+  padding: 10px;
+  background-color: ${themeGet('colors.globalNav.bg')};
+  box-shadow: none;
+
+  &:disabled {
+    background-color: ${themeGet('colors.globalNav.bg')};
+  }
+
+  &:hover:not(:disabled) {
+    background-color: #30363d;
+  }
+
+  &:not(:disabled) > svg {
+    fill: ${themeGet('colors.globalNav.text')};
+  }
+
+  & > *:not(:last-child) {
+    margin-right: 10px;
+  }
+
+  & > .octicon {
+    align-self: center;
+  }
+
+  &.open {
+    background-color: ${themeGet('colors.bg.primary')};
+    border-bottom: 1px solid ${themeGet('colors.bg.primary')};
+
+    &:not(:disabled) > svg {
+      fill: ${themeGet('colors.text.primary')};
+    }
+
+    &:active, &:focus, &:hover, &:disabled {
+      border-bottom: 1px solid ${themeGet('colors.bg.primary')};
+    }
+
+    & div.description {
+      color: ${themeGet('colors.text.tertiary')};
+    }
+
+    & div.title {
+      color: ${themeGet('colors.text.primary')};
+    }
+
+    &:hover {
+      background-color: ${themeGet('colors.btn.hoverBg')};
+    }
+  }
+`;
+
+const SpinningIcon = styled(SyncIcon)`
+  animation: spin-animation 5s infinite;
+  animation-timing-function: linear;
+  align-self: center;
+
+  @keyframes spin-animation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+const TwoRowText = styled.div`
+  flex-grow: 1;
+  text-align: initial;
+
+  & > div.description {
+    color: #8b949e;
+    font-size: 11px;
+    text-overflow: ellipsis;
+    line-height: initial;
+  }
+
+  & > div.title {
+    color: ${themeGet('colors.globalNav.text')};
+    font-size: 12px;
+    text-overflow: ellipsis;
+    line-height: initial;
+    margin: 0;
+  }
+`;
+
+function Nav(props) {
+  const match = useRouteMatch(ROUTES.REPO);
+  const repoid = get(match, 'params.repoid');
+  const isOpenRepoSelector = useSelector((state) => state.repos.selectorOpen);
+  const isOpenSettingsSelector = useSelector((state) => state.settings.selectorOpen);
+  const repos = useSelector((state) => state.repos.list);
+  const filesLastRefreshed = useSelector((state) => state.files.lastUpdated);
+  const filesFetching = useSelector((state) => state.files.fetching);
+  const dispatch = useDispatch();
+  const [dateString, setDateString] = useState('');
+
+  let repo;
+  if (repoid) {
+    repo = repos.find(r => r.id === repoid);
+  } else {
+    repo = undefined;
+  }
+
+  const updateDateString = (date) => {
+    if (date) {
+      setDateString(moment(date).fromNow());
+    }
+  }
+
+  useEffect(() => {
+    const date = filesLastRefreshed;
+    updateDateString(date);
+    const interval = setInterval(() => updateDateString(date), 1000);
+    return () => clearInterval(interval);
+  }, [filesLastRefreshed]);
+
+  const { t } = props;
+
+  return (
+    <Toolbar>
+      <StyledButton
+        onClick={() => {
+          if (isOpenSettingsSelector) {
+            dispatch(settingsToggle());
+          }
+          dispatch(reposToggle());
+        }}
+        className={isOpenRepoSelector ? 'open' : ''}
+      >
+        <RepoIcon size={16} />
+        <TwoRowText>
+          <Box className="description">
+            {t("Current Repository")}
+          </Box>
+          <Box className="title">
+            {repo ? repo.name : t("Add or Select a Repository")}
+          </Box>
+        </TwoRowText>
+        {isOpenRepoSelector ? (
+          <TriangleUpIcon size={16} />
+        ) : (
+          <TriangleDownIcon size={16} />
+        )}
+      </StyledButton>
+
+      <StyledButton
+        disabled={!repo}
+        onClick={() => {
+          if (isOpenRepoSelector) {
+            dispatch(reposToggle());
+          }
+          dispatch(settingsToggle());
+        }}
+        className={isOpenSettingsSelector ? 'open' : ''}
+      >
+        <GearIcon size={16} />
+        <TwoRowText>
+          <Box className="description">
+            {t("Configure Repository")}
+          </Box>
+          <Box className="title">
+            {t("Attributes and LFS Config")}
+          </Box>
+        </TwoRowText>
+        <TriangleDownIcon size={16} />
+      </StyledButton>
+
+      <StyledButton disabled={!repo || filesFetching} onClick={() => document.dispatchEvent(new Event('refreshFiles'))}>
+        {filesFetching ? (
+          <SpinningIcon size={16} />
+        ) : (
+          <SyncIcon size = {16} />
+        )}
+        <TwoRowText>
+          <Box className="title">
+            {t("Refresh")}
+          </Box>
+          <Box className="description">
+            {filesFetching ? (
+              <>
+                {t('Hold on...')}
+              </>
+            ) : (
+              <>
+                {t("Last refreshed")} {filesLastRefreshed ? dateString : t('never')}
+              </>
+            )}
+          </Box>
+        </TwoRowText>
+      </StyledButton>
+      <div></div>
+    </Toolbar>
+  );
 }
 
-// class Nav extends React.Component {
-//   constructor(props) {
-//     super(props);
-
-//     this.history = props.history;
-//     this.state = {
-//       mobileMenuActive: false,
-//     };
-
-//     this.toggleMenu = this.toggleMenu.bind(this);
-//     this.navigate = this.navigate.bind(this);
-//   }
-
-//   toggleMenu(event) {
-//     this.setState({
-//       mobileMenuActive: !this.state.mobileMenuActive,
-//     });
-//   }
-
-//   // Using a custom method to navigate because we
-//   // need to close the mobile menu if we navigate to
-//   // another page
-//   navigate(url) {
-//     this.setState(
-//       {
-//         mobileMenuActive: false,
-//       },
-//       function () {
-//         this.history.push(url);
-//       }
-//     );
-//   }
-
-//   render() {
-//     return (
-//       <div>
-
-//       </div>
-//       // <nav
-//       //   className="navbar is-dark"
-//       //   role="navigation"
-//       //   aria-label="main navigation">
-//       //   <div className="navbar-brand">
-//       //     <a
-//       //       role="button"
-//       //       className={`navbar-burger ${
-//       //         this.state.mobileMenuActive ? "is-active" : ""
-//       //       }`}
-//       //       data-target="navbarBasicExample"
-//       //       aria-label="menu"
-//       //       aria-expanded="false"
-//       //       onClick={this.toggleMenu}>
-//       //       <span aria-hidden="true"></span>
-//       //       <span aria-hidden="true"></span>
-//       //       <span aria-hidden="true"></span>
-//       //     </a>
-//       //   </div>
-//       //   <div
-//       //     id="navbarBasicExample"
-//       //     className={`navbar-menu ${
-//       //       this.state.mobileMenuActive ? "is-active" : ""
-//       //     }`}>
-//       //     <div className="navbar-start">
-//       //       <a
-//       //         className="navbar-item"
-//       //         onClick={() => this.navigate(ROUTES.WELCOME)}>
-//       //         Home
-//       //       </a>
-
-//       //       <a
-//       //         className="navbar-item"
-//       //         onClick={() => this.navigate(ROUTES.ABOUT)}>
-//       //         About
-//       //       </a>
-
-//       //       <div className="navbar-item has-dropdown is-hoverable">
-//       //         <a className="navbar-link">Sample pages</a>
-
-//       //         <div className="navbar-dropdown">
-//       //           <a
-//       //             className="navbar-item"
-//       //             onClick={() => this.navigate(ROUTES.MOTD)}>
-//       //             Using the Electron store
-//       //           </a>
-//       //           <a
-//       //             className="navbar-item"
-//       //             onClick={() => this.navigate(ROUTES.LOCALIZATION)}>
-//       //             Changing locales
-//       //           </a>
-//       //           <a
-//       //             className="navbar-item"
-//       //             onClick={() => this.navigate(ROUTES.UNDOREDO)}>
-//       //             Undo/redoing actions
-//       //           </a>
-//       //           <a
-//       //             className="navbar-item"
-//       //             onClick={() => this.navigate(ROUTES.CONTEXTMENU)}>
-//       //             Custom context menu
-//       //           </a>
-//       //         </div>
-//       //       </div>
-//       //     </div>
-//       //   </div>
-//       // </nav>
-//     );
-//   }
-// }
-
-// export default Nav;
+export default withTranslation()(Nav);

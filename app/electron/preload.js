@@ -18,6 +18,12 @@ contextBridge.exposeInMainWorld("api", {
   ipc: {
     on(c, h) {
       ipcRenderer.on(c, h);
+    },
+    send(c, d) {
+      ipcRenderer.send(c, d);
+    },
+    removeAllListeners(c) {
+      ipcRenderer.removeAllListeners(c);
     }
-  },
+  }
 });

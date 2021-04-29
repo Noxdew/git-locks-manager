@@ -13,7 +13,6 @@ i18n
     namespace: "translation",
     saveMissing: true,
     saveMissingTo: "current",
-    lng: "en",
     fallbackLng: false, // set to false when generating translation files locally
     whitelist: whitelist.langs
   });
