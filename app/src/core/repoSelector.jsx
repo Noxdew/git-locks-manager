@@ -12,7 +12,7 @@ import Dialog from '@primer/components/lib/Dialog';
 import Flex from '@primer/components/lib/Flex';
 import styled from 'styled-components';
 import { get as themeGet } from '@primer/components/lib/constants';
-import isEmpty from 'lodash/isempty';
+import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
 import { ArrowUpIcon, TrashIcon, FilterIcon } from '@primer/octicons-react';
 import { v4 as uuidv4 } from 'uuid';

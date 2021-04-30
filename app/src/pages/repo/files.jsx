@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { startFetching, stopFetching, setFiles } from 'Redux/components/files/filesSlice';
 import { addError } from 'Redux/components/errors/errorsSlice';
 import get from 'lodash/get';
-import isEmpty from 'lodash/isempty';
+import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import { QuickScore } from 'quick-score';
 import latinize from 'latinize';
