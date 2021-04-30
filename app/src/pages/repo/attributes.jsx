@@ -17,6 +17,7 @@ import defaultRules from "Pages/repo/defaultGitAttr.json";
 import update from 'immutability-helper';
 import get from 'lodash/get';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { reorder } from 'Core/utils';
 
 const Background = styled(Box)`
   display: flex;
@@ -100,14 +101,6 @@ const ButtonClose = styled(ButtonCloseRaw)`
   margin-left: ${themeGet('space.2')};
 `;
 
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
 function GitAttributes(props) {
   const { repoid } = useParams();
   const repos = useSelector((state) => state.repos.list);
@@ -184,7 +177,7 @@ function GitAttributes(props) {
         </ButtonRow>
         <FormBox>
           <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="droppable">
+            <Droppable droppableId="attributesDroppable">
               {(provided, snapshot) => (
                 <div
                   {...provided.droppableProps}
@@ -272,9 +265,6 @@ function GitAttributes(props) {
                 </div>
               )}
             </Droppable>
-            {/* {rules.map((rule, i) => {
-
-            })} */}
           </DragDropContext>
         </FormBox>
         <ButtonRow>

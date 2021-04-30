@@ -15,12 +15,15 @@ const reposSlice = createSlice({
     },
     removeRepo(state, action) {
       state.list = state.list.filter(r => r.id !== action.payload);
+    },
+    setRepos(state, action) {
+      state.list = action.payload;
     }
   }
 });
 
 // Export actions
-export const { toggle, addRepo, removeRepo } = reposSlice.actions;
+export const { toggle, addRepo, removeRepo, setRepos } = reposSlice.actions;
 
 // Export reducer
 export default reposSlice.reducer;
