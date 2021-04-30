@@ -22,6 +22,7 @@ const path = require("path");
 const fs = require("fs");
 const { autoUpdater } = require("electron-updater");
 const debounce = require('lodash/debounce');
+const enforceMacOSAppLocation = require('./enforceMacOSAppLocation');
 const isDev = process.env.NODE_ENV === "development";
 const port = 40992; // Hardcoded; needs to match webpack.development.js and package.json
 const selfHost = `http://localhost:${port}`;
@@ -93,6 +94,18 @@ async function createWindow() {
 
   // Sets up main.js bindings for our i18next backend
   i18nextBackend.mainBindings(ipcMain, win, fs);
+  // Overwrite the readFileRequest handler in order to use relative paths to the appPath
+  ipcMain.removeAllListeners(i18nextBackend.readFileRequest);
+  ipcMain.on(i18nextBackend.readFileRequest, (IpcMainEvent, args) => {
+    const callback = function (error, data) {
+      this.webContents.send(i18nextBackend.readFileResponse, {
+        key: args.key,
+        error,
+        data: typeof data !== "undefined" && data !== null ? data.toString() : ""
+      });
+    }.bind(win);
+    fs.readFile(path.resolve(app.getAppPath(), args.filename), "utf8", callback);
+  });
 
   // Sets up main.js bindings for our electron store;
   // callback is optional and allows you to use store in main process
@@ -201,12 +214,12 @@ async function createWindow() {
 
   menuBuilder = MenuBuilder(app.name);
 
-  i18nextMainBackend.changeLanguage(locale);
-
   i18nextMainBackend.on("languageChanged", (lng) => {
     locale = lng;
     menuBuilder.buildMenu(i18nextMainBackend);
   });
+
+  i18nextMainBackend.changeLanguage(locale);
 }
 
 // Needs to be called before app is ready;
@@ -224,7 +237,10 @@ protocol.registerSchemesAsPrivileged([{
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", createWindow);
+app.on("ready", () => {
+  enforceMacOSAppLocation()
+    .then(createWindow);
+});
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {

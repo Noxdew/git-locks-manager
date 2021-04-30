@@ -52,6 +52,11 @@ const StyledButton = styled(Button)`
   box-shadow: none;
   background-color: ${themeGet('colors.bg.primary')};
 
+  &:hover, &:focus {
+    color: ${themeGet('colors.text.primary')};
+    border-color: ${themeGet('colors.border.primary')};
+  }
+
   & > .octicon {
     align-self: center;
     margin-right: ${themeGet('space.2')};

@@ -252,7 +252,7 @@ const MenuBuilder = function(appName) {
             label: i18nextMainBackend.t("Learn More"),
             click: async () => {
               const { shell } = require("electron");
-              await shell.openExternal("https://electronjs.org");
+              await shell.openExternal("https://github.com/Noxdew/git-locks-manager");
             }
           }
         ]

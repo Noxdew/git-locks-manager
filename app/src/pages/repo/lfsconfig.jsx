@@ -27,9 +27,6 @@ const Content = styled(Box)`
 `;
 
 const TextBox = styled(Box)`
-  display: flex;
-  flex-direction: row;
-
   & > *:not(:last-child) {
     margin-right: ${themeGet('space.1')};
   }

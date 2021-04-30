@@ -1,13 +1,15 @@
 const i18n = require("i18next");
 const backend = require("i18next-fs-backend");
 const whitelist = require("./whitelist");
+const path = require('path');
+const { app } = require('electron');
 
 i18n
   .use(backend)
   .init({
     backend: {
-      loadPath: "./app/localization/locales/{{lng}}/{{ns}}.json",
-      addPath: "./app/localization/locales/{{lng}}/{{ns}}.missing.json"
+      loadPath: path.resolve(app.getAppPath(), "./app/localization/locales/{{lng}}/{{ns}}.json"),
+      addPath: path.resolve(app.getAppPath(), "./app/localization/locales/{{lng}}/{{ns}}.missing.json"),
     },
     debug: false,
     namespace: "translation",

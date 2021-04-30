@@ -7,6 +7,9 @@ const fs = require('fs');
 const path = require('path');
 const ini = require('ini');
 const GitAttributes = require('git-attributes');
+const fixPath = require('fix-path');
+
+fixPath();
 
 function repoRoot(repoPath) {
   let gitBaseDir = repoPath;
@@ -34,10 +37,10 @@ function remotes(repo) {
     exec('git remote', {
       cwd: repoRoot(repo)
     }, (err, stdout, stderr) => {
-      if (err) {
-        reject(err);
-      } else if (stderr) {
+      if (stderr) {
         reject(stderr);
+      } else if (err) {
+        reject(err);
       } else {
         resolve(stdout.trim().split('\n'));
       }
@@ -67,6 +70,7 @@ function createLfsconfig(repo, config) {
           resolve();
         }
       });
+      return;
     }
 
     const obj = {
@@ -137,11 +141,11 @@ function getRepoName(repo) {
     exec('git config --get remote.origin.url', {
       cwd: repoRoot(repo),
     }, (err, stdout, stderr) => {
-      if (err) {
-        reject(err);
-      } else if (stderr) {
+      if (stderr) {
         reject(stderr);
-      } else {
+      } else if (err) {
+        reject(err);
+      }  else {
         resolve(path.basename(stdout.trim(), '.git'));
       }
     });
@@ -154,10 +158,10 @@ function listLockableFiles(repo) {
       exec('git ls-files | git check-attr --stdin lockable', {
         cwd: repoRoot(repo),
       }, (err, stdout, stderr) => {
-        if (err) {
-          reject(err);
-        } else if (stderr) {
+        if (stderr) {
           reject(stderr);
+        } else if (err) {
+          reject(err);
         } else {
           resolve(stdout
             .trim()
@@ -173,10 +177,10 @@ function listLockableFiles(repo) {
       exec('git lfs locks --json', {
         cwd: repoRoot(repo),
       }, (err, stdout, stderr) => {
-        if (err) {
-          reject(err);
-        } else if (stderr) {
+        if (stderr) {
           reject(stderr);
+        } else if (err) {
+          reject(err);
         } else {
           resolve(JSON.parse(stdout));
         }
@@ -203,10 +207,10 @@ function lockFile(repo, file) {
     exec(`git lfs lock "${file}" --json`, {
       cwd: repoRoot(repo),
     }, (err, stdout, stderr) => {
-      if (err) {
-        reject(err);
-      } else if (stderr) {
+      if (stderr) {
         reject(stderr);
+      } else if (err) {
+        reject(err);
       } else {
         resolve(JSON.parse(stdout));
       }
@@ -219,10 +223,10 @@ function unlockFile(repo, file) {
     exec(`git lfs unlock "${file}" --json`, {
       cwd: repoRoot(repo),
     }, (err, stdout, stderr) => {
-      if (err) {
-        reject(err);
-      } else if (stderr) {
+      if (stderr) {
         reject(stderr);
+      } else if (err) {
+        reject(err);
       } else {
         resolve(JSON.parse(stdout));
       }

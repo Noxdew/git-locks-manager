@@ -58,13 +58,13 @@ import 'moment/locale/uk';
 import 'moment/locale/vi';
 import 'moment/locale/zh-cn';
 
-i18n.changeLanguage(window.api.store.initial()['locale'] || 'en');
-
 i18n.on('languageChanged', function (lng) {
   moment.locale(lng === 'no' ? 'nb' : lng);
   window.api.store.send(writeUnprotectedConfigRequest, 'locale', lng);
   window.api.store.send(writeConfigRequest, 'locale', lng);
 });
+
+i18n.changeLanguage(window.api.store.initial()['locale'] || 'en');
 
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>

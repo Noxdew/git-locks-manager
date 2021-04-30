@@ -79,7 +79,7 @@ const FileRow = withTranslation()(function FileRow(props) {
 
   useEffect(() => {
     setWorking(false);
-  }, [props.lockOwner]);
+  }, [props.lockOwner, props.lastUpdated]);
 
   const { t } = props;
   return (
@@ -152,6 +152,7 @@ function Files(props) {
   const [filter, setFilter] = useState('');
   const repos = useSelector((state) => state.repos.list);
   const files = useSelector((state) => state.files.list);
+  const filesLastUpdated = useSelector((state) => state.files.lastUpdated);
   const isRepoSelectorOpen = useSelector((state) => state.repos.selectorOpen);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -247,6 +248,7 @@ function Files(props) {
         repo={repo}
         onLock={onLock}
         onUnlock={onUnlock}
+        lastUpdated={filesLastUpdated}
       />
     ));
   } else {
@@ -260,6 +262,7 @@ function Files(props) {
         repo={repo}
         onLock={onLock}
         onUnlock={onUnlock}
+        lastUpdated={filesLastUpdated}
       />
     ));
   }
