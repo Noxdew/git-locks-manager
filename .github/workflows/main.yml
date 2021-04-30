@@ -29,3 +29,6 @@ jobs:
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+
+          # Retry if we fail to upload the release
+          max_attempts: 3
