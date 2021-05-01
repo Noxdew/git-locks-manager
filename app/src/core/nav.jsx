@@ -16,10 +16,7 @@ import moment from 'moment';
 const Toolbar = styled(Box)`
   display: flex;
   height: 50px;
-  position: fixed;
-  top: 0;
   width: 100%;
-  z-index: 1;
   background-color: ${themeGet('colors.globalNav.bg')};
 
   & > *:first-child {

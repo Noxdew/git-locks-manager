@@ -6,6 +6,7 @@ const {
   ipcMain,
   Menu,
   dialog,
+  systemPreferences,
 } = require("electron");
 const {
   default: installExtension,
@@ -63,7 +64,7 @@ async function createWindow() {
     savedConfig = store.mainInitialStore(fs);
     console.log(savedConfig);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     fs.unlink(store.options.unprotectedPath, err => err && console.log(err));
     savedConfig = {};
   }
@@ -78,7 +79,11 @@ async function createWindow() {
     height: savedConfig.height || minHeight,
     minWidth,
     minHeight,
-    title: "Application is currently initializing...",
+    title: "The application is currently initialising...",
+    titleBarStyle: process.platform === 'darwin' ? "hidden" : undefined,
+    frame: process.platform !== 'win32',
+    backgroundColor: '#fff',
+    show: false,
     webPreferences: {
       devTools: isDev,
       nodeIntegration: false,
@@ -144,6 +149,10 @@ async function createWindow() {
     win.setTitle(`Git Locks Manager (v${app.getVersion()})`);
   });
 
+  win.once('ready-to-show', () => {
+    win.show();
+  });
+
   // Only do these things when in development
   if (isDev) {
     // Errors are thrown if the dev tools are opened
@@ -159,6 +168,20 @@ async function createWindow() {
     });
   }
 
+  let quitting = false
+  app.on('before-quit', () => {
+    quitting = true;
+  });
+
+  if (process.platform === 'darwin') {
+    win.on('close', e => {
+      if (!quitting) {
+        e.preventDefault()
+        Menu.sendActionToFirstResponder('hide:')
+      }
+    });
+  }
+
   // Emitted when the window is closed.
   win.on("closed", () => {
     // Dereference the window object, usually you would store windows
@@ -169,8 +192,25 @@ async function createWindow() {
 
   win.on("resize", debounce(() => {
     const [ width, height ] = win.getSize();
+    console.log(width, height)
     win.webContents.send('resize', { width, height });
   }, 1000));
+
+  win.on("enter-full-screen", () => {
+    win.webContents.send("is-fullscreen", true);
+  });
+
+  win.on("enter-html-full-screen", () => {
+    win.webContents.send("is-fullscreen", true);
+  });
+
+  win.on("leave-full-screen", () => {
+    win.webContents.send("is-fullscreen", false);
+  });
+
+  win.on("leave-html-full-screen", () => {
+    win.webContents.send("is-fullscreen", false);
+  });
 
   ipcMain.on('select-repo', async () => {
     dialog.showOpenDialog(win, {
@@ -181,6 +221,30 @@ async function createWindow() {
     }).catch((err) => {
       console.log(err)
     });
+  });
+
+  ipcMain.on('mac-title-bar-double-click', () => {
+    const actionOnDoubleClick = systemPreferences.getUserDefault(
+      'AppleActionOnDoubleClick',
+      'string'
+    )
+
+    switch (actionOnDoubleClick) {
+      case 'Maximize':
+        if (win.isMaximized()) {
+          win.unmaximize()
+        } else {
+          win.maximize()
+        }
+        break
+      case 'Minimize':
+        win.minimize()
+        break
+    }
+  });
+
+  ipcMain.on('is-fullscreen', () => {
+    win.webContents.send("is-fullscreen", win.isFullScreen());
   });
 
   // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
@@ -253,6 +317,8 @@ app.on("window-all-closed", () => {
     ContextMenu.clearMainBindings(ipcMain);
     store.clearMainBindings(ipcMain);
     ipcMain.removeAllListeners('select-repo');
+    ipcMain.removeAllListeners('mac-title-bar-double-click');
+    ipcMain.removeAllListeners('is-fullscreen');
   }
 });
 

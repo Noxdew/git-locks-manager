@@ -10,11 +10,11 @@ import { UploadIcon, FileBinaryIcon } from '@primer/octicons-react'
 import { NavLink, useRouteMatch } from "react-router-dom";
 import get from 'lodash/get';
 import ROUTES from "Constants/routes";
-
+import MenuBar from 'Core/menuBar';
 
 const OverflowContainer = styled(Box)`
   position: absolute;
-  padding-top: 50px;
+  padding-top: ${50 + MenuBar.height}px;
   display: flex;
   flex-direction: row;
   width: 100%;

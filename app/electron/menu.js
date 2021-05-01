@@ -51,20 +51,22 @@ const MenuBuilder = function(appName) {
           ]
         : []),
       // { role: "fileMenu" }
-      {
-        label: i18nextMainBackend.t("File"),
-        submenu: [
-          isMac
-            ? {
+      ...(isMac ? [] : [
+        {
+          label: i18nextMainBackend.t("File"),
+          submenu: [
+            isMac
+              ? {
                 role: "close",
                 label: i18nextMainBackend.t("Quit")
               }
-            : {
+              : {
                 role: "quit",
                 label: i18nextMainBackend.t("Exit")
               }
-        ]
-      },
+          ]
+        },
+      ]),
       // { role: "editMenu" }
       {
         label: i18nextMainBackend.t("Edit"),
@@ -182,21 +184,6 @@ const MenuBuilder = function(appName) {
             type: "separator"
           },
           {
-            role: "resetzoom",
-            label: i18nextMainBackend.t("Reset Zoom")
-          },
-          {
-            role: "zoomin",
-            label: i18nextMainBackend.t("Zoom In")
-          },
-          {
-            role: "zoomout",
-            label: i18nextMainBackend.t("Zoom Out")
-          },
-          {
-            type: "separator"
-          },
-          {
             role: "togglefullscreen",
             label: i18nextMainBackend.t("Toggle Fullscreen")
           }
@@ -236,12 +223,7 @@ const MenuBuilder = function(appName) {
                   label: i18nextMainBackend.t("Window")
                 }
               ]
-            : [
-                {
-                  role: "close",
-                  label: i18nextMainBackend.t("Close")
-                }
-              ])
+            : [])
         ]
       },
       {
@@ -254,7 +236,13 @@ const MenuBuilder = function(appName) {
               const { shell } = require("electron");
               await shell.openExternal("https://github.com/Noxdew/git-locks-manager");
             }
-          }
+          },
+          ...(isMac ? [] : [
+            {
+              role: "about",
+              label: i18nextMainBackend.t("About")
+            }
+          ]),
         ]
       }
     ];

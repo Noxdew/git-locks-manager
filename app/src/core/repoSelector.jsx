@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { withTranslation } from "react-i18next";
 import { useSelector, useDispatch } from 'react-redux';
 import { toggle, addRepo, removeRepo, setRepos } from 'Redux/components/repos/reposSlice';
@@ -16,15 +16,18 @@ import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
 import { ArrowUpIcon, TrashIcon, FilterIcon } from '@primer/octicons-react';
 import { v4 as uuidv4 } from 'uuid';
-import { writeConfigRequest } from "secure-electron-store";
+import { writeConfigRequest, readConfigRequest, readConfigResponse } from "secure-electron-store";
 import { NavLink, useHistory } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import State from 'Components/state/State';
 import { reorder } from 'Core/utils';
+import MenuBar from 'Core/menuBar';
+import { Scrollbars } from "react-custom-scrollbars";
+import { AutoSizer } from "react-virtualized";
 
 const OverflowContainer = styled(Box)`
   position: absolute;
-  padding-top: 50px;
+  padding-top: ${50 + MenuBar.height}px;
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -37,6 +40,8 @@ const RepoContainer = styled(Box)`
   width: 250px;
   background: ${themeGet('colors.bg.primary')};
   pointer-events: auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 const BlackFill = styled(Box)`
@@ -97,22 +102,38 @@ const StyledTrashIcon = styled(TrashIcon)`
   margin-right: ${themeGet('space.2')};
 `;
 
+const RepoNavList = styled(Box)`
+  flex: 1;
+`;
+
 function RepoSelector(props) {
   const isOpen = useSelector((state) => state.repos.selectorOpen);
   const repos = useSelector((state) => state.repos.list);
   const dispatch = useDispatch();
   const history = useHistory();
+  const reposRef = useRef([]);
 
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
+    reposRef.current = repos;
+  }, [repos])
+
+  useEffect(() => {
+    window.api.store.onReceive(readConfigResponse, function (args) {
+      if (args.success) {
+        dispatch(setRepos(args.value));
+      }
+    });
+    window.api.store.send(readConfigRequest, "repos");
+
     window.api.ipc.on('add-repo', (e, { path }) => {
       if (!path) {
         return;
       }
       window.api.git.getRepoName(path)
         .then(name => {
-          const prevRepo = repos.find(r => r.path === path);
+          const prevRepo = reposRef.current.find(r => r.path === path);
           if (prevRepo) {
             dispatch(addError(t('Repository already added')));
             return;
@@ -123,9 +144,9 @@ function RepoSelector(props) {
             path,
             name,
           };
-          dispatch(addRepo(repo));
-          const newArray = [...repos, repo];
+          const newArray = [...reposRef.current, repo];
           window.api.store.send(writeConfigRequest, 'repos', newArray);
+          dispatch(addRepo(repo));
         })
         .catch(err => {
           console.error(err);
@@ -248,7 +269,15 @@ function RepoSelector(props) {
             {t('Add')}
           </Button>
         </FilterRow>
-        {list}
+        <RepoNavList>
+          <AutoSizer>
+            {({ width, height }) => (
+              <Scrollbars style={{ width, height }}>
+                {list}
+              </Scrollbars>
+            )}
+          </AutoSizer>
+        </RepoNavList>
       </RepoContainer>
       <BlackFill onClick={() => dispatch(toggle())} />
     </OverflowContainer>

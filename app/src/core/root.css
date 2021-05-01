@@ -5,9 +5,11 @@ html {
 body {
   margin: 0px;
   height: -webkit-fill-available;
+  display: flex;
 }
 
 #target {
   height: -webkit-fill-available;
+  flex: 1;
   display: flex;
 }

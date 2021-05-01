@@ -18,6 +18,8 @@ import sortBy from 'lodash/sortBy';
 import { QuickScore } from 'quick-score';
 import latinize from 'latinize';
 import moment from 'moment';
+import { Scrollbars } from "react-custom-scrollbars";
+import { AutoSizer } from "react-virtualized";
 
 const Background = styled(Box)`
   flex: 1;
@@ -72,6 +74,10 @@ const FileBoxSection = styled(Box)`
     color: ${themeGet('colors.text.link')};
     font-weight: ${themeGet('fontWeights.bold')};
   }
+`;
+
+const Flex = styled(Box)`
+  flex: 1;
 `;
 
 const FileRow = withTranslation()(function FileRow(props) {
@@ -280,11 +286,19 @@ function Files(props) {
           onChange={({ target: { value } }) => setFilter(value)}
         />
       </FilterBox>
-      {isEmpty(renderedFiles) ? null : (
-        <FilesBox>
-          {renderedFiles}
-        </FilesBox>
-      )}
+      <Flex>
+        {isEmpty(renderedFiles) ? null : (
+          <AutoSizer>
+            {({ width, height }) => (
+              <Scrollbars style={{ width, height }}>
+                <FilesBox>
+                  {renderedFiles}
+                </FilesBox>
+              </Scrollbars>
+            )}
+          </AutoSizer>
+        )}
+      </Flex>
     </Background>
   );
 }

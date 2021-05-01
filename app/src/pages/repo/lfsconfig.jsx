@@ -13,6 +13,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addError } from 'Redux/components/errors/errorsSlice';
 import { NavLink } from "react-router-dom";
 import ROUTES from "Constants/routes";
+import { Scrollbars } from "react-custom-scrollbars";
+import { AutoSizer } from "react-virtualized";
 
 const Background = styled(Box)`
   display: flex;
@@ -166,92 +168,98 @@ function LFSConfig(props) {
   const { t } = props;
   return (
     <Background bg="bg.primary">
-      <Content>
-        <TextBox>
-          <span>{t("Git Large File Storage (LFS) replaces large files such as audio samples, videos, datasets, and graphics with text pointers inside Git, while storing the file contents on a remote server.")}</span>
-          <span>{t("Most Git providers (like GitHub.com) support LFS and require no configuration at all. However, if you are using a third party server you can use the form below to configure your repository to use it.")}</span>
-        </TextBox>
-        <ButtonRow>
-          {hasConfig ? (
-            <ButtonDanger
-              onClick={() => {
-                setNeedsSaving(true);
-                setHasConfig(!hasConfig);
-              }}
-              disabled={isLoading}
-            >{t('Remove Custom Config')}</ButtonDanger>
-          ) : (
-            <ButtonPrimary
-              onClick={() => {
-                setNeedsSaving(true);
-                setHasConfig(!hasConfig);
-              }}
-              disabled={isLoading}
-            >{t('Use Custom Config')}</ButtonPrimary>
-          )}
-          {needsSaving ? (
-            <ButtonPrimary disabled={isLoading} onClick={save}>{t('Save')}</ButtonPrimary>
-          ) : null}
-          <ButtonOutline disabled={isLoading} as={NavLink} to={ROUTES.REPO.replace(':repoid', repoid)}>{t('Back')}</ButtonOutline>
-        </ButtonRow>
-        {hasConfig ? (
-          <>
-            <FormBox>
-              <FormGroup>
-                <FormGroup.Label htmlFor="remote-dropdown">{t('Select remote')}</FormGroup.Label>
-                <Dropdown id='remote-dropdown'>
-                  <Dropdown.Button disabled={isLoading}>{remote || t('Select remote')}</Dropdown.Button>
-                  <Dropdown.Menu direction='se'>
-                    {remotes.map(rem => (
-                      <Dropdown.Item key={rem} onClick={() => {
-                        setRemote(rem);
+      <AutoSizer>
+        {({ width, height }) => (
+          <Scrollbars style={{ width, height }}>
+            <Content>
+              <TextBox>
+                <span>{t("Git Large File Storage (LFS) replaces large files such as audio samples, videos, datasets, and graphics with text pointers inside Git, while storing the file contents on a remote server.")}</span>
+                <span>{t("Most Git providers (like GitHub.com) support LFS and require no configuration at all. However, if you are using a third party server you can use the form below to configure your repository to use it.")}</span>
+              </TextBox>
+              <ButtonRow>
+                {hasConfig ? (
+                  <ButtonDanger
+                    onClick={() => {
+                      setNeedsSaving(true);
+                      setHasConfig(!hasConfig);
+                    }}
+                    disabled={isLoading}
+                  >{t('Remove Custom Config')}</ButtonDanger>
+                ) : (
+                  <ButtonPrimary
+                    onClick={() => {
+                      setNeedsSaving(true);
+                      setHasConfig(!hasConfig);
+                    }}
+                    disabled={isLoading}
+                  >{t('Use Custom Config')}</ButtonPrimary>
+                )}
+                {needsSaving ? (
+                  <ButtonPrimary disabled={isLoading} onClick={save}>{t('Save')}</ButtonPrimary>
+                ) : null}
+                <ButtonOutline disabled={isLoading} as={NavLink} to={ROUTES.REPO.replace(':repoid', repoid)}>{t('Back')}</ButtonOutline>
+              </ButtonRow>
+              {hasConfig ? (
+                <>
+                  <FormBox>
+                    <FormGroup>
+                      <FormGroup.Label htmlFor="remote-dropdown">{t('Select remote')}</FormGroup.Label>
+                      <Dropdown id='remote-dropdown'>
+                        <Dropdown.Button disabled={isLoading}>{remote || t('Select remote')}</Dropdown.Button>
+                        <Dropdown.Menu direction='se'>
+                          {remotes.map(rem => (
+                            <Dropdown.Item key={rem} onClick={() => {
+                              setRemote(rem);
+                              setNeedsSaving(true);
+                            }}>{rem}</Dropdown.Item>
+                          ))}
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </FormGroup>
+                    <FormGroup>
+                      <FormGroup.Label htmlFor="lfs-url">{t('Full Git LFS Server URL')}</FormGroup.Label>
+                      <TextInput id="lfs-url" placeholder={`https://<server>/<owner>/${repo.name}.git/info/lfs/`} value={url} onChange={({ target: { value } }) => {
+                        setUrl(value);
                         setNeedsSaving(true);
-                      }}>{rem}</Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </FormGroup>
-              <FormGroup>
-                <FormGroup.Label htmlFor="lfs-url">{t('Full Git LFS Server URL')}</FormGroup.Label>
-                <TextInput id="lfs-url" placeholder={`https://<server>/<owner>/${repo.name}.git/info/lfs/`} value={url} onChange={({ target: { value } }) => {
-                  setUrl(value);
-                  setNeedsSaving(true);
-                }} />
-              </FormGroup>
-              <FormGroup>
-                <FormGroup.Label htmlFor="lfs-auth">{t('Authentication')}</FormGroup.Label>
-                <ButtonInvisible
-                  id="lfs-auth"
-                  disabled={isLoading}
-                  onClick={() => {
-                    setUseAuth(!useAuth);
-                    setNeedsSaving(true);
-                  }}
-                >
-                  {useAuth ? (
-                    <>
-                      <CheckCircleIcon size={16} />
-                      {t('With Authentication')}
-                    </>
-                  ) : (
-                    <>
-                      <XCircleIcon size={16} />
-                      {t('Without Authentication')}
-                    </>
-                  )}
-                </ButtonInvisible>
-              </FormGroup>
+                      }} />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormGroup.Label htmlFor="lfs-auth">{t('Authentication')}</FormGroup.Label>
+                      <ButtonInvisible
+                        id="lfs-auth"
+                        disabled={isLoading}
+                        onClick={() => {
+                          setUseAuth(!useAuth);
+                          setNeedsSaving(true);
+                        }}
+                      >
+                        {useAuth ? (
+                          <>
+                            <CheckCircleIcon size={16} />
+                            {t('With Authentication')}
+                          </>
+                        ) : (
+                          <>
+                            <XCircleIcon size={16} />
+                            {t('Without Authentication')}
+                          </>
+                        )}
+                      </ButtonInvisible>
+                    </FormGroup>
 
-            </FormBox>
-            <ButtonRow>
-              {needsSaving ? (
-                <ButtonPrimary disabled={isLoading} onClick={save}>{t('Save')}</ButtonPrimary>
+                  </FormBox>
+                  <ButtonRow>
+                    {needsSaving ? (
+                      <ButtonPrimary disabled={isLoading} onClick={save}>{t('Save')}</ButtonPrimary>
+                    ) : null}
+                    <ButtonOutline disabled={isLoading} as={NavLink} to={ROUTES.REPO.replace(':repoid', repoid)}>{t('Back')}</ButtonOutline>
+                  </ButtonRow>
+                </>
               ) : null}
-              <ButtonOutline disabled={isLoading} as={NavLink} to={ROUTES.REPO.replace(':repoid', repoid)}>{t('Back')}</ButtonOutline>
-            </ButtonRow>
-          </>
-        ) : null}
-      </Content>
+            </Content>
+          </Scrollbars>
+        )}
+      </AutoSizer>
     </Background>
   );
 }

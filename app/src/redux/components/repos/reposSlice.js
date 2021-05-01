@@ -4,7 +4,7 @@ const reposSlice = createSlice({
   name: "repos",
   initialState: {
     selectorOpen: false,
-    list: window.api.store.initial()['repos'] || [],
+    list: [],
   },
   reducers: {
     toggle(state, action) {

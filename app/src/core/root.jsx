@@ -5,22 +5,19 @@ import { ConnectedRouter } from "connected-react-router";
 import { Provider } from "react-redux";
 import styled from 'styled-components';
 import Routes from "Core/routes";
-import Nav from "./nav";
-import RepoSelector from "./repoSelector";
-import SettingsSelector from "./settingsSelector";
-import Errors from "./errors";
+import Nav from "Core/nav";
+import RepoSelector from "Core/repoSelector";
+import SettingsSelector from "Core/settingsSelector";
+import MenuBar from 'Core/menuBar';
+import Errors from "Core/errors";
 import { writeConfigRequest } from "secure-electron-store";
-import "./root.css";
+import "Core/root.css";
 import '@fontsource/roboto';
 
 const BaseStylesFlex = styled(BaseStyles)`
   flex: 1;
   display: flex;
   flex-direction: column;
-
-  & > *:last-child {
-    padding-top: 50px;
-  }
 `;
 
 class Root extends React.Component {
@@ -53,6 +50,7 @@ class Root extends React.Component {
           <ConnectedRouter history={history}>
             <ThemeProvider colorMode={this.state.theme}>
               <BaseStylesFlex>
+                <MenuBar />
                 <Nav history={history}></Nav>
                 <RepoSelector />
                 <SettingsSelector />
