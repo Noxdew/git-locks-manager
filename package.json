@@ -116,7 +116,7 @@
     "connected-react-router": "^6.9.1",
     "easy-redux-undo": "^1.0.3",
     "electron-devtools-installer": "^3.2.0",
-    "electron-log": "^4.3.4",
+    "electron-log": "^4.3.5",
     "electron-updater": "^4.3.8",
     "electron-util": "^0.15.1",
     "fix-path": "^3.0.0",
