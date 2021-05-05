@@ -91,5 +91,6 @@
   "Remove row": "Usuń wiersz",
   "Drag to reorder": "Przeciągnij, aby zmienić kolejność",
   "The server URL is required": "Adres URL serwera jest wymagany",
-  "Add or Select a Repository": "Dodaj lub wybierz repozytorium"
+  "Add or Select a Repository": "Dodaj lub wybierz repozytorium",
+  "Theme": "Motyw"
 }

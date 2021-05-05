@@ -91,5 +91,6 @@
   "Remove row": "Удалить строку",
   "Drag to reorder": "Перетащите, чтобы изменить порядок",
   "The server URL is required": "Требуется URL-адрес сервера",
-  "Add or Select a Repository": "Добавить или выбрать репозиторий"
+  "Add or Select a Repository": "Добавить или выбрать репозиторий",
+  "Theme": "Тема"
 }

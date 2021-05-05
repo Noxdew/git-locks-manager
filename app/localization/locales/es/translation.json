@@ -91,5 +91,6 @@
   "Remove row": "Quitar fila",
   "Drag to reorder": "Arrastre para reordenar",
   "The server URL is required": "Se requiere la URL del servidor",
-  "Add or Select a Repository": "Agregar o seleccionar un repositorio"
+  "Add or Select a Repository": "Agregar o seleccionar un repositorio",
+  "Theme": "Tema"
 }

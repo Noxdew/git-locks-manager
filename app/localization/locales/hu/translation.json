@@ -91,5 +91,6 @@
   "Remove row": "Távolítsa el a sort",
   "Drag to reorder": "Húzza az átrendezéshez",
   "The server URL is required": "A kiszolgáló URL-címe kötelező",
-  "Add or Select a Repository": "Adattár hozzáadása vagy kiválasztása"
+  "Add or Select a Repository": "Adattár hozzáadása vagy kiválasztása",
+  "Theme": "Téma"
 }

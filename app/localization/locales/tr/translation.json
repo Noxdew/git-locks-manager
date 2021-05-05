@@ -91,5 +91,6 @@
   "Remove row": "Satırı kaldır",
   "Drag to reorder": "Yeniden sıralamak için sürükleyin",
   "The server URL is required": "Sunucu URL'si gerekli",
-  "Add or Select a Repository": "Depo Ekle veya Seç"
+  "Add or Select a Repository": "Depo Ekle veya Seç",
+  "Theme": "Tema"
 }

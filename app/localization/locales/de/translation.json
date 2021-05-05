@@ -91,5 +91,6 @@
   "Remove row": "Zeile entfernen",
   "Drag to reorder": "Ziehen zum Neuanordnen",
   "The server URL is required": "Die Server-URL ist erforderlich",
-  "Add or Select a Repository": "Repository hinzufügen oder auswählen"
+  "Add or Select a Repository": "Repository hinzufügen oder auswählen",
+  "Theme": "Thema"
 }

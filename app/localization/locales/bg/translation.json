@@ -91,5 +91,6 @@
   "Remove row": "Премахване на реда",
   "Drag to reorder": "Плъзнете, за да пренаредите",
   "The server URL is required": "URL адресът на сървъра е задължителен",
-  "Add or Select a Repository": "Добавете или изберете хранилище"
+  "Add or Select a Repository": "Добавете или изберете хранилище",
+  "Theme": "Тема"
 }

@@ -91,5 +91,6 @@
   "Remove row": "Poista rivi",
   "Drag to reorder": "Järjestä uudelleen vetämällä",
   "The server URL is required": "Palvelimen URL-osoite vaaditaan",
-  "Add or Select a Repository": "Lisää tai valitse arkisto"
+  "Add or Select a Repository": "Lisää tai valitse arkisto",
+  "Theme": "Teema"
 }

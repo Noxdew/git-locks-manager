@@ -91,5 +91,6 @@
   "Remove row": "행 제거",
   "Drag to reorder": "순서를 변경하려면 드래그하세요.",
   "The server URL is required": "서버 URL이 필요합니다.",
-  "Add or Select a Repository": "저장소 추가 또는 선택"
+  "Add or Select a Repository": "저장소 추가 또는 선택",
+  "Theme": "테마"
 }

@@ -91,5 +91,6 @@
   "Remove row": "删除行",
   "Drag to reorder": "拖动重新排序",
   "The server URL is required": "服务器URL是必需的",
-  "Add or Select a Repository": "添加或选择存储库"
+  "Add or Select a Repository": "添加或选择存储库",
+  "Theme": "主题"
 }

@@ -91,5 +91,6 @@
   "Remove row": "Зняти рядок",
   "Drag to reorder": "Перетягніть, щоб змінити порядок",
   "The server URL is required": "Потрібна URL-адреса сервера",
-  "Add or Select a Repository": "Додати або вибрати сховище"
+  "Add or Select a Repository": "Додати або вибрати сховище",
+  "Theme": "Тема"
 }

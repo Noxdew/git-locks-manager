@@ -91,5 +91,6 @@
   "Remove row": "Supprimer la ligne",
   "Drag to reorder": "Faites glisser pour réorganiser",
   "The server URL is required": "L'URL du serveur est obligatoire",
-  "Add or Select a Repository": "Ajouter ou sélectionner un référentiel"
+  "Add or Select a Repository": "Ajouter ou sélectionner un référentiel",
+  "Theme": "Thème"
 }
