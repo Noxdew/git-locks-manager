@@ -145,25 +145,30 @@ const MenuBuilder = function(appName) {
         label: i18nextMainBackend.t("View"),
         submenu: [
           {
-            label: i18nextMainBackend.t("System Theme"),
-            click: () => {
-              const mainWindow = BrowserWindow.getAllWindows()[0];
-              mainWindow.webContents.send('theme', 'auto');
-            }
-          },
-          {
-            label: i18nextMainBackend.t("Light Theme"),
-            click: () => {
-              const mainWindow = BrowserWindow.getAllWindows()[0];
-              mainWindow.webContents.send('theme', 'day');
-            }
-          },
-          {
-            label: i18nextMainBackend.t("Dark Theme"),
-            click: () => {
-              const mainWindow = BrowserWindow.getAllWindows()[0];
-              mainWindow.webContents.send('theme', 'night');
-            }
+            label: i18nextMainBackend.t("Theme"),
+            submenu: [
+              {
+                label: i18nextMainBackend.t("System Theme"),
+                click: () => {
+                  const mainWindow = BrowserWindow.getAllWindows()[0];
+                  mainWindow.webContents.send('theme', 'auto');
+                }
+              },
+              {
+                label: i18nextMainBackend.t("Light Theme"),
+                click: () => {
+                  const mainWindow = BrowserWindow.getAllWindows()[0];
+                  mainWindow.webContents.send('theme', 'day');
+                }
+              },
+              {
+                label: i18nextMainBackend.t("Dark Theme"),
+                click: () => {
+                  const mainWindow = BrowserWindow.getAllWindows()[0];
+                  mainWindow.webContents.send('theme', 'night');
+                }
+              }
+            ]
           },
           {
             type: "separator"

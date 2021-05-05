@@ -212,6 +212,18 @@ async function createWindow() {
     win.webContents.send("is-fullscreen", false);
   });
 
+  win.on('is-maximised', () => {
+    win.webContents.send("is-maximised", win.isMaximized());
+  });
+
+  win.on('maximize', () => {
+    win.webContents.send("is-maximised", true);
+  });
+
+  win.on('unmaximize', () => {
+    win.webContents.send("is-maximised", false);
+  });
+
   ipcMain.on('select-repo', async () => {
     dialog.showOpenDialog(win, {
       title: i18nextMainBackend.t('Select a Git Repository'),
@@ -223,11 +235,11 @@ async function createWindow() {
     });
   });
 
-  ipcMain.on('mac-title-bar-double-click', () => {
+  ipcMain.on('title-bar-double-click', () => {
     const actionOnDoubleClick = systemPreferences.getUserDefault(
       'AppleActionOnDoubleClick',
       'string'
-    )
+    );
 
     switch (actionOnDoubleClick) {
       case 'Maximize':
@@ -245,6 +257,53 @@ async function createWindow() {
 
   ipcMain.on('is-fullscreen', () => {
     win.webContents.send("is-fullscreen", win.isFullScreen());
+  });
+
+  ipcMain.on('is-maximised', () => {
+    win.webContents.send("is-maximised", win.isMaximized());
+  });
+
+  ipcMain.on('minimize', () => {
+    win.minimize();
+  });
+
+  ipcMain.on('maximize', () => {
+    win.isMaximized() ? win.unmaximize() : win.maximize();
+  });
+
+  ipcMain.on('close', () => {
+    win.close();
+  });
+
+  const getMenuList = () => {
+    const menu = Menu.getApplicationMenu();
+    if (!menu) {
+      return [];
+    }
+
+    return menu.items
+      .filter(mi => mi.submenu)
+      .map(mi => ({ label: mi.label }));
+  };
+
+  ipcMain.on('get-menu', () => {
+    win.webContents.send('menu-update', getMenuList());
+  });
+
+  ipcMain.on('open-menu', (e, data) => {
+    const menu = Menu.getApplicationMenu();
+    if (!menu) return;
+
+    const menuItem = menu.items[data.index];
+    if (!menuItem) return;
+
+    const submenu = menuItem.submenu;
+    if (!submenu) return;
+
+    submenu.popup({
+      x: Math.round(data.x),
+      y: Math.round(data.y),
+    });
   });
 
   // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
@@ -281,6 +340,7 @@ async function createWindow() {
   i18nextMainBackend.on("languageChanged", (lng) => {
     locale = lng;
     menuBuilder.buildMenu(i18nextMainBackend);
+    win.webContents.send('menu-update', getMenuList());
   });
 
   i18nextMainBackend.changeLanguage(locale);
@@ -317,8 +377,14 @@ app.on("window-all-closed", () => {
     ContextMenu.clearMainBindings(ipcMain);
     store.clearMainBindings(ipcMain);
     ipcMain.removeAllListeners('select-repo');
-    ipcMain.removeAllListeners('mac-title-bar-double-click');
+    ipcMain.removeAllListeners('title-bar-double-click');
     ipcMain.removeAllListeners('is-fullscreen');
+    ipcMain.removeAllListeners('is-maximised');
+    ipcMain.removeAllListeners('minimize');
+    ipcMain.removeAllListeners('maximize');
+    ipcMain.removeAllListeners('close');
+    ipcMain.removeAllListeners('get-menu');
+    ipcMain.removeAllListeners('open-menu');
   }
 });
 
