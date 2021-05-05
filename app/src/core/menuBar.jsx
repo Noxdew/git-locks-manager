@@ -84,7 +84,7 @@ const WindowsButtonGroup = styled(Box)`
 
 const ImageContainer = styled.div`
   height: 100%;
-  padding: ${themeGet('space.1')};
+  padding: 5px;
   display: inline-block;
 
   & > img {

@@ -4,7 +4,6 @@ import i18n from "I18n/i18n.config";
 import { I18nextProvider } from "react-i18next";
 import Root from "Core/root";
 import store, { history } from "Redux/store/store";
-import "bulma/css/bulma.css";
 import {
   writeUnprotectedConfigRequest,
   writeConfigRequest,
@@ -57,6 +56,8 @@ import 'moment/locale/tr';
 import 'moment/locale/uk';
 import 'moment/locale/vi';
 import 'moment/locale/zh-cn';
+
+document.oncontextmenu = () => false;
 
 i18n.on('languageChanged', function (lng) {
   moment.locale(lng === 'no' ? 'nb' : lng);

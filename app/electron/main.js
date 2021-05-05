@@ -65,8 +65,9 @@ async function createWindow() {
     console.log(savedConfig);
   } catch (e) {
     console.error(e);
-    fs.unlink(store.options.unprotectedPath, err => err && console.log(err));
-    savedConfig = {};
+    fs.unlinkSync(store.options.unprotectedPath);
+    app.quit();
+    return;
   }
 
   const minWidth = 950;
