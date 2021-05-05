@@ -92,5 +92,6 @@
   "Drag to reorder": "اسحب لإعادة ترتيب",
   "The server URL is required": "مطلوب عنوان URL للخادم",
   "Add or Select a Repository": "إضافة أو تحديد مستودع",
-  "Theme": "سمة"
+  "Theme": "سمة",
+  "The folder was not identified as Git Repository": "لم يتم تحديد المجلد كمستودع Git"
 }

@@ -92,5 +92,6 @@
   "Drag to reorder": "拖动重新排序",
   "The server URL is required": "服务器URL是必需的",
   "Add or Select a Repository": "添加或选择存储库",
-  "Theme": "主题"
+  "Theme": "主题",
+  "The folder was not identified as Git Repository": "该文件夹未标识为Git存储库"
 }

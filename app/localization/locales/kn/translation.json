@@ -92,5 +92,6 @@
   "Drag to reorder": "ಮರುಕ್ರಮಗೊಳಿಸಲು ಎಳೆಯಿರಿ",
   "The server URL is required": "ಸರ್ವರ್ URL ಅಗತ್ಯವಿದೆ",
   "Add or Select a Repository": "ರೆಪೊಸಿಟರಿಯನ್ನು ಸೇರಿಸಿ ಅಥವಾ ಆಯ್ಕೆಮಾಡಿ",
-  "Theme": "ಥೀಮ್"
+  "Theme": "ಥೀಮ್",
+  "The folder was not identified as Git Repository": "ಫೋಲ್ಡರ್ ಅನ್ನು ಜಿಟ್ ರೆಪೊಸಿಟರಿ ಎಂದು ಗುರುತಿಸಲಾಗಿಲ್ಲ"
 }

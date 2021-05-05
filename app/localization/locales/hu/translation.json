@@ -92,5 +92,6 @@
   "Drag to reorder": "Húzza az átrendezéshez",
   "The server URL is required": "A kiszolgáló URL-címe kötelező",
   "Add or Select a Repository": "Adattár hozzáadása vagy kiválasztása",
-  "Theme": "Téma"
+  "Theme": "Téma",
+  "The folder was not identified as Git Repository": "A mappát nem azonosították Git-tárként"
 }

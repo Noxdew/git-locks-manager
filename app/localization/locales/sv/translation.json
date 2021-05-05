@@ -92,5 +92,6 @@
   "Drag to reorder": "Dra för att sortera om",
   "The server URL is required": "Serverns URL krävs",
   "Add or Select a Repository": "Lägg till eller välj ett arkiv",
-  "Theme": "Tema"
+  "Theme": "Tema",
+  "The folder was not identified as Git Repository": "Mappen identifierades inte som Git Repository"
 }

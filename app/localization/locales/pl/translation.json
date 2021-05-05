@@ -92,5 +92,6 @@
   "Drag to reorder": "Przeciągnij, aby zmienić kolejność",
   "The server URL is required": "Adres URL serwera jest wymagany",
   "Add or Select a Repository": "Dodaj lub wybierz repozytorium",
-  "Theme": "Motyw"
+  "Theme": "Motyw",
+  "The folder was not identified as Git Repository": "Folder nie został zidentyfikowany jako repozytorium Git"
 }

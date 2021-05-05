@@ -92,5 +92,6 @@
   "Drag to reorder": "Velciet, lai pārkārtotu",
   "The server URL is required": "Nepieciešams servera URL",
   "Add or Select a Repository": "Pievienot vai atlasīt krātuvi",
-  "Theme": "Tēma"
+  "Theme": "Tēma",
+  "The folder was not identified as Git Repository": "Mape netika identificēta kā Git krātuve"
 }

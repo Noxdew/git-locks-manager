@@ -92,5 +92,6 @@
   "Drag to reorder": "Seret untuk menyusun ulang",
   "The server URL is required": "URL server harus diisi",
   "Add or Select a Repository": "Tambah atau Pilih Repositori",
-  "Theme": "Tema"
+  "Theme": "Tema",
+  "The folder was not identified as Git Repository": "Folder tidak diidentifikasi sebagai Git Repository"
 }

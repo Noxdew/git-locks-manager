@@ -92,5 +92,6 @@
   "Drag to reorder": "Σύρετε για αναδιάταξη",
   "The server URL is required": "Απαιτείται η διεύθυνση URL του διακομιστή",
   "Add or Select a Repository": "Προσθήκη ή Επιλογή αποθετηρίου",
-  "Theme": "Θέμα"
+  "Theme": "Θέμα",
+  "The folder was not identified as Git Repository": "Ο φάκελος δεν αναγνωρίστηκε ως Git Repository"
 }

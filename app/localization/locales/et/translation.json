@@ -92,5 +92,6 @@
   "Drag to reorder": "Järjestuse muutmiseks lohistage",
   "The server URL is required": "Serveri URL on kohustuslik",
   "Add or Select a Repository": "Lisage või valige hoidla",
-  "Theme": "Teema"
+  "Theme": "Teema",
+  "The folder was not identified as Git Repository": "Kausta ei tuvastatud kui Git Repository"
 }

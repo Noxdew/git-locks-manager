@@ -92,5 +92,6 @@
   "Drag to reorder": "Järjestä uudelleen vetämällä",
   "The server URL is required": "Palvelimen URL-osoite vaaditaan",
   "Add or Select a Repository": "Lisää tai valitse arkisto",
-  "Theme": "Teema"
+  "Theme": "Teema",
+  "The folder was not identified as Git Repository": "Kansiota ei tunnistettu Git-arkistoksi"
 }

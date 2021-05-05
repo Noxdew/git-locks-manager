@@ -92,5 +92,6 @@
   "Drag to reorder": "I-drag upang muling isaayos",
   "The server URL is required": "Kailangan ang server URL",
   "Add or Select a Repository": "Magdagdag o Pumili ng isang Repository",
-  "Theme": "Tema"
+  "Theme": "Tema",
+  "The folder was not identified as Git Repository": "Ang folder ay hindi nakilala bilang Git Repository"
 }

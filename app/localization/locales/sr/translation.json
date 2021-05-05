@@ -92,5 +92,6 @@
   "Drag to reorder": "Превуците за преуређивање",
   "The server URL is required": "УРЛ сервера је обавезан",
   "Add or Select a Repository": "Додајте или изаберите спремиште",
-  "Theme": "Тема"
+  "Theme": "Тема",
+  "The folder was not identified as Git Repository": "Директоријум није идентификован као Гит Репоситори"
 }

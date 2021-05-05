@@ -92,5 +92,6 @@
   "Drag to reorder": "Drag to reorder",
   "The server URL is required": "The server URL is required",
   "Add or Select a Repository": "Add or Select a Repository",
-  "Theme": "Theme"
+  "Theme": "Theme",
+  "The folder was not identified as Git Repository": "The folder was not identified as Git Repository"
 }

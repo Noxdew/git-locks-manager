@@ -92,5 +92,6 @@
   "Drag to reorder": "Vilkite, kad pertvarkytumėte",
   "The server URL is required": "Būtinas serverio URL",
   "Add or Select a Repository": "Pridėti arba pasirinkti saugyklą",
-  "Theme": "Tema"
+  "Theme": "Tema",
+  "The folder was not identified as Git Repository": "Aplankas nebuvo nustatytas kaip „Git“ saugykla"
 }

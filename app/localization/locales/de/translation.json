@@ -92,5 +92,6 @@
   "Drag to reorder": "Ziehen zum Neuanordnen",
   "The server URL is required": "Die Server-URL ist erforderlich",
   "Add or Select a Repository": "Repository hinzufügen oder auswählen",
-  "Theme": "Thema"
+  "Theme": "Thema",
+  "The folder was not identified as Git Repository": "Der Ordner wurde nicht als Git Repository identifiziert"
 }

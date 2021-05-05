@@ -92,5 +92,6 @@
   "Drag to reorder": "पुनर्क्रमित करण्यासाठी ड्रॅग करा",
   "The server URL is required": "सर्व्हर URL आवश्यक आहे",
   "Add or Select a Repository": "एक भांडार जोडा किंवा निवडा",
-  "Theme": "थीम"
+  "Theme": "थीम",
+  "The folder was not identified as Git Repository": "फोल्डर गिट रिपॉझिटरी म्हणून ओळखले गेले नाही"
 }

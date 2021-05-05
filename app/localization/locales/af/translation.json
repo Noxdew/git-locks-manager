@@ -92,5 +92,6 @@
   "Drag to reorder": "Sleep om te herorden",
   "The server URL is required": "Die bediener-URL is nodig",
   "Add or Select a Repository": "Voeg of kies 'n bewaarplek",
-  "Theme": "Tema"
+  "Theme": "Tema",
+  "The folder was not identified as Git Repository": "Die vouer is nie as Git Repository geïdentifiseer nie"
 }

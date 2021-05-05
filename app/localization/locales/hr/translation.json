@@ -92,5 +92,6 @@
   "Drag to reorder": "Povucite za promjenu redoslijeda",
   "The server URL is required": "URL poslužitelja je obavezan",
   "Add or Select a Repository": "Dodajte ili odaberite spremište",
-  "Theme": "Tema"
+  "Theme": "Tema",
+  "The folder was not identified as Git Repository": "Mapa nije identificirana kao Git Repository"
 }

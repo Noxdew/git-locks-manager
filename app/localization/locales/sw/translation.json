@@ -92,5 +92,6 @@
   "Drag to reorder": "Buruta ili kupanga tena",
   "The server URL is required": "URL ya seva inahitajika",
   "Add or Select a Repository": "Ongeza au Chagua Hifadhi",
-  "Theme": "Mandhari"
+  "Theme": "Mandhari",
+  "The folder was not identified as Git Repository": "Folda haikutambuliwa kama Hifadhi ya Git"
 }

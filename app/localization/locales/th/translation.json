@@ -92,5 +92,6 @@
   "Drag to reorder": "ลากเพื่อจัดลำดับใหม่",
   "The server URL is required": "ต้องระบุ URL ของเซิร์ฟเวอร์",
   "Add or Select a Repository": "เพิ่มหรือเลือกที่เก็บ",
-  "Theme": "ธีม"
+  "Theme": "ธีม",
+  "The folder was not identified as Git Repository": "ไม่ได้ระบุโฟลเดอร์เป็น Git Repository"
 }

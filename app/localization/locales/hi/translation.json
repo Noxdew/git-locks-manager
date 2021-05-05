@@ -92,5 +92,6 @@
   "Drag to reorder": "पुन: व्यवस्थित करने के लिए खींचें",
   "The server URL is required": "सर्वर URL आवश्यक है",
   "Add or Select a Repository": "एक रिपॉजिटरी जोड़ें या चुनें",
-  "Theme": "विषय"
+  "Theme": "विषय",
+  "The folder was not identified as Git Repository": "फ़ोल्डर को Git Repository के रूप में पहचाना नहीं गया था"
 }

@@ -92,5 +92,6 @@
   "Drag to reorder": "Плъзнете, за да пренаредите",
   "The server URL is required": "URL адресът на сървъра е задължителен",
   "Add or Select a Repository": "Добавете или изберете хранилище",
-  "Theme": "Тема"
+  "Theme": "Тема",
+  "The folder was not identified as Git Repository": "Папката не беше идентифицирана като Git Repository"
 }

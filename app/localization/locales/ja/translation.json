@@ -92,5 +92,6 @@
   "Drag to reorder": "再注文のためにドラッグする",
   "The server URL is required": "サーバーのURLが必要です",
   "Add or Select a Repository": "リポジトリを追加または選択する",
-  "Theme": "テーマ"
+  "Theme": "テーマ",
+  "The folder was not identified as Git Repository": "フォルダがGitリポジトリとして識別されませんでした"
 }

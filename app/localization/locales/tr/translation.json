@@ -92,5 +92,6 @@
   "Drag to reorder": "Yeniden sıralamak için sürükleyin",
   "The server URL is required": "Sunucu URL'si gerekli",
   "Add or Select a Repository": "Depo Ekle veya Seç",
-  "Theme": "Tema"
+  "Theme": "Tema",
+  "The folder was not identified as Git Repository": "Klasör Git Deposu olarak tanımlanmadı"
 }

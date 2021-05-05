@@ -92,5 +92,6 @@
   "Drag to reorder": "Перетягніть, щоб змінити порядок",
   "The server URL is required": "Потрібна URL-адреса сервера",
   "Add or Select a Repository": "Додати або вибрати сховище",
-  "Theme": "Тема"
+  "Theme": "Тема",
+  "The folder was not identified as Git Repository": "Папка не була визначена як Git Repository"
 }
