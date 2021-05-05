@@ -1,6 +1,6 @@
 {
   "name": "git-locks-manager",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Git LFS Locking GUI",
   "private": true,
   "main": "app/electron/main.js",
@@ -102,7 +102,7 @@
     "style-loader": "^2.0.0",
     "styled-components": "^5.2.3",
     "url-loader": "^4.1.1",
-    "webpack": "^5.33.2",
+    "webpack": "^5.36.2",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3"
