@@ -79,7 +79,7 @@
     "@babel/preset-react": "^7.13.13",
     "@doyensec/electronegativity": "^1.9.0",
     "@google-cloud/translate": "^6.2.0",
-    "@primer/components": "^27.0.0",
+    "@primer/components": "^28.0.4",
     "@primer/octicons-react": "^11.3.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-module-resolver": "^4.1.0",
