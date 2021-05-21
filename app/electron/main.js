@@ -17,7 +17,7 @@ const Protocol = require("./protocol");
 const MenuBuilder = require("./menu");
 const i18nextBackend = require("i18next-electron-fs-backend");
 const i18nextMainBackend = require("../localization/i18n.mainconfig");
-const Store = require("secure-electron-store").default;
+const Store = require('./store');
 const ContextMenu = require("secure-electron-context-menu").default;
 const path = require("path");
 const fs = require("fs");
@@ -50,25 +50,11 @@ async function createWindow() {
   }
 
   if (!store) {
-    store = new Store({
-      path: app.getPath("userData"),
-    });
+    store = new Store(app.getPath("userData"));
   }
 
-  // Use saved config values for configuring your
-  // BrowserWindow, for instance.
-  // NOTE - this config is not passcode protected
-  // and stores plaintext values
-  let savedConfig;
-  try {
-    savedConfig = store.mainInitialStore(fs);
-    console.log(savedConfig);
-  } catch (e) {
-    console.error(e);
-    fs.unlinkSync(store.options.unprotectedPath);
-    app.quit();
-    return;
-  }
+  const savedConfig = store.initial();
+  console.log('Stored Config', savedConfig);
 
   const minWidth = 950;
   const minHeight = 650;
@@ -113,19 +99,7 @@ async function createWindow() {
     fs.readFile(path.resolve(app.getAppPath(), args.filename), "utf8", callback);
   });
 
-  // Sets up main.js bindings for our electron store;
-  // callback is optional and allows you to use store in main process
-  const callback = function (success, initialStore) {
-    console.log(`${!success ? "Un-s" : "S"}uccessfully retrieved store in main process.`);
-    console.log(initialStore); // {"key1": "value1", ... }
-  };
-
-  const callbackUnprotected = function (success, initialStore) {
-    console.log(`${!success ? "Un-s" : "S"}uccessfully retrieved unprotected store in main process.`);
-    console.log(initialStore); // {"key1": "value1", ... }
-  };
-
-  store.mainBindings(ipcMain, win, fs, callback, callbackUnprotected);
+  store.mainBindings(ipcMain, win);
 
   // Sets up bindings for our custom context menu
   ContextMenu.mainBindings(ipcMain, win, Menu, isDev, {

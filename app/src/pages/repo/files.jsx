@@ -160,6 +160,7 @@ function Files(props) {
   const files = useSelector((state) => state.files.list);
   const filesLastUpdated = useSelector((state) => state.files.lastUpdated);
   const isRepoSelectorOpen = useSelector((state) => state.repos.selectorOpen);
+  const reposLoaded = useSelector((state) => state.repos.initialLoad);
   const history = useHistory();
   const dispatch = useDispatch();
   const searchLib = useRef(new QuickScore([], quickScoreOptions));
@@ -173,35 +174,11 @@ function Files(props) {
     repo = undefined;
   }
 
-  useEffect(() => {
-    isRepoSelectorOpenRef.current = isRepoSelectorOpen;
-  }, [isRepoSelectorOpen]);
-
-  useEffect(() => {
-    refreshFiles();
-    document.addEventListener(`update-${repoid}`, handleFiles);
-    document.addEventListener(`error-${repoid}`, handleError);
-    return () => {
-      document.removeEventListener(`update-${repoid}`, handleFiles);
-      document.removeEventListener(`error-${repoid}`, handleError);
-    }
-  }, [repoid]);
-
-  useEffect(() => {
-    document.addEventListener('refreshFiles', refreshFiles);
-    document.addEventListener('keydown', focusFilter);
-    return () => {
-      document.removeEventListener('refreshFiles', refreshFiles);
-      document.removeEventListener('keydown', focusFilter);
-    };
-  }, []);
-
-  if (!repo) {
-    history.push('/');
-    return null;
-  }
-
   const refreshFiles = () => {
+    if (!repo) {
+      return;
+    }
+
     dispatch(startFetching());
     window.api.git.listLockableFiles(repo.path)
       .then(files => {
@@ -227,6 +204,39 @@ function Files(props) {
   const handleError = ({ detail: err }) => {
     dispatch(addError(err.message || err));
     dispatch(stopFetching());
+  };
+
+  useEffect(() => {
+    isRepoSelectorOpenRef.current = isRepoSelectorOpen;
+  }, [isRepoSelectorOpen]);
+
+  useEffect(() => {
+    document.addEventListener(`update-${repoid}`, handleFiles);
+    document.addEventListener(`error-${repoid}`, handleError);
+    return () => {
+      document.removeEventListener(`update-${repoid}`, handleFiles);
+      document.removeEventListener(`error-${repoid}`, handleError);
+    }
+  }, [repoid]);
+
+  useEffect(() => {
+    refreshFiles();
+  }, [repoid, repos]);
+
+  useEffect(() => {
+    document.addEventListener('refreshFiles', refreshFiles);
+    document.addEventListener('keydown', focusFilter);
+    return () => {
+      document.removeEventListener('refreshFiles', refreshFiles);
+      document.removeEventListener('keydown', focusFilter);
+    };
+  }, []);
+
+  if (!repo) {
+    if (reposLoaded) {
+      history.push('/');
+    }
+    return null;
   }
 
   const onLock = (filePath) => {

@@ -16,7 +16,6 @@ import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
 import { ArrowUpIcon, TrashIcon, FilterIcon } from '@primer/octicons-react';
 import { v4 as uuidv4 } from 'uuid';
-import { writeConfigRequest, readConfigRequest, readConfigResponse } from "secure-electron-store";
 import { NavLink, useHistory } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import State from 'Components/state/State';
@@ -120,12 +119,12 @@ function RepoSelector(props) {
   }, [repos])
 
   useEffect(() => {
-    window.api.store.onReceive(readConfigResponse, function (args) {
-      if (args.success && args.value) {
-        dispatch(setRepos(args.value));
-      }
-    });
-    window.api.store.send(readConfigRequest, "repos");
+    window.api.store.read("repos")
+      .then(rs => {
+        if (rs) {
+          dispatch(setRepos(rs));
+        }
+      });
 
     window.api.ipc.on('add-repo', (e, { path }) => {
       if (!path) {
@@ -145,7 +144,7 @@ function RepoSelector(props) {
             name,
           };
           const newArray = [...reposRef.current, repo];
-          window.api.store.send(writeConfigRequest, 'repos', newArray);
+          window.api.store.write('repos', newArray);
           dispatch(addRepo(repo));
         })
         .catch(err => {
@@ -181,7 +180,7 @@ function RepoSelector(props) {
     );
 
     dispatch(setRepos(items));
-    window.api.store.send(writeConfigRequest, 'repos', items);
+    window.api.store.write('repos', items);
   };
 
   let list;
@@ -224,7 +223,7 @@ function RepoSelector(props) {
                                         <Button mr={1} onClick={() => setIsOpen(false)}>{t('Cancel')}</Button>
                                         <ButtonDanger onClick={() => {
                                           dispatch(removeRepo(id));
-                                          window.api.store.send(writeConfigRequest, 'repos', repos.filter(r => r.id !== id));
+                                          window.api.store.write('repos', repos.filter(r => r.id !== id));
                                           history.push('/');
                                         }}>
                                           {t('Remove')}
