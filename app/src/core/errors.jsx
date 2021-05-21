@@ -17,6 +17,7 @@ const ErrorsContainer = styled(Box)`
   pointer-events: none;
   flex-direction: column;
   justify-content: flex-end;
+  z-index: 1;
 
   & > * {
     align-self: center;
