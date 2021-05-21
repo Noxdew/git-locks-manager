@@ -5,6 +5,7 @@ const reposSlice = createSlice({
   initialState: {
     selectorOpen: false,
     list: [],
+    initialLoad: false,
   },
   reducers: {
     toggle(state, action) {
@@ -18,6 +19,7 @@ const reposSlice = createSlice({
     },
     setRepos(state, action) {
       state.list = action.payload;
+      state.initialLoad = true;
     }
   }
 });

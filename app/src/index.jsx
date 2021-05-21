@@ -4,10 +4,6 @@ import i18n from "I18n/i18n.config";
 import { I18nextProvider } from "react-i18next";
 import Root from "Core/root";
 import store, { history } from "Redux/store/store";
-import {
-  writeUnprotectedConfigRequest,
-  writeConfigRequest,
-} from "secure-electron-store";
 
 import moment from 'moment';
 import 'moment/locale/af';
@@ -61,8 +57,7 @@ document.oncontextmenu = () => false;
 
 i18n.on('languageChanged', function (lng) {
   moment.locale(lng === 'no' ? 'nb' : lng);
-  window.api.store.send(writeUnprotectedConfigRequest, 'locale', lng);
-  window.api.store.send(writeConfigRequest, 'locale', lng);
+  window.api.store.write('locale', lng);
 });
 
 i18n.changeLanguage(window.api.store.initial()['locale'] || 'en');
@@ -77,6 +72,8 @@ ReactDOM.render(
 );
 
 window.api.ipc.on('resize', (e, data) => {
-  window.api.store.send(writeUnprotectedConfigRequest, 'width', data.width);
-  window.api.store.send(writeUnprotectedConfigRequest, 'height', data.height);
+  window.api.store.write('width', data.width)
+    .finally(() => {
+      window.api.store.write('height', data.height);
+    });
 });

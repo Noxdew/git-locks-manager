@@ -1,7 +1,6 @@
 const { contextBridge, ipcRenderer } = require("electron");
-const fs = require("fs");
 const i18nextBackend = require("i18next-electron-fs-backend");
-const Store = require("secure-electron-store").default;
+const Store = require('./store');
 const ContextMenu = require("secure-electron-context-menu").default;
 const git = require("./git");
 const process = require('process');
@@ -10,6 +9,7 @@ const compareVersions = require('compare-versions');
 
 // Create the electron store to be made available in the renderer process
 const store = new Store();
+console.log(store.initial());
 
 let osVersion;
 if (process.platform === 'darwin') {
@@ -24,7 +24,7 @@ if (process.platform === 'darwin') {
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
   i18nextElectronBackend: i18nextBackend.preloadBindings(ipcRenderer),
-  store: store.preloadBindings(ipcRenderer, fs),
+  store: store.preloadBindings(ipcRenderer),
   contextMenu: ContextMenu.preloadBindings(ipcRenderer),
   git,
   env: {

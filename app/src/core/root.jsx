@@ -10,7 +10,6 @@ import RepoSelector from "Core/repoSelector";
 import SettingsSelector from "Core/settingsSelector";
 import MenuBar from 'Core/menuBar';
 import Errors from "Core/errors";
-import { writeConfigRequest } from "secure-electron-store";
 import "Core/root.css";
 import '@fontsource/roboto';
 
@@ -28,7 +27,7 @@ class Root extends React.Component {
     let theme = window.api.store.initial()['theme'];
     if (!validThemes.includes(theme)) {
       theme = 'auto';
-      window.api.store.send(writeConfigRequest, 'theme', theme);
+      window.api.store.write('theme', theme);
     }
 
     this.state = {
@@ -36,7 +35,7 @@ class Root extends React.Component {
     };
 
     window.api.ipc.on('theme', (e, theme) => {
-      window.api.store.send(writeConfigRequest, 'theme', theme);
+      window.api.store.write('theme', theme);
       this.setState({ theme });
     });
   }
