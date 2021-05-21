@@ -18,6 +18,7 @@ You can download an installer for your operating system from the [latest GitHub 
 - View and edit `.gitattributes` through the UI
 - Easily set up custom Git LFS servers
 - Uses the GitHub design system to create a familiar interface for GitHub Desktop users
+- Translated in 47 languages (Contributions and improvements are welcome)
 
 ## :computer: Development
 
