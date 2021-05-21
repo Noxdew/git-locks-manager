@@ -124,7 +124,7 @@ class Store {
         this.initialRead = true;
         this.initialData = jsonData;
       } catch (error) {
-        if (error.code === "ENOENT") {
+        if (error.code === "ENOENT" || error instanceof SyntaxError) {
           this.initialRead = true;
           this.initialData = {};
           fs.writeFileSync(this.filePath, '{}');
