@@ -109,7 +109,7 @@ const FileRow = withTranslation()(function FileRow(props) {
             </Tooltip>
             <ButtonDanger disabled={working} onClick={() => {
               setWorking(true);
-              props.onUnlock(props.path);
+              props.onUnlock(props.rawPath);
             }}>{t('Unlock')}</ButtonDanger>
           </>
         ) : (
@@ -117,7 +117,7 @@ const FileRow = withTranslation()(function FileRow(props) {
             <UnlockIcon size={16} />
             <ButtonOutline disabled={working} onClick={() => {
               setWorking(true);
-              props.onLock(props.path);
+              props.onLock(props.rawPath);
             }}>{t('Lock')}</ButtonOutline>
           </>
         )}
@@ -258,6 +258,7 @@ function Files(props) {
       <FileRow
         key={file.item.path}
         path={highlight(file, 'path')}
+        rawPath={file.item.path}
         lockOwner={highlight(file, 'lock.owner.name')}
         lockTime={get(file.item, 'lock.locked_at')}
         isMissing={file.item.isMissing}
@@ -272,6 +273,7 @@ function Files(props) {
       <FileRow
         key={file.path}
         path={file.path}
+        rawPath={file.path}
         lockOwner={get(file, 'lock.owner.name')}
         lockTime={get(file, 'lock.locked_at')}
         isMissing={file.isMissing}
