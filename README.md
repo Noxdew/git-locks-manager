@@ -13,6 +13,8 @@ Git is awesome. However, working on a project with a lot of binary files can be 
 ## :closed_lock_with_key: Get Git Locks Manager
 You can download an installer for your operating system from the [latest GitHub Release](https://github.com/Noxdew/git-locks-manager/releases/latest)
 
+<img src="docs/imgs/git-locks-manager-screenshot.png" alt="Git Locks Manager Screenshot"/>
+
 ## :sparkles: Features
 - View, lock and unlock lockable files in your repositories
 - View and edit `.gitattributes` through the UI
