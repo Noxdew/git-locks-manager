@@ -13,6 +13,8 @@ Git is awesome. However, working on a project with a lot of binary files can be 
 ## :closed_lock_with_key: Get Git Locks Manager
 You can download an installer for your operating system from the [latest GitHub Release](https://github.com/Noxdew/git-locks-manager/releases/latest)
 
+Note that the releases are not signed. This means that you OS might tell you that the developer is untrusted and auto-updates won't work on MacOS.
+
 <img src="docs/imgs/git-locks-manager-screenshot.png" alt="Git Locks Manager Screenshot"/>
 
 ## :sparkles: Features
