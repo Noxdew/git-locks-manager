@@ -108,7 +108,7 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
-    "@fontsource/roboto": "^4.4.0",
+    "@fontsource/roboto": "^4.4.5",
     "@loadable/component": "^5.15.0",
     "@reduxjs/toolkit": "^1.5.1",
     "bulma": "^0.9.2",
