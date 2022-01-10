@@ -95,7 +95,7 @@
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.1",
     "install": "^0.13.0",
-    "mini-css-extract-plugin": "^1.6.0",
+    "mini-css-extract-plugin": "^2.4.6",
     "npm": "^7.24.1",
     "path-browserify": "^1.0.1",
     "stream-browserify": "^3.0.0",
