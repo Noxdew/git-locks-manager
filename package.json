@@ -72,7 +72,7 @@
     "last 2 Chrome versions"
   ],
   "devDependencies": {
-    "@babel/core": "^7.14.3",
+    "@babel/core": "^7.16.7",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-react-jsx": "^7.14.3",
     "@babel/preset-env": "^7.15.6",
@@ -100,7 +100,7 @@
     "path-browserify": "^1.0.1",
     "stream-browserify": "^3.0.0",
     "style-loader": "^2.0.0",
-    "styled-components": "^5.3.0",
+    "styled-components": "^5.3.3",
     "url-loader": "^4.1.1",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.0",
