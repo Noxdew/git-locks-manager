@@ -1,4 +1,4 @@
-const exec = require('child_process').exec;
+const { exec, spawn } = require('child_process');
 const isEmpty = require('lodash/isEmpty');
 const size = require('lodash/size');
 const remove = require('lodash/remove');
@@ -155,34 +155,65 @@ function getRepoName(repo) {
 function listLockableFiles(repo) {
   return Promise.all([
     new Promise((resolve, reject) => {
-      exec('git ls-files | git check-attr --stdin lockable', {
+      const lsFiles = spawn('git', ['ls-files'], {
         cwd: repoRoot(repo),
-      }, (err, stdout, stderr) => {
-        if (stderr) {
-          reject(stderr);
-        } else if (err) {
-          reject(err);
-        } else {
-          resolve(stdout
+      });
+      const attrs = spawn('git', ['check-attr', '--stdin', 'lockable'], {
+        cwd: repoRoot(repo),
+      });
+
+      let lsFilesError = '';
+      lsFiles.stdout.on('data', function (data) {
+        attrs.stdin.write(data);
+      });
+      lsFiles.stderr.on('data', function (data) {
+        lsFilesError += data;
+      });
+      lsFiles.on('close', function (code) {
+        if (code !== 0) {
+          reject(lsFilesError);
+        }
+        attrs.stdin.end();
+      });
+
+      let attrsError = '';
+      let attrsData = '';
+      attrs.stdout.on('data', function (data) {
+        attrsData += data;
+      });
+      attrs.stderr.on('data', function (data) {
+        attrsError += data;
+      });
+      attrs.on('close', function (code) {
+        if (code === 0) {
+          resolve(attrsData
             .trim()
             .split('\n')
             .map(f => f.split(': lockable: '))
             .filter(f => size(f) === 2 && f[1] === 'set')
-            .map(f => f[0])
-          );
+            .map(f => f[0]));
+        } else {
+          reject(attrsError);
         }
       });
     }),
     new Promise((resolve, reject) => {
-      exec('git lfs locks --json', {
+      const locks = spawn('git', ['lfs', 'locks', '--json'], {
         cwd: repoRoot(repo),
-      }, (err, stdout, stderr) => {
-        if (stderr) {
-          reject(stderr);
-        } else if (err) {
-          reject(err);
+      });
+      let locksError = '';
+      let locksData = '';
+      locks.stdout.on('data', function (data) {
+        locksData += data;
+      });
+      locks.stderr.on('data', function (data) {
+        locksError += data;
+      });
+      locks.on('close', function (code) {
+        if (code === 0) {
+          resolve(JSON.parse(locksData));
         } else {
-          resolve(JSON.parse(stdout));
+          reject(locksError);
         }
       });
     })
