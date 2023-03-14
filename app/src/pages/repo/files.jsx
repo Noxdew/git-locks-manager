@@ -2,10 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import Box from "@primer/components/lib/Box";
 import BorderBox from "@primer/components/lib/BorderBox";
 import TextInput from "@primer/components/lib/TextInput";
+import FilteredSearch from "@primer/components/lib/FilteredSearch";
+import Dropdown from "@primer/components/lib/Dropdown";
 import Tooltip from "@primer/components/lib/Tooltip";
 import { ButtonOutline, ButtonDanger } from "@primer/components/lib/Button";
 import styled from 'styled-components';
-import { LockIcon, UnlockIcon, AlertIcon, FileIcon, FilterIcon } from '@primer/octicons-react';
+import { LockIcon, UnlockIcon, AlertIcon, FileIcon, FilterIcon, CheckIcon } from '@primer/octicons-react';
 import { get as themeGet } from '@primer/components/lib/constants';
 import { withTranslation } from "react-i18next";
 import { useParams, useHistory } from "react-router-dom";
@@ -15,6 +17,7 @@ import { addError } from 'Redux/components/errors/errorsSlice';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
+import lodashFilter from 'lodash/filter';
 import { QuickScore } from 'quick-score';
 import latinize from 'latinize';
 import moment from 'moment';
@@ -29,10 +32,23 @@ const Background = styled(Box)`
 
 const FilterBox = styled(Box)`
   padding: ${themeGet('space.2')};
+  display: flex;
 
-  & > * {
+  & > *:first-child {
+    margin-right: ${themeGet('space.2')};
     width: 100%;
   }
+`;
+
+const FilterTextInput = styled(TextInput)`
+  width: 100%;
+`;
+
+const DropdownItemButton = styled(Dropdown.Item)`
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const FilesBox = styled(BorderBox)`
@@ -156,6 +172,11 @@ const quickScoreOptions = {
 function Files(props) {
   const { repoid } = useParams();
   const [filter, setFilter] = useState('');
+
+  const savedData = window.api.store.initial();
+
+  const [sort, setSort] = useState(savedData['sort'] || 'locked');
+  const [hardFilter, setHardFilter] = useState(savedData['hardFilter'] || 'all');
   const repos = useSelector((state) => state.repos.list);
   const files = useSelector((state) => state.files.list);
   const filesLastUpdated = useSelector((state) => state.files.lastUpdated);
@@ -251,10 +272,19 @@ function Files(props) {
       .finally(() => refreshFiles());
   };
 
+  const applyHardFilter = files => {
+    if (hardFilter == 'locked') {
+      return lodashFilter(files, f => get(f, 'lock.locked_at') || get(f, 'item.lock.locked_at'));
+    } else if (hardFilter == 'unlocked') {
+      return lodashFilter(files, f => !get(f, 'lock.locked_at') && !get(f, 'item.lock.locked_at'));
+    }
+    return files;
+  }
+
   let renderedFiles;
   if (filter) {
     const filtered = searchLib.current.search(filter);
-    renderedFiles = filtered.map(file => (
+    renderedFiles = applyHardFilter(filtered).map(file => (
       <FileRow
         key={file.item.path}
         path={highlight(file, 'path')}
@@ -269,7 +299,12 @@ function Files(props) {
       />
     ));
   } else {
-    renderedFiles = sortBy(files, 'path').map(file => (
+    let sortedFiles = sortBy(applyHardFilter(files), 'path');
+    if (sort == 'locked') {
+      sortedFiles = sortBy(sortedFiles, f => !get(f, 'lock.locked_at'));
+    }
+
+    renderedFiles = sortedFiles.map(file => (
       <FileRow
         key={file.path}
         path={file.path}
@@ -286,17 +321,67 @@ function Files(props) {
   }
 
   const { t } = props;
+
+  let hardFilterText = t("All Files");
+  if (hardFilter == 'locked') {
+    hardFilterText = t("Locked Files");
+  } else if (hardFilter == 'unlocked') {
+    hardFilterText = t("Unlocked Files");
+  }
+
   return (
     <Background bg="bg.primary">
       <FilterBox>
-        <TextInput
-          ref={filterField}
-          aria-label={t("Filter")}
-          name="filter"
-          placeholder={t("Filter")}
-          icon={FilterIcon}
-          onChange={({ target: { value } }) => setFilter(value)}
-        />
+        <FilteredSearch>
+          <Dropdown>
+            <Dropdown.Button>{hardFilterText}</Dropdown.Button>
+            <Dropdown.Menu direction="se">
+              <DropdownItemButton onClick={() => {
+                setHardFilter('all');
+                window.api.store.write('hardFilter', 'all');
+              }}>
+                {t("All Files")} {hardFilter == 'all' ? <CheckIcon /> : null}
+              </DropdownItemButton>
+              <DropdownItemButton onClick={() => {
+                setHardFilter('locked');
+                window.api.store.write('hardFilter', 'locked');
+              }}>
+                {t("Locked Files")} {hardFilter == 'locked' ? <CheckIcon /> : null}
+              </DropdownItemButton>
+              <DropdownItemButton onClick={() => {
+                setHardFilter('unlocked');
+                window.api.store.write('hardFilter', 'unlocked');
+              }}>
+                {t("Unlocked Files")} {hardFilter == 'unlocked' ? <CheckIcon /> : null}
+              </DropdownItemButton>
+            </Dropdown.Menu>
+          </Dropdown>
+          <FilterTextInput
+            ref={filterField}
+            aria-label={t("Filter")}
+            name="filter"
+            placeholder={t("Filter")}
+            icon={FilterIcon}
+            onChange={({ target: { value } }) => setFilter(value)}
+          />
+        </FilteredSearch>
+        <Dropdown>
+          <Dropdown.Button>{t("Sorting")}</Dropdown.Button>
+          <Dropdown.Menu direction="sw">
+            <DropdownItemButton onClick={() => {
+              setSort('path');
+              window.api.store.write('sort', 'path');
+            }}>
+              {t("Path")} {sort == 'path' ? <CheckIcon /> : null}
+            </DropdownItemButton>
+            <DropdownItemButton onClick={() => {
+              setSort('locked');
+              window.api.store.write('sort', 'locked');
+            }}>
+              {t("Locked")} {sort == 'locked' ? <CheckIcon /> : null}
+            </DropdownItemButton>
+          </Dropdown.Menu>
+        </Dropdown>
       </FilterBox>
       <Flex>
         {isEmpty(renderedFiles) ? null : (
