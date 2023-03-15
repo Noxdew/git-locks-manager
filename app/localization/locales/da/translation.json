@@ -93,5 +93,11 @@
   "The server URL is required": "Server-URL er påkrævet",
   "Add or Select a Repository": "Tilføj eller vælg et lager",
   "Theme": "Tema",
-  "The folder was not identified as Git Repository": "Mappen blev ikke identificeret som Git Repository"
+  "The folder was not identified as Git Repository": "Mappen blev ikke identificeret som Git Repository",
+  "All Files": "Alle filer",
+  "Locked Files": "Låste filer",
+  "Unlocked Files": "Ulåste filer",
+  "Sorting": "Sortering",
+  "Name": "Navn",
+  "Path": "Sti"
 }

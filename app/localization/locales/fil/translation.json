@@ -93,5 +93,11 @@
   "The server URL is required": "Kailangan ang server URL",
   "Add or Select a Repository": "Magdagdag o Pumili ng isang Repository",
   "Theme": "Tema",
-  "The folder was not identified as Git Repository": "Ang folder ay hindi nakilala bilang Git Repository"
+  "The folder was not identified as Git Repository": "Ang folder ay hindi nakilala bilang Git Repository",
+  "All Files": "Lahat ng File",
+  "Locked Files": "Mga Naka-lock na File",
+  "Unlocked Files": "Mga Naka-unlock na File",
+  "Sorting": "Pag-uuri",
+  "Name": "Pangalan",
+  "Path": "Daan"
 }

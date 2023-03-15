@@ -93,5 +93,11 @@
   "The server URL is required": "De server-URL is vereist",
   "Add or Select a Repository": "Voeg een repository toe of selecteer deze",
   "Theme": "Thema",
-  "The folder was not identified as Git Repository": "De map is niet geïdentificeerd als Git-opslagplaats"
+  "The folder was not identified as Git Repository": "De map is niet geïdentificeerd als Git-opslagplaats",
+  "All Files": "Alle bestanden",
+  "Locked Files": "Vergrendelde bestanden",
+  "Unlocked Files": "Ontgrendelde bestanden",
+  "Sorting": "Sorteren",
+  "Name": "Naam",
+  "Path": "Pad"
 }

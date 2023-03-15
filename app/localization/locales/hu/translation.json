@@ -93,5 +93,11 @@
   "The server URL is required": "A kiszolgáló URL-címe kötelező",
   "Add or Select a Repository": "Adattár hozzáadása vagy kiválasztása",
   "Theme": "Téma",
-  "The folder was not identified as Git Repository": "A mappát nem azonosították Git-tárként"
+  "The folder was not identified as Git Repository": "A mappát nem azonosították Git-tárként",
+  "All Files": "Minden fájl",
+  "Locked Files": "Zárolt fájlok",
+  "Unlocked Files": "Feloldott fájlok",
+  "Sorting": "Válogatás",
+  "Name": "Név",
+  "Path": "Pálya"
 }

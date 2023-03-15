@@ -93,5 +93,11 @@
   "The server URL is required": "URL ya seva inahitajika",
   "Add or Select a Repository": "Ongeza au Chagua Hifadhi",
   "Theme": "Mandhari",
-  "The folder was not identified as Git Repository": "Folda haikutambuliwa kama Hifadhi ya Git"
+  "The folder was not identified as Git Repository": "Folda haikutambuliwa kama Hifadhi ya Git",
+  "All Files": "Faili Zote",
+  "Locked Files": "Faili Zilizofungwa",
+  "Unlocked Files": "Faili Zilizofunguliwa",
+  "Sorting": "Inapanga",
+  "Name": "Jina",
+  "Path": "Njia"
 }

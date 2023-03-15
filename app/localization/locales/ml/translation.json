@@ -93,5 +93,11 @@
   "The server URL is required": "സെർവർ URL ആവശ്യമാണ്",
   "Add or Select a Repository": "ഒരു ശേഖരം ചേർക്കുക അല്ലെങ്കിൽ തിരഞ്ഞെടുക്കുക",
   "Theme": "തീം",
-  "The folder was not identified as Git Repository": "ഫോൾഡർ Git Repository ആയി തിരിച്ചറിഞ്ഞിട്ടില്ല"
+  "The folder was not identified as Git Repository": "ഫോൾഡർ Git Repository ആയി തിരിച്ചറിഞ്ഞിട്ടില്ല",
+  "All Files": "എല്ലാ ഫയലുകളും",
+  "Locked Files": "ലോക്ക് ചെയ്ത ഫയലുകൾ",
+  "Unlocked Files": "അൺലോക്ക് ചെയ്ത ഫയലുകൾ",
+  "Sorting": "അടുക്കുന്നു",
+  "Name": "പേര്",
+  "Path": "പാത"
 }

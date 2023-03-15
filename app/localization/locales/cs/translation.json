@@ -93,5 +93,11 @@
   "The server URL is required": "URL serveru je povinné",
   "Add or Select a Repository": "Přidat nebo vybrat úložiště",
   "Theme": "Téma",
-  "The folder was not identified as Git Repository": "Složka nebyla identifikována jako úložiště Git"
+  "The folder was not identified as Git Repository": "Složka nebyla identifikována jako úložiště Git",
+  "All Files": "Všechny soubory",
+  "Locked Files": "Uzamčené soubory",
+  "Unlocked Files": "Odemčené soubory",
+  "Sorting": "Řazení",
+  "Name": "název",
+  "Path": "Cesta"
 }

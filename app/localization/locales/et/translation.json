@@ -93,5 +93,11 @@
   "The server URL is required": "Serveri URL on kohustuslik",
   "Add or Select a Repository": "Lisage või valige hoidla",
   "Theme": "Teema",
-  "The folder was not identified as Git Repository": "Kausta ei tuvastatud kui Git Repository"
+  "The folder was not identified as Git Repository": "Kausta ei tuvastatud kui Git Repository",
+  "All Files": "Kõik failid",
+  "Locked Files": "Lukustatud failid",
+  "Unlocked Files": "Lukustamata failid",
+  "Sorting": "Sorteerimine",
+  "Name": "Nimi",
+  "Path": "Tee"
 }

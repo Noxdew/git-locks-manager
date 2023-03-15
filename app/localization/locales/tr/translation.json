@@ -93,5 +93,11 @@
   "The server URL is required": "Sunucu URL'si gerekli",
   "Add or Select a Repository": "Depo Ekle veya Seç",
   "Theme": "Tema",
-  "The folder was not identified as Git Repository": "Klasör Git Deposu olarak tanımlanmadı"
+  "The folder was not identified as Git Repository": "Klasör Git Deposu olarak tanımlanmadı",
+  "All Files": "Tüm dosyalar",
+  "Locked Files": "Kilitli Dosyalar",
+  "Unlocked Files": "Kilidi Açılmış Dosyalar",
+  "Sorting": "Sıralama",
+  "Name": "İsim",
+  "Path": "Yol"
 }

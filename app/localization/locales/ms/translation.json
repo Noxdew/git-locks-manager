@@ -93,5 +93,11 @@
   "The server URL is required": "URL pelayan diperlukan",
   "Add or Select a Repository": "Tambah atau Pilih Repositori",
   "Theme": "Tema",
-  "The folder was not identified as Git Repository": "Folder tidak dikenali sebagai Git Repository"
+  "The folder was not identified as Git Repository": "Folder tidak dikenali sebagai Git Repository",
+  "All Files": "Semua fail",
+  "Locked Files": "Fail Berkunci",
+  "Unlocked Files": "Fail Tidak Berkunci",
+  "Sorting": "Menyusun",
+  "Name": "Nama",
+  "Path": "Laluan"
 }

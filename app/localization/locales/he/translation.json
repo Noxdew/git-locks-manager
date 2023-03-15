@@ -93,5 +93,11 @@
   "The server URL is required": "כתובת אתר השרת נדרשת",
   "Add or Select a Repository": "הוסף או בחר מאגר",
   "Theme": "נושא",
-  "The folder was not identified as Git Repository": "התיקיה לא זוהתה כ- Git Repository"
+  "The folder was not identified as Git Repository": "התיקיה לא זוהתה כ- Git Repository",
+  "All Files": "כל הקבצים",
+  "Locked Files": "קבצים נעולים",
+  "Unlocked Files": "קבצים לא נעולים",
+  "Sorting": "מִיוּן",
+  "Name": "שֵׁם",
+  "Path": "נָתִיב"
 }

@@ -93,5 +93,11 @@
   "The server URL is required": "مطلوب عنوان URL للخادم",
   "Add or Select a Repository": "إضافة أو تحديد مستودع",
   "Theme": "سمة",
-  "The folder was not identified as Git Repository": "لم يتم تحديد المجلد كمستودع Git"
+  "The folder was not identified as Git Repository": "لم يتم تحديد المجلد كمستودع Git",
+  "All Files": "كل الملفات",
+  "Locked Files": "ملفات مقفلة",
+  "Unlocked Files": "الملفات غير المؤمنة",
+  "Sorting": "فرز",
+  "Name": "اسم",
+  "Path": "طريق"
 }

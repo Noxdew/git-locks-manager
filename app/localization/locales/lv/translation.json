@@ -93,5 +93,11 @@
   "The server URL is required": "Nepieciešams servera URL",
   "Add or Select a Repository": "Pievienot vai atlasīt krātuvi",
   "Theme": "Tēma",
-  "The folder was not identified as Git Repository": "Mape netika identificēta kā Git krātuve"
+  "The folder was not identified as Git Repository": "Mape netika identificēta kā Git krātuve",
+  "All Files": "Visi faili",
+  "Locked Files": "Bloķēti faili",
+  "Unlocked Files": "Atbloķēti faili",
+  "Sorting": "Šķirošana",
+  "Name": "Vārds",
+  "Path": "Ceļš"
 }

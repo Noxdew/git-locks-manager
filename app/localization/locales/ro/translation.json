@@ -93,5 +93,11 @@
   "The server URL is required": "Adresa URL a serverului este necesară",
   "Add or Select a Repository": "Adăugați sau selectați un depozit",
   "Theme": "Temă",
-  "The folder was not identified as Git Repository": "Dosarul nu a fost identificat ca Git Repository"
+  "The folder was not identified as Git Repository": "Dosarul nu a fost identificat ca Git Repository",
+  "All Files": "Toate filele",
+  "Locked Files": "Fișiere blocate",
+  "Unlocked Files": "Fișiere deblocate",
+  "Sorting": "Triere",
+  "Name": "Nume",
+  "Path": "cale"
 }

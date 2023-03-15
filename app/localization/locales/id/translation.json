@@ -93,5 +93,11 @@
   "The server URL is required": "URL server harus diisi",
   "Add or Select a Repository": "Tambah atau Pilih Repositori",
   "Theme": "Tema",
-  "The folder was not identified as Git Repository": "Folder tidak diidentifikasi sebagai Git Repository"
+  "The folder was not identified as Git Repository": "Folder tidak diidentifikasi sebagai Git Repository",
+  "All Files": "Semua data",
+  "Locked Files": "File Terkunci",
+  "Unlocked Files": "File Tidak Terkunci",
+  "Sorting": "Penyortiran",
+  "Name": "Nama",
+  "Path": "Jalur"
 }

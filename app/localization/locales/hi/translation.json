@@ -93,5 +93,11 @@
   "The server URL is required": "सर्वर URL आवश्यक है",
   "Add or Select a Repository": "एक रिपॉजिटरी जोड़ें या चुनें",
   "Theme": "विषय",
-  "The folder was not identified as Git Repository": "फ़ोल्डर को Git Repository के रूप में पहचाना नहीं गया था"
+  "The folder was not identified as Git Repository": "फ़ोल्डर को Git Repository के रूप में पहचाना नहीं गया था",
+  "All Files": "सभी फाइलें",
+  "Locked Files": "लॉक की गई फ़ाइलें",
+  "Unlocked Files": "अनलॉक की गई फ़ाइलें",
+  "Sorting": "छंटाई",
+  "Name": "नाम",
+  "Path": "पथ"
 }

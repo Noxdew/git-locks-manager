@@ -93,5 +93,11 @@
   "The server URL is required": "УРЛ сервера је обавезан",
   "Add or Select a Repository": "Додајте или изаберите спремиште",
   "Theme": "Тема",
-  "The folder was not identified as Git Repository": "Директоријум није идентификован као Гит Репоситори"
+  "The folder was not identified as Git Repository": "Директоријум није идентификован као Гит Репоситори",
+  "All Files": "Све датотеке",
+  "Locked Files": "Закључане датотеке",
+  "Unlocked Files": "Откључане датотеке",
+  "Sorting": "Сортирање",
+  "Name": "Име",
+  "Path": "Пут"
 }

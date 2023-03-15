@@ -93,5 +93,11 @@
   "The server URL is required": "URL адресът на сървъра е задължителен",
   "Add or Select a Repository": "Добавете или изберете хранилище",
   "Theme": "Тема",
-  "The folder was not identified as Git Repository": "Папката не беше идентифицирана като Git Repository"
+  "The folder was not identified as Git Repository": "Папката не беше идентифицирана като Git Repository",
+  "All Files": "Всички файлове",
+  "Locked Files": "Заключени файлове",
+  "Unlocked Files": "Отключени файлове",
+  "Sorting": "Сортиране",
+  "Name": "Име",
+  "Path": "Пътека"
 }

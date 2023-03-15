@@ -93,5 +93,11 @@
   "The server URL is required": "Απαιτείται η διεύθυνση URL του διακομιστή",
   "Add or Select a Repository": "Προσθήκη ή Επιλογή αποθετηρίου",
   "Theme": "Θέμα",
-  "The folder was not identified as Git Repository": "Ο φάκελος δεν αναγνωρίστηκε ως Git Repository"
+  "The folder was not identified as Git Repository": "Ο φάκελος δεν αναγνωρίστηκε ως Git Repository",
+  "All Files": "Ολα τα αρχεία",
+  "Locked Files": "Κλειδωμένα Αρχεία",
+  "Unlocked Files": "Ξεκλείδωτα αρχεία",
+  "Sorting": "Ταξινόμηση",
+  "Name": "Ονομα",
+  "Path": "Μονοπάτι"
 }

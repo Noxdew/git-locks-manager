@@ -93,5 +93,11 @@
   "The server URL is required": "URL poslužitelja je obavezan",
   "Add or Select a Repository": "Dodajte ili odaberite spremište",
   "Theme": "Tema",
-  "The folder was not identified as Git Repository": "Mapa nije identificirana kao Git Repository"
+  "The folder was not identified as Git Repository": "Mapa nije identificirana kao Git Repository",
+  "All Files": "Sve datoteke",
+  "Locked Files": "Zaključane datoteke",
+  "Unlocked Files": "Otključane datoteke",
+  "Sorting": "Sortiranje",
+  "Name": "Ime",
+  "Path": "Staza"
 }

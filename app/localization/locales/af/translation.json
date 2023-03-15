@@ -93,5 +93,11 @@
   "The server URL is required": "Die bediener-URL is nodig",
   "Add or Select a Repository": "Voeg of kies 'n bewaarplek",
   "Theme": "Tema",
-  "The folder was not identified as Git Repository": "Die vouer is nie as Git Repository geïdentifiseer nie"
+  "The folder was not identified as Git Repository": "Die vouer is nie as Git Repository geïdentifiseer nie",
+  "All Files": "Alle lêers",
+  "Locked Files": "Geslote lêers",
+  "Unlocked Files": "Ontsluit lêers",
+  "Sorting": "Sorteer",
+  "Name": "Naam",
+  "Path": "Pad"
 }

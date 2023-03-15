@@ -93,5 +93,11 @@
   "The server URL is required": "ಸರ್ವರ್ URL ಅಗತ್ಯವಿದೆ",
   "Add or Select a Repository": "ರೆಪೊಸಿಟರಿಯನ್ನು ಸೇರಿಸಿ ಅಥವಾ ಆಯ್ಕೆಮಾಡಿ",
   "Theme": "ಥೀಮ್",
-  "The folder was not identified as Git Repository": "ಫೋಲ್ಡರ್ ಅನ್ನು ಜಿಟ್ ರೆಪೊಸಿಟರಿ ಎಂದು ಗುರುತಿಸಲಾಗಿಲ್ಲ"
+  "The folder was not identified as Git Repository": "ಫೋಲ್ಡರ್ ಅನ್ನು ಜಿಟ್ ರೆಪೊಸಿಟರಿ ಎಂದು ಗುರುತಿಸಲಾಗಿಲ್ಲ",
+  "All Files": "ಎಲ್ಲ ಕಡತಗಳು",
+  "Locked Files": "ಲಾಕ್ ಮಾಡಿದ ಫೈಲ್‌ಗಳು",
+  "Unlocked Files": "ಅನ್‌ಲಾಕ್ ಮಾಡಿದ ಫೈಲ್‌ಗಳು",
+  "Sorting": "ವಿಂಗಡಿಸಲಾಗುತ್ತಿದೆ",
+  "Name": "ಹೆಸರು",
+  "Path": "ಮಾರ್ಗ"
 }

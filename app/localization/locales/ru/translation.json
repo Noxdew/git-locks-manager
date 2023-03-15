@@ -93,5 +93,11 @@
   "The server URL is required": "Требуется URL-адрес сервера",
   "Add or Select a Repository": "Добавить или выбрать репозиторий",
   "Theme": "Тема",
-  "The folder was not identified as Git Repository": "Папка не была идентифицирована как репозиторий Git"
+  "The folder was not identified as Git Repository": "Папка не была идентифицирована как репозиторий Git",
+  "All Files": "Все файлы",
+  "Locked Files": "Заблокированные файлы",
+  "Unlocked Files": "Разблокированные файлы",
+  "Sorting": "Сортировка",
+  "Name": "Имя",
+  "Path": "Путь"
 }

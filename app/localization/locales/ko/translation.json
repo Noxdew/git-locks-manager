@@ -93,5 +93,11 @@
   "The server URL is required": "서버 URL이 필요합니다.",
   "Add or Select a Repository": "저장소 추가 또는 선택",
   "Theme": "테마",
-  "The folder was not identified as Git Repository": "폴더가 Git Repository로 식별되지 않았습니다."
+  "The folder was not identified as Git Repository": "폴더가 Git Repository로 식별되지 않았습니다.",
+  "All Files": "모든 파일",
+  "Locked Files": "잠긴 파일",
+  "Unlocked Files": "잠금 해제된 파일",
+  "Sorting": "분류",
+  "Name": "이름",
+  "Path": "길"
 }

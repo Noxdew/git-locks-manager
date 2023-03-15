@@ -93,5 +93,11 @@
   "The server URL is required": "L'URL del server è obbligatorio",
   "Add or Select a Repository": "Aggiungi o seleziona un repository",
   "Theme": "Tema",
-  "The folder was not identified as Git Repository": "La cartella non è stata identificata come Git Repository"
+  "The folder was not identified as Git Repository": "La cartella non è stata identificata come Git Repository",
+  "All Files": "Tutti i files",
+  "Locked Files": "File bloccati",
+  "Unlocked Files": "File sbloccati",
+  "Sorting": "Ordinamento",
+  "Name": "Nome",
+  "Path": "Sentiero"
 }

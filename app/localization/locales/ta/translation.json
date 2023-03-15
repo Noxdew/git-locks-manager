@@ -93,5 +93,11 @@
   "The server URL is required": "சேவையக URL தேவை",
   "Add or Select a Repository": "ஒரு களஞ்சியத்தைச் சேர்க்கவும் அல்லது தேர்ந்தெடுக்கவும்",
   "Theme": "தீம்",
-  "The folder was not identified as Git Repository": "கோப்புறை கிட் களஞ்சியமாக அடையாளம் காணப்படவில்லை"
+  "The folder was not identified as Git Repository": "கோப்புறை கிட் களஞ்சியமாக அடையாளம் காணப்படவில்லை",
+  "All Files": "அனைத்து கோப்புகள்",
+  "Locked Files": "பூட்டப்பட்ட கோப்புகள்",
+  "Unlocked Files": "திறக்கப்பட்ட கோப்புகள்",
+  "Sorting": "வரிசைப்படுத்துதல்",
+  "Name": "பெயர்",
+  "Path": "பாதை"
 }

@@ -93,5 +93,11 @@
   "The server URL is required": "Būtinas serverio URL",
   "Add or Select a Repository": "Pridėti arba pasirinkti saugyklą",
   "Theme": "Tema",
-  "The folder was not identified as Git Repository": "Aplankas nebuvo nustatytas kaip „Git“ saugykla"
+  "The folder was not identified as Git Repository": "Aplankas nebuvo nustatytas kaip „Git“ saugykla",
+  "All Files": "Visi failai",
+  "Locked Files": "Užrakinti failai",
+  "Unlocked Files": "Atrakinti failai",
+  "Sorting": "Rūšiavimas",
+  "Name": "vardas",
+  "Path": "Kelias"
 }

@@ -93,5 +93,11 @@
   "The server URL is required": "సర్వర్ URL అవసరం",
   "Add or Select a Repository": "రిపోజిటరీని జోడించండి లేదా ఎంచుకోండి",
   "Theme": "థీమ్",
-  "The folder was not identified as Git Repository": "ఫోల్డర్ Git రిపోజిటరీగా గుర్తించబడలేదు"
+  "The folder was not identified as Git Repository": "ఫోల్డర్ Git రిపోజిటరీగా గుర్తించబడలేదు",
+  "All Files": "అన్ని ఫైల్‌లు",
+  "Locked Files": "లాక్ చేయబడిన ఫైల్‌లు",
+  "Unlocked Files": "అన్‌లాక్ చేయబడిన ఫైల్‌లు",
+  "Sorting": "క్రమబద్ధీకరణ",
+  "Name": "పేరు",
+  "Path": "మార్గం"
 }

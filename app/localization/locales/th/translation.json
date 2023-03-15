@@ -93,5 +93,11 @@
   "The server URL is required": "ต้องระบุ URL ของเซิร์ฟเวอร์",
   "Add or Select a Repository": "เพิ่มหรือเลือกที่เก็บ",
   "Theme": "ธีม",
-  "The folder was not identified as Git Repository": "ไม่ได้ระบุโฟลเดอร์เป็น Git Repository"
+  "The folder was not identified as Git Repository": "ไม่ได้ระบุโฟลเดอร์เป็น Git Repository",
+  "All Files": "เอกสารทั้งหมด",
+  "Locked Files": "ไฟล์ที่ถูกล็อค",
+  "Unlocked Files": "ปลดล็อคไฟล์",
+  "Sorting": "การเรียงลำดับ",
+  "Name": "ชื่อ",
+  "Path": "เส้นทาง"
 }
