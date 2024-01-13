@@ -2,12 +2,6 @@
 
 <img src="resources/icon.png" alt="Git Locks Manager Logo" width="250"/>
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Noxdew_git-locks-manager&metric=alert_status)](https://sonarcloud.io/dashboard?id=Noxdew_git-locks-manager)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Noxdew_git-locks-manager&metric=security_rating)](https://sonarcloud.io/dashboard?id=Noxdew_git-locks-manager)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Noxdew_git-locks-manager&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=Noxdew_git-locks-manager)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Noxdew_git-locks-manager&metric=bugs)](https://sonarcloud.io/dashboard?id=Noxdew_git-locks-manager)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Noxdew_git-locks-manager&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=Noxdew_git-locks-manager)
-
 Git is awesome. However, working on a project with a lot of binary files can be challenging. Especially for non-engineers having to use the git terminal commands. To improve the experience of everybody in your team we developed the Git Locks Manager. A graphical interface to provide a straightforward way of managing the file locks in your repositories.
 
 ## :closed_lock_with_key: Get Git Locks Manager
