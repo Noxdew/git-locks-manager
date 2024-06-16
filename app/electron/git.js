@@ -126,7 +126,7 @@ function createGitAttributes(repo, rules) {
     const attrsPath = GitAttributes.findAttributesFile(repo, false);
     const attrs = new GitAttributes();
     attrs.rules = rules;
-    fs.writeFile(attrsPath, attrs.serialize(), (err) => {
+    fs.writeFile(attrsPath, attrs.serialize().replace(/\t/g, ' '), (err) => {
       if (err) {
         reject(err);
       } else {
