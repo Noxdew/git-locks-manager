@@ -1,6 +1,6 @@
 {
   "name": "git-locks-manager",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Git LFS Locking GUI",
   "private": true,
   "main": "app/electron/main.js",
