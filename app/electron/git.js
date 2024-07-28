@@ -249,9 +249,9 @@ function lockFile(repo, file) {
   });
 }
 
-function unlockFile(repo, file) {
+function unlockFile(repo, file, force) {
   return new Promise((resolve, reject) => {
-    exec(`git lfs unlock "${file}" --json`, {
+    exec(`git lfs unlock "${file}" --json${force ? " --force" : ""}`, {
       cwd: repoRoot(repo),
     }, (err, stdout, stderr) => {
       if (stderr) {

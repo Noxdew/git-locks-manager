@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Box, TextInput, Tooltip, Button, ActionList, ActionMenu, themeGet } from "@primer/react";
+import { Box, TextInput, Text, Tooltip, Button, ActionList, ActionMenu, Dialog, themeGet } from "@primer/react";
 import { FilteredSearch } from '@primer/react/deprecated'
 import styled from 'styled-components';
-import { LockIcon, UnlockIcon, AlertIcon, FileIcon, FilterIcon, CheckIcon } from '@primer/octicons-react';
+import { LockIcon, UnlockIcon, AlertIcon, FileIcon, FilterIcon, CheckIcon, PasskeyFillIcon } from '@primer/octicons-react';
 import { withTranslation } from "react-i18next";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,6 +18,7 @@ import moment from 'moment';
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { AutoSizer } from "react-virtualized";
 import { writeConfigRequest } from "secure-electron-store";
+import State from 'Components/state/State';
 
 const Background = styled(Box)`
   flex: 1;
@@ -82,6 +83,7 @@ const FileBoxSection = styled(Box)`
 `;
 
 const Flex = styled(Box)`
+  display: flex;
   flex: 1;
 `;
 
@@ -100,8 +102,14 @@ const StyledFilteredSearch = styled(FilteredSearch)`
   }
 `;
 
+const StyledForceUnlockIcon = styled(PasskeyFillIcon)`
+  align-self: center;
+  margin-right: ${themeGet('space.2')};
+`;
+
 const FileRow = withTranslation()(function FileRow(props) {
   const [working, setWorking] = useState(false);
+  const [errorUnlocking, setErrorUnlocking] = useState(false);
 
   useEffect(() => {
     setWorking(false);
@@ -129,8 +137,47 @@ const FileRow = withTranslation()(function FileRow(props) {
             </Tooltip>
             <Button variant="danger" disabled={working} onClick={() => {
               setWorking(true);
-              props.onUnlock(props.rawPath);
+              props.onUnlock(props.rawPath)
+                .then(() => setErrorUnlocking(false))
+                .catch(() => setErrorUnlocking(true));
             }}>{t('Unlock')}</Button>
+            {errorUnlocking ? (
+              <State default={false}>
+              {([isOpen, setIsOpen]) => {
+                const returnFocusRef = React.useRef(null)
+                return (
+                  <>
+                    <Dialog isOpen={isOpen} returnFocusRef={returnFocusRef} onDismiss={() => setIsOpen(false)} aria-labelledby="label">
+                      <Dialog.Header>
+                        <StyledForceUnlockIcon />
+                        {t("Force unlock")}
+                      </Dialog.Header>
+                      <Box p={3}>
+                        <Text id="label" fontFamily="sans-serif" as="div">{t('Do you want force unlock')} {props.path}</Text>
+                        <Text id="label" fontFamily="sans-serif" as="div" mt={2}>{t('Before you do, make sure nobody is working on it!')}</Text>
+                        <Flex mt={3} justifyContent="flex-end">
+                          <Button sx={{ marginRight: 1 }} onClick={() => setIsOpen(false)}>{t('Cancel')}</Button>
+                          <Button
+                            variant="danger"
+                            onClick={() => {
+                              setIsOpen(false);
+                              setWorking(true);
+                              props.onUnlock(props.rawPath, true)
+                                .then(() => setErrorUnlocking(false))
+                                .catch(() => setErrorUnlocking(true));
+                            }}
+                          >
+                            {t('Force unlock')}
+                          </Button>
+                        </Flex>
+                      </Box>
+                    </Dialog>
+                    <Button variant="danger" sx={{ marginLeft: 1 }} disabled={working} onClick={() => setIsOpen(true)}>{t('Force unlock')}</Button>
+                  </>
+                )
+              }}
+            </State>
+            ) : null}
           </>
         ) : (
           <>
@@ -270,9 +317,12 @@ function Files(props) {
       .finally(() => refreshFiles());
   };
 
-  const onUnlock = (filePath) => {
-    window.api.git.unlockFile(repo.path, filePath)
-      .catch(err => dispatch(addError(err.message || err)))
+  const onUnlock = (filePath, force) => {
+    return window.api.git.unlockFile(repo.path, filePath, force)
+      .catch(err => {
+        dispatch(addError(err.message || err));
+        throw err;
+      })
       .finally(() => refreshFiles());
   };
 
