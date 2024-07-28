@@ -1,30 +1,26 @@
 import React, { useState, useEffect } from "react";
-import styled from 'styled-components'
-import Button from '@primer/components/lib/Button';
-import Box from '@primer/components/lib/Box';
+import styled from 'styled-components';
+import { Button, Box, themeGet } from '@primer/react';
 import { RepoIcon, GearIcon, SyncIcon, TriangleDownIcon, TriangleUpIcon } from '@primer/octicons-react'
-import { get as themeGet } from '@primer/components/lib/constants';
 import { withTranslation } from "react-i18next";
-import { useRouteMatch } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { toggle as reposToggle } from 'Redux/components/repos/reposSlice';
 import { toggle as settingsToggle } from 'Redux/components/settings/settingsSlice';
-import ROUTES from "Constants/routes";
-import get from 'lodash/get';
 import moment from 'moment';
 
 const Toolbar = styled(Box)`
   display: flex;
   height: 50px;
   width: 100%;
-  background-color: ${themeGet('colors.globalNav.bg')};
+  background-color: ${themeGet('colors.header.bg')};
 
   & > *:first-child {
     width: 250px;
   }
 
   & > *:not(:first-child) {
-    border-left: none;
+    border-left: 1px solid transparent;
   }
 
   & > div {
@@ -34,17 +30,13 @@ const Toolbar = styled(Box)`
   & > button, & > div {
     border: 1px solid black;
 
-    &:not(:first-child) {
-      border-left: none;
-    }
-
     &:active, &:focus, &:hover, &:disabled {
       border: 1px solid black;
-
-      &:not(:first-child) {
-        border-left: none;
-      }
     }
+  }
+
+  & > button:hover {
+    border: 1px solid ${themeGet('colors.btn.hoverBorder')} !important;
   }
 `;
 
@@ -56,11 +48,11 @@ const StyledButton = styled(Button)`
   max-width: 250px;
   border-radius: 0;
   padding: 10px;
-  background-color: ${themeGet('colors.globalNav.bg')};
+  background-color: ${themeGet('colors.header.bg')};
   box-shadow: none;
 
   &:disabled {
-    background-color: ${themeGet('colors.globalNav.bg')};
+    background-color: ${themeGet('colors.header.bg')};
   }
 
   &:hover:not(:disabled) {
@@ -68,15 +60,17 @@ const StyledButton = styled(Button)`
   }
 
   &:not(:disabled) > svg {
-    fill: ${themeGet('colors.globalNav.text')};
+    fill: ${themeGet('colors.header.text')};
   }
 
-  & > *:not(:last-child) {
+  & > *:first-child {
     margin-right: 10px;
+    justify-content: left;
   }
 
-  & > .octicon {
+  & .octicon {
     align-self: center;
+    fill: ${themeGet('colors.header.text')};
   }
 
   &.open {
@@ -84,7 +78,7 @@ const StyledButton = styled(Button)`
     border-bottom: 1px solid ${themeGet('colors.bg.primary')};
 
     &:not(:disabled) > svg {
-      fill: ${themeGet('colors.text.primary')};
+      fill: ${themeGet('colors.btn.text')};
     }
 
     &:active, &:focus, &:hover, &:disabled {
@@ -92,11 +86,11 @@ const StyledButton = styled(Button)`
     }
 
     & div.description {
-      color: ${themeGet('colors.text.tertiary')};
+      color: ${themeGet('colors.btn.text')};
     }
 
     & div.title {
-      color: ${themeGet('colors.text.primary')};
+      color: ${themeGet('colors.btn.text')};
     }
 
     &:hover {
@@ -141,8 +135,9 @@ const TwoRowText = styled.div`
 `;
 
 function Nav(props) {
-  const match = useRouteMatch(ROUTES.REPO);
-  const repoid = get(match, 'params.repoid');
+  // This component is outside of a route so it doesn't have access to useParams
+  const location = useLocation();
+  const repoid = location.pathname.split('/')[1];
   const isOpenRepoSelector = useSelector((state) => state.repos.selectorOpen);
   const isOpenSettingsSelector = useSelector((state) => state.settings.selectorOpen);
   const repos = useSelector((state) => state.repos.list);
@@ -183,8 +178,9 @@ function Nav(props) {
           dispatch(reposToggle());
         }}
         className={isOpenRepoSelector ? 'open' : ''}
+        leadingVisual={RepoIcon}
+        trailingAction={isOpenRepoSelector ? TriangleUpIcon : TriangleDownIcon}
       >
-        <RepoIcon size={16} />
         <TwoRowText>
           <Box className="description">
             {t("Current Repository")}
@@ -193,11 +189,6 @@ function Nav(props) {
             {repo ? repo.name : t("Add or Select a Repository")}
           </Box>
         </TwoRowText>
-        {isOpenRepoSelector ? (
-          <TriangleUpIcon size={16} />
-        ) : (
-          <TriangleDownIcon size={16} />
-        )}
       </StyledButton>
 
       <StyledButton
@@ -209,8 +200,9 @@ function Nav(props) {
           dispatch(settingsToggle());
         }}
         className={isOpenSettingsSelector ? 'open' : ''}
+        leadingVisual={GearIcon}
+        trailingAction={TriangleDownIcon}
       >
-        <GearIcon size={16} />
         <TwoRowText>
           <Box className="description">
             {t("Configure Repository")}
@@ -219,15 +211,13 @@ function Nav(props) {
             {t("Attributes and LFS Config")}
           </Box>
         </TwoRowText>
-        <TriangleDownIcon size={16} />
       </StyledButton>
 
-      <StyledButton disabled={!repo || filesFetching} onClick={() => document.dispatchEvent(new Event('refreshFiles'))}>
-        {filesFetching ? (
-          <SpinningIcon size={16} />
-        ) : (
-          <SyncIcon size = {16} />
-        )}
+      <StyledButton
+        disabled={!repo || filesFetching}
+        onClick={() => document.dispatchEvent(new Event('refreshFiles'))}
+        leadingVisual={filesFetching ? SpinningIcon : SyncIcon}
+      >
         <TwoRowText>
           <Box className="title">
             {t("Refresh")}

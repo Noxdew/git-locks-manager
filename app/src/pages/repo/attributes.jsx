@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Box from "@primer/components/lib/Box";
-import Tooltip from "@primer/components/lib/Tooltip";
-import TextInput from "@primer/components/lib/TextInput";
-import { ButtonInvisible as ButtonInvisibleRaw, ButtonOutline, ButtonPrimary as ButtonPrimaryRaw, ButtonClose as ButtonCloseRaw } from "@primer/components/lib/Button";
+import { Box, Tooltip, TextInput, Button,themeGet } from "@primer/react";
+import CloseButton from "Components/close-button/CloseButton";
 import styled from 'styled-components';
 import { ThreeBarsIcon, CommentIcon, FileBadgeIcon, CheckCircleIcon, XCircleIcon } from '@primer/octicons-react';
-import { get as themeGet } from '@primer/components/lib/constants';
 import { withTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,12 +15,13 @@ import update from 'immutability-helper';
 import get from 'lodash/get';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { reorder } from 'Core/utils';
-import { Scrollbars } from "react-custom-scrollbars";
+import { Scrollbars } from "react-custom-scrollbars-2";
 import { AutoSizer } from "react-virtualized";
 
 const Background = styled(Box)`
   display: flex;
   flex: 1;
+  background-color: ${themeGet('colors.canvas.subtle')};
 `;
 
 const Content = styled(Box)`
@@ -50,9 +48,9 @@ const ButtonRow = styled(Box)`
   }
 `;
 
-const ButtonPrimary = styled(ButtonPrimaryRaw)`
+const ButtonPrimary = styled(Button)`
   &:hover {
-    color: ${themeGet('colors.btn.primary.text')};
+    color: ${themeGet('colors.btn.text')};
   }
 `;
 
@@ -91,16 +89,20 @@ const PatternBox = styled(Box)`
   }
 `;
 
-const ButtonInvisible = styled(ButtonInvisibleRaw)`
-  padding-right: 0;
+const ButtonInvisible = styled(Button)`
+  margin-left: ${themeGet('space.2')};
 
-  & > svg {
+  & svg {
     margin-right: ${themeGet('space.2')};
   }
 `;
 
-const ButtonClose = styled(ButtonCloseRaw)`
+const ButtonClose = styled(CloseButton)`
   margin-left: ${themeGet('space.2')};
+
+  & svg {
+    margin-right: 0;
+  }
 `;
 
 function GitAttributes(props) {
@@ -173,6 +175,7 @@ function GitAttributes(props) {
               </TextBox>
               <ButtonRow>
                 <ButtonPrimary
+                  variant="primary"
                   onClick={() => {
                     setNeedsSaving(true);
                     setRules(defaultRules.map(r => ({ ...r, id: uuidv4() })));
@@ -200,7 +203,7 @@ function GitAttributes(props) {
                                       setNeedsSaving(true);
                                       setRules(update(rules, { [i]: { pattern: { $set: value } } }));
                                     }} />
-                                    <ButtonInvisible disabled={isLoading} onClick={() => {
+                                    <ButtonInvisible variant="invisible" disabled={isLoading} onClick={() => {
                                       setNeedsSaving(true);
                                       const newValueFilter = get(rule, 'attrs.filter') === 'lfs' ? undefined : 'lfs';
                                       setRules(update(rules, {
@@ -226,7 +229,7 @@ function GitAttributes(props) {
                                         </>
                                       )}
                                     </ButtonInvisible>
-                                    <ButtonInvisible disabled={isLoading} onClick={() => {
+                                    <ButtonInvisible variant="invisible" disabled={isLoading} onClick={() => {
                                       setNeedsSaving(true);
                                       setRules(update(rules, { [i]: { attrs: { lockable: { $set: get(rule, 'attrs.lockable') ? undefined : true } } } }));
                                     }}>
@@ -273,7 +276,7 @@ function GitAttributes(props) {
                 </DragDropContext>
               </FormBox>
               <ButtonRow>
-                <ButtonPrimary disabled={isLoading} onClick={() => {
+                <ButtonPrimary variant="primary" disabled={isLoading} onClick={() => {
                   setNeedsSaving(true);
                   setRules(update(rules, {
                     $push: [{
@@ -284,7 +287,7 @@ function GitAttributes(props) {
                     }]
                   }));
                 }}>{t('Add Comment')}</ButtonPrimary>
-                <ButtonPrimary disabled={isLoading} onClick={() => {
+                <ButtonPrimary variant="primary" disabled={isLoading} onClick={() => {
                   setNeedsSaving(true);
                   setRules(update(rules, {
                     $push: [{
@@ -302,9 +305,9 @@ function GitAttributes(props) {
                   }));
                 }}>{t('Add Rule')}</ButtonPrimary>
                 {needsSaving ? (
-                  <ButtonPrimary disabled={isLoading} onClick={save}>{t('Save')}</ButtonPrimary>
+                  <ButtonPrimary variant="primary" disabled={isLoading} onClick={save}>{t('Save')}</ButtonPrimary>
                 ) : null}
-                <ButtonOutline disabled={isLoading} as={NavLink} to={ROUTES.REPO.replace(':repoid', repoid)}>{t('Back')}</ButtonOutline>
+                <Button variant="outline" disabled={isLoading} as={NavLink} to={ROUTES.REPO.replace(':repoid', repoid)}>{t('Back')}</Button>
               </ButtonRow>
             </Content>
           </Scrollbars>

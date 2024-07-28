@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Box from '@primer/components/lib/Box';
+import { Box, themeGet } from '@primer/react';
 import styled from 'styled-components';
-import { get as themeGet } from '@primer/components/lib/constants';
 import Ref from 'Components/ref/Ref';
-import AppIcon from 'Core/logo.png';
+import AppIcon from 'Images/logo.png';
 
 const oldMacHeight = 22;
 const bigSurHeight = 26;

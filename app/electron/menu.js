@@ -3,7 +3,7 @@ const i18nBackend = require("i18next-electron-fs-backend");
 const whitelist = require("../localization/whitelist");
 const isMac = process.platform === "darwin";
 
-const MenuBuilder = function(appName) {
+const MenuBuilder = function(mainWindow, appName) {
   // https://electronjs.org/docs/api/menu#main-process
   const defaultTemplate = function(i18nextMainBackend) {
     return [
@@ -57,13 +57,13 @@ const MenuBuilder = function(appName) {
           submenu: [
             isMac
               ? {
-                role: "close",
-                label: i18nextMainBackend.t("Quit")
-              }
+                  role: "close",
+                  label: i18nextMainBackend.t("Quit")
+                }
               : {
-                role: "quit",
-                label: i18nextMainBackend.t("Exit")
-              }
+                  role: "quit",
+                  label: i18nextMainBackend.t("Exit")
+                }
           ]
         },
       ]),
@@ -189,6 +189,21 @@ const MenuBuilder = function(appName) {
             type: "separator"
           },
           {
+            role: "resetzoom",
+            label: i18nextMainBackend.t("Reset Zoom")
+          },
+          {
+            role: "zoomin",
+            label: i18nextMainBackend.t("Zoom In")
+          },
+          {
+            role: "zoomout",
+            label: i18nextMainBackend.t("Zoom Out")
+          },
+          {
+            type: "separator"
+          },
+          {
             role: "togglefullscreen",
             label: i18nextMainBackend.t("Toggle Fullscreen")
           }
@@ -228,7 +243,12 @@ const MenuBuilder = function(appName) {
                   label: i18nextMainBackend.t("Window")
                 }
               ]
-            : [])
+            : [
+                {
+                  role: "close",
+                  label: i18nextMainBackend.t("Close")
+                }
+              ])
         ]
       },
       {

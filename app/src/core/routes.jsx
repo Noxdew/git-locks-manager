@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router";
+import { Routes, Route } from "react-router";
 import ROUTES from "Constants/routes";
 import loadable from "@loadable/component";
 
@@ -17,17 +17,17 @@ const LFSConfig = loadable(() =>
   import(/* webpackChunkName: "LFSConfigChunk" */ "Pages/repo/lfsconfig")
 );
 
-class Routes extends React.Component {
+class AppRoutes extends React.Component {
   render() {
     return (
-      <Switch>
-        <Route exact path={ROUTES.WELCOME} component={Welcome}></Route>
-        <Route path={ROUTES.REPO_ATTRIBUTES} component={RepoAttributes}></Route>
-        <Route path={ROUTES.REPO_LFS_CONFIG} component={LFSConfig}></Route>
-        <Route path={ROUTES.REPO} component={Repo}></Route>
-      </Switch>
+      <Routes>
+        <Route path={ROUTES.WELCOME} element={<Welcome />} />
+        <Route path={ROUTES.REPO} element={<Repo />} />
+        <Route path={ROUTES.REPO_ATTRIBUTES} element={<RepoAttributes />}></Route>
+        <Route path={ROUTES.REPO_LFS_CONFIG} element={<LFSConfig />}></Route>
+      </Routes>
     );
   }
 }
 
-export default Routes;
+export default AppRoutes;

@@ -1,16 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import Box from "@primer/components/lib/Box";
-import BorderBox from "@primer/components/lib/BorderBox";
-import TextInput from "@primer/components/lib/TextInput";
-import FilteredSearch from "@primer/components/lib/FilteredSearch";
-import Dropdown from "@primer/components/lib/Dropdown";
-import Tooltip from "@primer/components/lib/Tooltip";
-import { ButtonOutline, ButtonDanger } from "@primer/components/lib/Button";
+import { Box, TextInput, Tooltip, Button, ActionList, ActionMenu, themeGet } from "@primer/react";
+import { FilteredSearch } from '@primer/react/deprecated'
 import styled from 'styled-components';
 import { LockIcon, UnlockIcon, AlertIcon, FileIcon, FilterIcon, CheckIcon } from '@primer/octicons-react';
-import { get as themeGet } from '@primer/components/lib/constants';
 import { withTranslation } from "react-i18next";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { startFetching, stopFetching, setFiles } from 'Redux/components/files/filesSlice';
 import { addError } from 'Redux/components/errors/errorsSlice';
@@ -21,13 +15,15 @@ import lodashFilter from 'lodash/filter';
 import { QuickScore } from 'quick-score';
 import latinize from 'latinize';
 import moment from 'moment';
-import { Scrollbars } from "react-custom-scrollbars";
+import { Scrollbars } from "react-custom-scrollbars-2";
 import { AutoSizer } from "react-virtualized";
+import { writeConfigRequest } from "secure-electron-store";
 
 const Background = styled(Box)`
   flex: 1;
   display: flex;
   flex-direction: column;
+  background-color: ${themeGet('colors.canvas.subtle')};
 `;
 
 const FilterBox = styled(Box)`
@@ -44,19 +40,12 @@ const FilterTextInput = styled(TextInput)`
   width: 100%;
 `;
 
-const DropdownItemButton = styled(Dropdown.Item)`
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const FilesBox = styled(BorderBox)`
+const FilesBox = styled(Box)`
   margin: ${themeGet('space.2')};
   margin-top: 0;
 
   & > *:not(:last-child) {
-    border-bottom: 1px solid ${themeGet('colors.border.primary')};
+    border-bottom: 1px solid ${themeGet('colors.border.default')};
   }
 `;
 
@@ -66,7 +55,7 @@ const FileBox = styled(Box)`
   justify-content: space-between;
 
   &:hover {
-    background-color: ${themeGet('colors.bg.secondary')};
+    background-color: ${themeGet('colors.border.default')};
   }
 `;
 
@@ -87,13 +76,28 @@ const FileBoxSection = styled(Box)`
 
   & mark {
     background-color: unset;
-    color: ${themeGet('colors.text.link')};
+    color: ${themeGet('colors.checks.textLink')};
     font-weight: ${themeGet('fontWeights.bold')};
   }
 `;
 
 const Flex = styled(Box)`
   flex: 1;
+`;
+
+const StyledFilteredSearch = styled(FilteredSearch)`
+  & > :first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  & svg {
+    margin-left: ${themeGet('space.2')};
+  }
+
+  & input {
+    padding-left: 0;
+  }
 `;
 
 const FileRow = withTranslation()(function FileRow(props) {
@@ -123,18 +127,18 @@ const FileRow = withTranslation()(function FileRow(props) {
               {props.lockOwner}
               <LockIcon size={16} />
             </Tooltip>
-            <ButtonDanger disabled={working} onClick={() => {
+            <Button variant="danger" disabled={working} onClick={() => {
               setWorking(true);
               props.onUnlock(props.rawPath);
-            }}>{t('Unlock')}</ButtonDanger>
+            }}>{t('Unlock')}</Button>
           </>
         ) : (
           <>
             <UnlockIcon size={16} />
-            <ButtonOutline disabled={working} onClick={() => {
+            <Button variant="outline" disabled={working} onClick={() => {
               setWorking(true);
               props.onLock(props.rawPath);
-            }}>{t('Lock')}</ButtonOutline>
+            }}>{t('Lock')}</Button>
           </>
         )}
       </FileBoxSection>
@@ -182,7 +186,7 @@ function Files(props) {
   const filesLastUpdated = useSelector((state) => state.files.lastUpdated);
   const isRepoSelectorOpen = useSelector((state) => state.repos.selectorOpen);
   const reposLoaded = useSelector((state) => state.repos.initialLoad);
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const searchLib = useRef(new QuickScore([], quickScoreOptions));
   const filterField = useRef();
@@ -255,7 +259,7 @@ function Files(props) {
 
   if (!repo) {
     if (reposLoaded) {
-      history.push('/');
+      navigate('/');
     }
     return null;
   }
@@ -332,30 +336,32 @@ function Files(props) {
   return (
     <Background bg="bg.primary">
       <FilterBox>
-        <FilteredSearch>
-          <Dropdown>
-            <Dropdown.Button>{hardFilterText}</Dropdown.Button>
-            <Dropdown.Menu direction="se">
-              <DropdownItemButton onClick={() => {
-                setHardFilter('all');
-                window.api.store.write('hardFilter', 'all');
-              }}>
-                {t("All Files")} {hardFilter == 'all' ? <CheckIcon /> : null}
-              </DropdownItemButton>
-              <DropdownItemButton onClick={() => {
-                setHardFilter('locked');
-                window.api.store.write('hardFilter', 'locked');
-              }}>
-                {t("Locked Files")} {hardFilter == 'locked' ? <CheckIcon /> : null}
-              </DropdownItemButton>
-              <DropdownItemButton onClick={() => {
-                setHardFilter('unlocked');
-                window.api.store.write('hardFilter', 'unlocked');
-              }}>
-                {t("Unlocked Files")} {hardFilter == 'unlocked' ? <CheckIcon /> : null}
-              </DropdownItemButton>
-            </Dropdown.Menu>
-          </Dropdown>
+        <StyledFilteredSearch>
+          <ActionMenu>
+            <ActionMenu.Button as="summary">{hardFilterText}</ActionMenu.Button>
+            <ActionMenu.Overlay>
+              <ActionList>
+                <ActionList.Item onClick={() => {
+                  setHardFilter('all');
+                  window.api.store.send(writeConfigRequest, 'hardFilter', 'all');
+                }}>
+                  {t("All Files")} {hardFilter == 'all' ? <CheckIcon /> : null}
+                </ActionList.Item>
+                <ActionList.Item onClick={() => {
+                  setHardFilter('locked');
+                  window.api.store.send(writeConfigRequest, 'hardFilter', 'locked');
+                }}>
+                  {t("Locked Files")} {hardFilter == 'locked' ? <CheckIcon /> : null}
+                </ActionList.Item>
+                <ActionList.Item onClick={() => {
+                  setHardFilter('unlocked');
+                  window.api.store.send(writeConfigRequest, 'hardFilter', 'unlocked');
+                }}>
+                  {t("Unlocked Files")} {hardFilter == 'unlocked' ? <CheckIcon /> : null}
+                </ActionList.Item>
+              </ActionList>
+            </ActionMenu.Overlay>
+          </ActionMenu>
           <FilterTextInput
             ref={filterField}
             aria-label={t("Filter")}
@@ -364,24 +370,26 @@ function Files(props) {
             icon={FilterIcon}
             onChange={({ target: { value } }) => setFilter(value)}
           />
-        </FilteredSearch>
-        <Dropdown>
-          <Dropdown.Button>{t("Sorting")}</Dropdown.Button>
-          <Dropdown.Menu direction="sw">
-            <DropdownItemButton onClick={() => {
-              setSort('path');
-              window.api.store.write('sort', 'path');
-            }}>
-              {t("Path")} {sort == 'path' ? <CheckIcon /> : null}
-            </DropdownItemButton>
-            <DropdownItemButton onClick={() => {
-              setSort('locked');
-              window.api.store.write('sort', 'locked');
-            }}>
-              {t("Locked")} {sort == 'locked' ? <CheckIcon /> : null}
-            </DropdownItemButton>
-          </Dropdown.Menu>
-        </Dropdown>
+        </StyledFilteredSearch>
+        <ActionMenu>
+          <ActionMenu.Button as="summary">{t("Sorting")}</ActionMenu.Button>
+          <ActionMenu.Overlay>
+            <ActionList>
+              <ActionList.Item onClick={() => {
+                setSort('path');
+                window.api.store.send(writeConfigRequest, 'sort', 'path');
+              }}>
+                {t("Path")} {sort == 'path' ? <CheckIcon /> : null}
+              </ActionList.Item>
+              <ActionList.Item onClick={() => {
+                setSort('locked');
+                window.api.store.send(writeConfigRequest, 'sort', 'locked');
+              }}>
+                {t("Locked")} {sort == 'locked' ? <CheckIcon /> : null}
+              </ActionList.Item>
+            </ActionList>
+          </ActionMenu.Overlay>
+        </ActionMenu>
       </FilterBox>
       <Flex>
         {isEmpty(renderedFiles) ? null : (

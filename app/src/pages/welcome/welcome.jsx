@@ -1,12 +1,12 @@
 import React from "react";
-import Box from "@primer/components/lib/Box";
+import { Box, themeGet } from "@primer/react";
 import styled from 'styled-components';
 import { ArrowUpIcon } from '@primer/octicons-react';
-import { get as themeGet } from '@primer/components/lib/constants';
 import { withTranslation } from "react-i18next";
 
 const Background = styled(Box)`
   flex: 1;
+  background-color: ${themeGet('colors.canvas.default')};
 `;
 
 const ArrowBox = styled(Box)`
@@ -28,7 +28,7 @@ const TextBox = styled(Box)`
 function Welcome(props) {
   const { t } = props;
   return (
-    <Background bg="bg.primary">
+    <Background>
       <ArrowBox>
         <ArrowUpIcon size={24} />
       </ArrowBox>

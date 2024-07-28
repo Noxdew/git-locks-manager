@@ -1,14 +1,11 @@
 import React from "react";
 import { withTranslation } from "react-i18next";
-import Button from '@primer/components/lib/Button';
-import Box from '@primer/components/lib/Box';
+import { Button, Box, themeGet } from '@primer/react';
 import styled from 'styled-components';
-import { get as themeGet } from '@primer/components/lib/constants';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggle } from 'Redux/components/settings/settingsSlice';
 import { UploadIcon, FileBinaryIcon } from '@primer/octicons-react'
-import { NavLink, useRouteMatch } from "react-router-dom";
-import get from 'lodash/get';
+import { NavLink, useLocation } from "react-router-dom";
 import ROUTES from "Constants/routes";
 import MenuBar from 'Core/menuBar';
 
@@ -29,13 +26,13 @@ const OverflowContainer = styled(Box)`
 
 const BlackFill = styled(Box)`
   flex: 1;
-  background: ${themeGet('colors.bg.backdrop')};
+  background: ${themeGet('colors.selectMenu.tapHighlight')};
   pointer-events: auto;
 `;
 
 const SettingsContainer = styled(Box)`
   width: 250px;
-  background: ${themeGet('colors.bg.primary')};
+  background: ${themeGet('colors.canvas.subtle')};
   pointer-events: auto;
 
   & > *:not(:first-child) {
@@ -50,11 +47,13 @@ const StyledButton = styled(Button)`
   border-radius: 0;
   padding: 10px;
   box-shadow: none;
-  background-color: ${themeGet('colors.bg.primary')};
+  background-color: ${themeGet('colors.btn.bg')};
+  color: ${themeGet('colors.btn.text')};
+  text-decoration: none;
+  border-bottom: 1px solid ${themeGet('colors.border.default')};
 
   &:hover, &:focus {
-    color: ${themeGet('colors.text.primary')};
-    border-color: ${themeGet('colors.border.primary')};
+    background-color: ${themeGet('colors.btn.hoverBg')};
   }
 
   & > .octicon {
@@ -68,7 +67,7 @@ const TwoRowText = styled.div`
   text-align: initial;
 
   & > div.description {
-    color: ${themeGet('colors.text.tertiary')};
+    color: ${themeGet('colors.btn.text')};
     color: #8b949e;
     font-size: 11px;
     text-overflow: ellipsis;
@@ -76,7 +75,7 @@ const TwoRowText = styled.div`
   }
 
   & > div.title {
-    color: ${themeGet('colors.text.primary')};
+    color: ${themeGet('colors.btn.text')};
     font-size: 12px;
     text-overflow: ellipsis;
     line-height: initial;
@@ -85,8 +84,9 @@ const TwoRowText = styled.div`
 `;
 
 function SettingsSelector(props) {
-  const match = useRouteMatch(ROUTES.REPO);
-  const repoid = get(match, 'params.repoid');
+  // This component is outside of a route so it doesn't have access to useParams
+  const location = useLocation();
+  const repoid = location.pathname.split('/')[1];
   const isOpen = useSelector((state) => state.settings.selectorOpen);
   const dispatch = useDispatch();
 

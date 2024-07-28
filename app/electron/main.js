@@ -12,15 +12,17 @@ const {
   default: installExtension,
   REDUX_DEVTOOLS,
   REACT_DEVELOPER_TOOLS
-} = require('electron-devtools-installer');
+} = require("electron-devtools-installer");
+const SecureElectronLicenseKeys = require("secure-electron-license-keys");
 const Protocol = require("./protocol");
 const MenuBuilder = require("./menu");
 const i18nextBackend = require("i18next-electron-fs-backend");
 const i18nextMainBackend = require("../localization/i18n.mainconfig");
-const Store = require('./store');
+const Store = require("secure-electron-store").default;
 const ContextMenu = require("secure-electron-context-menu").default;
 const path = require("path");
 const fs = require("fs");
+const crypto = require("crypto");
 const { autoUpdater } = require("electron-updater");
 const debounce = require('lodash/debounce');
 const enforceMacOSAppLocation = require('./enforceMacOSAppLocation');
@@ -50,10 +52,20 @@ async function createWindow() {
   }
 
   if (!store) {
-    store = new Store(app.getPath("userData"));
+    store = new Store({
+      path: app.getPath("userData"),
+      encrypt: false,
+      minify: false,
+      debug: true,
+    });
   }
 
-  const savedConfig = store.initial();
+  // Use saved config values for configuring your
+  // BrowserWindow, for instance.
+  // NOTE - this config is not passcode protected
+  // and stores plaintext values
+  let savedConfig = store.mainInitialStore(fs);
+
   console.log('Stored Config', savedConfig);
 
   const minWidth = 950;
@@ -78,28 +90,24 @@ async function createWindow() {
       nodeIntegrationInSubFrames: false,
       contextIsolation: true,
       enableRemoteModule: false,
-      additionalArguments: [`storePath:${app.getPath("userData")}`],
-      preload: path.join(__dirname, "preload.js"), /* eng-disable PRELOAD_JS_CHECK */
+      additionalArguments: [`--storePath=${store.sanitizePath(app.getPath("userData"))}`],
+      preload: path.join(__dirname, "preload.js"),
+      /* eng-disable PRELOAD_JS_CHECK */
       disableBlinkFeatures: "Auxclick"
     }
   });
 
   // Sets up main.js bindings for our i18next backend
   i18nextBackend.mainBindings(ipcMain, win, fs);
-  // Overwrite the readFileRequest handler in order to use relative paths to the appPath
-  ipcMain.removeAllListeners(i18nextBackend.readFileRequest);
-  ipcMain.on(i18nextBackend.readFileRequest, (IpcMainEvent, args) => {
-    const callback = function (error, data) {
-      this.webContents.send(i18nextBackend.readFileResponse, {
-        key: args.key,
-        error,
-        data: typeof data !== "undefined" && data !== null ? data.toString() : ""
-      });
-    }.bind(win);
-    fs.readFile(path.resolve(app.getAppPath(), args.filename), "utf8", callback);
-  });
 
-  store.mainBindings(ipcMain, win);
+  // Sets up main.js bindings for our electron store;
+  // callback is optional and allows you to use store in main process
+  const callback = function (success, initialStore) {
+    console.log(`${!success ? "Un-s" : "S"}uccessfully retrieved store in main process.`);
+    console.log(initialStore); // {"key1": "value1", ... }
+  };
+
+  store.mainBindings(ipcMain, win, fs, callback);
 
   // Sets up bindings for our custom context menu
   ContextMenu.mainBindings(ipcMain, win, Menu, isDev, {
@@ -111,6 +119,12 @@ async function createWindow() {
       id: "softAlert",
       label: "Soft alert"
     }]
+  });
+
+  // Setup bindings for offline license verification
+  SecureElectronLicenseKeys.mainBindings(ipcMain, win, fs, crypto, {
+    root: process.cwd(),
+    version: app.getVersion()
   });
 
   // Load app
@@ -134,7 +148,7 @@ async function createWindow() {
     // before the DOM is ready
     win.webContents.once("dom-ready", async () => {
       await installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS])
-        .then((name) => console.log(`Added Extension:  ${name}`))
+        .then((name) => console.log(`Added Extension: ${name}`))
         .catch((err) => console.log("An error occurred: ", err))
         .finally(() => {
           require("electron-debug")(); // https://github.com/sindresorhus/electron-debug
@@ -286,7 +300,7 @@ async function createWindow() {
   const partition = "default";
   ses.fromPartition(partition) /* eng-disable PERMISSION_REQUEST_HANDLER_JS_CHECK */
     .setPermissionRequestHandler((webContents, permission, permCallback) => {
-      let allowedPermissions = []; // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
+      const allowedPermissions = []; // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
 
       if (allowedPermissions.includes(permission)) {
         permCallback(true); // Approve permission request
@@ -310,15 +324,28 @@ async function createWindow() {
   //   }
   // });
 
-  menuBuilder = MenuBuilder(app.name);
-
-  i18nextMainBackend.on("languageChanged", (lng) => {
-    locale = lng;
-    menuBuilder.buildMenu(i18nextMainBackend);
-    win.webContents.send('menu-update', getMenuList());
+  menuBuilder = MenuBuilder(win, app.name);
+  
+  // Set up necessary bindings to update the menu items
+  // based on the current language selected
+  i18nextMainBackend.on("initialized", (loaded) => {
+    i18nextMainBackend.changeLanguage("en");
+    i18nextMainBackend.off("initialized"); // Remove listener to this event as it's not needed anymore   
   });
 
-  i18nextMainBackend.changeLanguage(locale);
+  // When the i18n framework starts up, this event is called
+  // (presumably when the default language is initialized)
+  // BEFORE the "initialized" event is fired - this causes an 
+  // error in the logs. To prevent said error, we only call the
+  // below code until AFTER the i18n framework has finished its
+  // "initialized" event.
+  i18nextMainBackend.on("languageChanged", (lng) => {
+    locale = lng;
+    // win.webContents.send('menu-update', getMenuList());
+    if (i18nextMainBackend.isInitialized){
+      menuBuilder.buildMenu(i18nextMainBackend);
+    }
+  });
 }
 
 // Needs to be called before app is ready;
@@ -350,7 +377,7 @@ app.on("window-all-closed", () => {
   } else {
     i18nextBackend.clearMainBindings(ipcMain);
     ContextMenu.clearMainBindings(ipcMain);
-    store.clearMainBindings(ipcMain);
+    SecureElectronLicenseKeys.clearMainBindings(ipcMain);
     ipcMain.removeAllListeners('select-repo');
     ipcMain.removeAllListeners('title-bar-double-click');
     ipcMain.removeAllListeners('is-fullscreen');
@@ -373,18 +400,18 @@ app.on("activate", () => {
 
 // https://electronjs.org/docs/tutorial/security#12-disable-or-limit-navigation
 app.on("web-contents-created", (event, contents) => {
-  contents.on("will-navigate", (contentsEvent, navigationUrl) => { /* eng-disable LIMIT_NAVIGATION_JS_CHECK  */
+  contents.on("will-navigate", (contentsEvent, navigationUrl) => {
+    /* eng-disable LIMIT_NAVIGATION_JS_CHECK  */
     const parsedUrl = new URL(navigationUrl);
     const validOrigins = [selfHost];
 
     // Log and prevent the app from navigating to a new page if that page's origin is not whitelisted
     if (!validOrigins.includes(parsedUrl.origin)) {
       console.error(
-        `The application tried to redirect to the following address: '${parsedUrl}'. This origin is not whitelisted and the attempt to navigate was blocked.`
+        `The application tried to navigate to the following address: '${parsedUrl}'. This origin is not whitelisted and the attempt to navigate was blocked.`
       );
 
       contentsEvent.preventDefault();
-      return;
     }
   });
 
@@ -399,7 +426,6 @@ app.on("web-contents-created", (event, contents) => {
       );
 
       contentsEvent.preventDefault();
-      return;
     }
   });
 
@@ -412,46 +438,39 @@ app.on("web-contents-created", (event, contents) => {
     // Disable Node.js integration
     webPreferences.nodeIntegration = false;
   });
-
+  // enable i18next translations in popup window
+  contents.on("did-create-window", (window) => {
+    i18nextBackend.mainBindings(ipcMain, window, fs);
+  });
+  // destroy bindings on popup window closed
+  contents.on("destroyed", () => {
+    i18nextBackend.clearMainBindings(ipcMain);
+  });
+  
   // https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows
-  contents.on("new-window", (contentsEvent, navigationUrl) => { /* eng-disable LIMIT_NAVIGATION_JS_CHECK */
-    const parsedUrl = new URL(navigationUrl);
+  // This code replaces the old "new-window" event handling;
+  // https://github.com/electron/electron/pull/24517#issue-447670981
+  contents.setWindowOpenHandler(({
+    url
+  }) => {
+    const parsedUrl = new URL(url);
     const validOrigins = [];
 
     // Log and prevent opening up a new window
     if (!validOrigins.includes(parsedUrl.origin)) {
       console.error(
-        `The application tried to open a new window at the following address: '${navigationUrl}'. This attempt was blocked.`
+        `The application tried to open a new window at the following address: '${url}'. This attempt was blocked.`
       );
 
-      contentsEvent.preventDefault();
-      return;
+      return {
+        action: "deny"
+      };
     }
+
+    return {
+      action: "allow"
+    };
   });
-});
-
-// Filter loading any module via remote;
-// you shouldn't be using remote at all, though
-// https://electronjs.org/docs/tutorial/security#16-filter-the-remote-module
-app.on("remote-require", (event, webContents, moduleName) => {
-  event.preventDefault();
-});
-
-// built-ins are modules such as "app"
-app.on("remote-get-builtin", (event, webContents, moduleName) => {
-  event.preventDefault();
-});
-
-app.on("remote-get-global", (event, webContents, globalName) => {
-  event.preventDefault();
-});
-
-app.on("remote-get-current-window", (event, webContents) => {
-  event.preventDefault();
-});
-
-app.on("remote-get-current-web-contents", (event, webContents) => {
-  event.preventDefault();
 });
 
 autoUpdater.on('update-downloaded', (info) => {
