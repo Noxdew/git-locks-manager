@@ -155,7 +155,7 @@ function getRepoName(repo) {
 function listLockableFiles(repo) {
   return Promise.all([
     new Promise((resolve, reject) => {
-      const lsFiles = spawn('git', ['ls-files'], {
+      const lsFiles = spawn('git', ['ls-files', '--recurse-submodules'], {
         cwd: repoRoot(repo),
       });
       const attrs = spawn('git', ['check-attr', '--stdin', 'lockable'], {
