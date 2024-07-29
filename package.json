@@ -39,16 +39,17 @@
     ],
     "win": {
       "target": [
-        "nsis",
-        "msi"
+        "nsis"
       ]
     },
     "linux": {
       "target": [
-        "deb",
-        "rpm",
-        "snap",
-        "AppImage"
+        "deb"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg"
       ]
     }
   },
