@@ -325,17 +325,17 @@ async function createWindow() {
   // });
 
   menuBuilder = MenuBuilder(win, app.name);
-  
+
   // Set up necessary bindings to update the menu items
   // based on the current language selected
   i18nextMainBackend.on("initialized", (loaded) => {
     i18nextMainBackend.changeLanguage("en");
-    i18nextMainBackend.off("initialized"); // Remove listener to this event as it's not needed anymore   
+    i18nextMainBackend.off("initialized"); // Remove listener to this event as it's not needed anymore
   });
 
   // When the i18n framework starts up, this event is called
   // (presumably when the default language is initialized)
-  // BEFORE the "initialized" event is fired - this causes an 
+  // BEFORE the "initialized" event is fired - this causes an
   // error in the logs. To prevent said error, we only call the
   // below code until AFTER the i18n framework has finished its
   // "initialized" event.
@@ -446,7 +446,7 @@ app.on("web-contents-created", (event, contents) => {
   contents.on("destroyed", () => {
     i18nextBackend.clearMainBindings(ipcMain);
   });
-  
+
   // https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows
   // This code replaces the old "new-window" event handling;
   // https://github.com/electron/electron/pull/24517#issue-447670981
