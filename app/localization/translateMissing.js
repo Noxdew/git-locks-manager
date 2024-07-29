@@ -47,7 +47,6 @@ const translate = new Translate({
 });
 
 async function updateTranslations() {
-
   try {
     const root = "./app/localization/locales";
     const fromLanguage = "en";
@@ -62,7 +61,7 @@ async function updateTranslations() {
     // Get all language directories;
     // https://stackoverflow.com/a/35759360/1837080
     const getDirectories = p => readdirSync(p).filter(f => statSync(join(p, f)).isDirectory());
-    const languageDirectories = getDirectories(root).filter(d => googleLanguages.includes(d));    
+    const languageDirectories = getDirectories(root).filter(d => googleLanguages.includes(d));
 
     // For each language, read in any missing translations
     // and translate
@@ -88,7 +87,7 @@ async function updateTranslations() {
           }));
 
           // Only translate files with actual values
-          const missingKeys = Object.keys(missing);        
+          const missingKeys = Object.keys(missing);
           if (missingKeys.length > 0){
 
             // Translate each of the missing keys to the target language
@@ -101,7 +100,7 @@ async function updateTranslations() {
               // Only set if a value is returned
               if (googleTranslation.length > 0){
                 translations[missingKey] = googleTranslation[0];
-              }              
+              }
             }
   
             // Write output back to file
@@ -111,9 +110,8 @@ async function updateTranslations() {
             console.log(`Successfully updated translations for ${languageDirectory}`);
           } else {
             console.log(`Skipped creating translations for ${languageDirectory}; none found!`);
-          }          
+          }
         } else {
-
           // Log if we failed
           if (!translationExists) {
             console.error(`Could not generate translations for language '${languageDirectory}' because ${translationFile} does not exist, skipping!`);
