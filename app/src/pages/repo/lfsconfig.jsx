@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
-import Box from "@primer/components/lib/Box";
-import Dropdown from "@primer/components/lib/Dropdown";
-import FormGroup from "@primer/components/lib/FormGroup";
-import TextInputRaw from "@primer/components/lib/TextInput";
-import { ButtonDanger, ButtonInvisible as ButtonInvisibleRaw, ButtonOutline, ButtonPrimary as ButtonPrimaryRaw } from "@primer/components/lib/Button";
+import { Box, TextInput, FormGroup, Button, ActionList, ActionMenu, themeGet, FormControl } from "@primer/react";
 import styled from 'styled-components';
 import { XCircleIcon, CheckCircleIcon } from '@primer/octicons-react';
-import { get as themeGet } from '@primer/components/lib/constants';
 import { withTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { addError } from 'Redux/components/errors/errorsSlice';
 import { NavLink } from "react-router-dom";
 import ROUTES from "Constants/routes";
-import { Scrollbars } from "react-custom-scrollbars";
+import { Scrollbars } from "react-custom-scrollbars-2";
 import { AutoSizer } from "react-virtualized";
 
 const Background = styled(Box)`
   display: flex;
   flex: 1;
+  background-color: ${themeGet('colors.canvas.subtle')};
+
+  & label {
+    margin-top: ${themeGet('space.3')};
+  }
 `;
 
 const Content = styled(Box)`
@@ -45,27 +45,18 @@ const ButtonRow = styled(Box)`
   }
 `;
 
-const ButtonPrimary = styled(ButtonPrimaryRaw)`
+const ButtonPrimary = styled(Button)`
   &:hover {
     color: ${themeGet('colors.btn.primary.text')};
   }
 `;
 
-const FormBox = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  margin-top: ${themeGet('space.2')};
-`;
-
-const TextInput = styled(TextInputRaw)`
+const StyledTextInput = styled(TextInput)`
   width: 100%;
 `;
 
-const ButtonInvisible = styled(ButtonInvisibleRaw)`
-  padding-left: 0;
-  padding-right: 0;
-
-  & > svg {
+const ButtonInvisible = styled(Button)`
+  & svg {
     margin-right: ${themeGet('space.2')};
   }
 `;
@@ -178,15 +169,17 @@ function LFSConfig(props) {
               </TextBox>
               <ButtonRow>
                 {hasConfig ? (
-                  <ButtonDanger
+                  <Button
+                    variant="danger"
                     onClick={() => {
                       setNeedsSaving(true);
                       setHasConfig(!hasConfig);
                     }}
                     disabled={isLoading}
-                  >{t('Remove Custom Config')}</ButtonDanger>
+                  >{t('Remove Custom Config')}</Button>
                 ) : (
                   <ButtonPrimary
+                    variant="primary"
                     onClick={() => {
                       setNeedsSaving(true);
                       setHasConfig(!hasConfig);
@@ -195,65 +188,65 @@ function LFSConfig(props) {
                   >{t('Use Custom Config')}</ButtonPrimary>
                 )}
                 {needsSaving ? (
-                  <ButtonPrimary disabled={isLoading} onClick={save}>{t('Save')}</ButtonPrimary>
+                  <ButtonPrimary variant="primary" disabled={isLoading} onClick={save}>{t('Save')}</ButtonPrimary>
                 ) : null}
-                <ButtonOutline disabled={isLoading} as={NavLink} to={ROUTES.REPO.replace(':repoid', repoid)}>{t('Back')}</ButtonOutline>
+                <Button variant="outline" disabled={isLoading} as={NavLink} to={ROUTES.REPO.replace(':repoid', repoid)}>{t('Back')}</Button>
               </ButtonRow>
               {hasConfig ? (
                 <>
-                  <FormBox>
-                    <FormGroup>
-                      <FormGroup.Label htmlFor="remote-dropdown">{t('Select remote')}</FormGroup.Label>
-                      <Dropdown id='remote-dropdown'>
-                        <Dropdown.Button disabled={isLoading}>{remote || t('Select remote')}</Dropdown.Button>
-                        <Dropdown.Menu direction='se'>
+                  <FormControl>
+                    <FormControl.Label htmlFor="remote-dropdown">{t('Select remote')}</FormControl.Label>
+                    <ActionMenu id='remote-dropdown'>
+                      <ActionMenu.Button as="summary" disabled={isLoading}>{remote || t('Select remote')}</ActionMenu.Button>
+                      <ActionMenu.Overlay>
+                        <ActionList>
                           {remotes.map(rem => (
-                            <Dropdown.Item key={rem} onClick={() => {
+                            <ActionList.Item key={rem} onClick={() => {
                               setRemote(rem);
                               setNeedsSaving(true);
-                            }}>{rem}</Dropdown.Item>
+                            }}>{rem}</ActionList.Item>
                           ))}
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </FormGroup>
-                    <FormGroup>
-                      <FormGroup.Label htmlFor="lfs-url">{t('Full Git LFS Server URL')}</FormGroup.Label>
-                      <TextInput id="lfs-url" placeholder={`https://<server>/<owner>/${repo.name}.git/info/lfs/`} value={url} onChange={({ target: { value } }) => {
-                        setUrl(value);
+                        </ActionList>
+                      </ActionMenu.Overlay>
+                    </ActionMenu>
+                  </FormControl>
+                  <FormControl>
+                    <FormControl.Label htmlFor="lfs-url">{t('Full Git LFS Server URL')}</FormControl.Label>
+                    <StyledTextInput id="lfs-url" placeholder={`https://<server>/<owner>/${repo.name}.git/info/lfs/`} value={url} onChange={({ target: { value } }) => {
+                      setUrl(value);
+                      setNeedsSaving(true);
+                    }} />
+                  </FormControl>
+                  <FormControl>
+                    <FormControl.Label htmlFor="lfs-auth">{t('Authentication')}</FormControl.Label>
+                    <ButtonInvisible
+                      variant="invisible"
+                      id="lfs-auth"
+                      disabled={isLoading}
+                      onClick={() => {
+                        setUseAuth(!useAuth);
                         setNeedsSaving(true);
-                      }} />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormGroup.Label htmlFor="lfs-auth">{t('Authentication')}</FormGroup.Label>
-                      <ButtonInvisible
-                        id="lfs-auth"
-                        disabled={isLoading}
-                        onClick={() => {
-                          setUseAuth(!useAuth);
-                          setNeedsSaving(true);
-                        }}
-                      >
-                        {useAuth ? (
-                          <>
-                            <CheckCircleIcon size={16} />
-                            {t('With Authentication')}
-                          </>
-                        ) : (
-                          <>
-                            <XCircleIcon size={16} />
-                            {t('Without Authentication')}
-                          </>
-                        )}
-                      </ButtonInvisible>
-                    </FormGroup>
-
-                  </FormBox>
-                  <ButtonRow>
-                    {needsSaving ? (
-                      <ButtonPrimary disabled={isLoading} onClick={save}>{t('Save')}</ButtonPrimary>
-                    ) : null}
-                    <ButtonOutline disabled={isLoading} as={NavLink} to={ROUTES.REPO.replace(':repoid', repoid)}>{t('Back')}</ButtonOutline>
-                  </ButtonRow>
+                      }}
+                    >
+                      {useAuth ? (
+                        <>
+                          <CheckCircleIcon size={16} />
+                          {t('With Authentication')}
+                        </>
+                      ) : (
+                        <>
+                          <XCircleIcon size={16} />
+                          {t('Without Authentication')}
+                        </>
+                      )}
+                    </ButtonInvisible>
+                    <ButtonRow>
+                      {needsSaving ? (
+                        <ButtonPrimary variant="primary" disabled={isLoading} onClick={save}>{t('Save')}</ButtonPrimary>
+                      ) : null}
+                      <Button variant="outline" disabled={isLoading} as={NavLink} to={ROUTES.REPO.replace(':repoid', repoid)}>{t('Back')}</Button>
+                    </ButtonRow>
+                  </FormControl>
                 </>
               ) : null}
             </Content>

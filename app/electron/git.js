@@ -155,7 +155,7 @@ function getRepoName(repo) {
 function listLockableFiles(repo) {
   return Promise.all([
     new Promise((resolve, reject) => {
-      const lsFiles = spawn('git', ['ls-files'], {
+      const lsFiles = spawn('git', ['ls-files', '--recurse-submodules'], {
         cwd: repoRoot(repo),
       });
       const attrs = spawn('git', ['check-attr', '--stdin', 'lockable'], {
@@ -249,9 +249,9 @@ function lockFile(repo, file) {
   });
 }
 
-function unlockFile(repo, file) {
+function unlockFile(repo, file, force) {
   return new Promise((resolve, reject) => {
-    exec(`git lfs unlock "${file}" --json`, {
+    exec(`git lfs unlock "${file}" --json${force ? " --force" : ""}`, {
       cwd: repoRoot(repo),
     }, (err, stdout, stderr) => {
       if (stderr) {

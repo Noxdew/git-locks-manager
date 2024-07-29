@@ -1,13 +1,9 @@
 import React from "react";
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux';
-import Box from '@primer/components/lib/Box';
-import Flash from '@primer/components/lib/Flash';
-import { ButtonClose } from '@primer/components/lib/Button';
-import { AlertIcon } from '@primer/octicons-react'
-import { get as themeGet } from '@primer/components/lib/constants';
+import { Box, themeGet } from '@primer/react';
+import { Banner } from '@primer/react/experimental';
 import { removeError } from 'Redux/components/errors/errorsSlice';
-
 
 const ErrorsContainer = styled(Box)`
   position: absolute;
@@ -24,16 +20,9 @@ const ErrorsContainer = styled(Box)`
   }
 `;
 
-const ErrorBox = styled(Flash)`
+const ErrorBox = styled(Banner)`
   pointer-events: auto;
   margin-bottom: ${themeGet('space.2')};
-`;
-
-const Close = styled(ButtonClose)`
-  & > svg {
-    margin: 0;
-    margin-left: ${themeGet('space.2')};
-  }
 `;
 
 export default function Errors() {
@@ -42,12 +31,9 @@ export default function Errors() {
 
   return (
     <ErrorsContainer>
-      {errors.map(err => (
-        <ErrorBox variant="danger" key={err}>
-          <AlertIcon size={16} />
-          {err}
-          <Close onClick={() => dispatch(removeError(err))} />
-        </ErrorBox>
+      {errors.map((err, index) => (
+        // Critical banners currently don't allow dismiss action
+        <ErrorBox variant="warning" key={`${index}-${err}`} title={err} onDismiss={() => dispatch(removeError(err))} />
       ))}
     </ErrorsContainer>
   );

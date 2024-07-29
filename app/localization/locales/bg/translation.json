@@ -99,5 +99,8 @@
   "Unlocked Files": "Отключени файлове",
   "Sorting": "Сортиране",
   "Name": "Име",
-  "Path": "Пътека"
+  "Path": "Пътека",
+  "Force unlock": "Принудително отключване",
+  "Do you want force unlock": "Искате ли принудително отключване",
+  "Before you do, make sure nobody is working on it!": "Преди да го направите, уверете се, че никой не работи по него!"
 }

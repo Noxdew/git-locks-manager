@@ -3,14 +3,15 @@
         [
             "module-resolver",
             {
-                "cwd": "babelrc",                
+                "cwd": "babelrc",
                 "alias": {
                     "Constants": "./app/src/constants",
                     "Components": "./app/src/components",
                     "Core": "./app/src/core",
                     "Pages": "./app/src/pages",
                     "Redux": "./app/src/redux",
-                    "I18n": "./app/localization"
+                    "I18n": "./app/localization",
+                    "Images": "./resources/images"
                 }
             },
             "@babel/plugin-syntax-dynamic-import"
@@ -18,6 +19,7 @@
     ],
     "presets": [
         "@babel/preset-env",
-        "@babel/preset-react"
+        "@babel/preset-react",
+        "@babel/preset-typescript"
     ]
 }

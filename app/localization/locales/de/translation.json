@@ -99,5 +99,8 @@
   "Unlocked Files": "Entsperrte Dateien",
   "Sorting": "Sortierung",
   "Name": "Name",
-  "Path": "Weg"
+  "Path": "Weg",
+  "Force unlock": "Entsperren erzwingen",
+  "Do you want force unlock": "Möchten Sie die Entsperrung erzwingen?",
+  "Before you do, make sure nobody is working on it!": "Stellen Sie vorher sicher, dass niemand daran arbeitet!"
 }

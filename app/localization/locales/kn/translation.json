@@ -99,5 +99,8 @@
   "Unlocked Files": "ಅನ್‌ಲಾಕ್ ಮಾಡಿದ ಫೈಲ್‌ಗಳು",
   "Sorting": "ವಿಂಗಡಿಸಲಾಗುತ್ತಿದೆ",
   "Name": "ಹೆಸರು",
-  "Path": "ಮಾರ್ಗ"
+  "Path": "ಮಾರ್ಗ",
+  "Force unlock": "ಫೋರ್ಸ್ ಅನ್‌ಲಾಕ್",
+  "Do you want force unlock": "ನೀವು ಬಲವಂತವಾಗಿ ಅನ್ಲಾಕ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ",
+  "Before you do, make sure nobody is working on it!": "ನೀವು ಮಾಡುವ ಮೊದಲು, ಯಾರೂ ಅದರಲ್ಲಿ ಕೆಲಸ ಮಾಡುತ್ತಿಲ್ಲ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ!"
 }

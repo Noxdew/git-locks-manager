@@ -1,6 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { changeMessage } from "Redux/components/home/homeSlice";
+import {
+  writeConfigRequest,
+  useConfigInMainRequest,
+} from "secure-electron-store";
 
 class Motd extends React.Component {
   constructor(props) {
@@ -14,9 +18,14 @@ class Motd extends React.Component {
     this.onSubmitMessage = this.onSubmitMessage.bind(this);
   }
 
+  componentDidMount() {
+    // Request so that the main process can use the store
+    window.api.store.send(useConfigInMainRequest);
+  }
+
   onChangeMessage(event) {
     const { value } = event.target;
-    this.setState((state) => ({
+    this.setState((_state) => ({
       message: value,
     }));
   }
@@ -24,10 +33,10 @@ class Motd extends React.Component {
   onSubmitMessage(event) {
     event.preventDefault(); // prevent navigation
     this.props.changeMessage(this.state.message); // update redux store
-    window.api.store.write("motd", this.state.message); // save message to store (persist)
+    window.api.store.send(writeConfigRequest, "motd", this.state.message); // save message to store (persist)
 
     // reset
-    this.setState((state) => ({
+    this.setState((_state) => ({
       message: "",
     }));
   }
@@ -66,7 +75,7 @@ class Motd extends React.Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state, _props) => ({
   home: state.home,
 });
 const mapDispatch = { changeMessage };

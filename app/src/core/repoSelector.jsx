@@ -3,26 +3,21 @@ import { withTranslation } from "react-i18next";
 import { useSelector, useDispatch } from 'react-redux';
 import { toggle, addRepo, removeRepo, setRepos } from 'Redux/components/repos/reposSlice';
 import { addError } from 'Redux/components/errors/errorsSlice';
-import Box from '@primer/components/lib/Box';
-import TextInput from '@primer/components/lib/TextInput';
-import Button, { ButtonClose, ButtonDanger } from '@primer/components/lib/Button';
-import SideNav from '@primer/components/lib/SideNav';
-import Text from '@primer/components/lib/Text';
-import Dialog from '@primer/components/lib/Dialog';
-import Flex from '@primer/components/lib/Flex';
+import { Box, TextInput, SideNav, Text, Dialog, Button, themeGet } from '@primer/react';
 import styled from 'styled-components';
-import { get as themeGet } from '@primer/components/lib/constants';
 import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
 import { ArrowUpIcon, TrashIcon, FilterIcon } from '@primer/octicons-react';
 import { v4 as uuidv4 } from 'uuid';
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import State from 'Components/state/State';
 import { reorder } from 'Core/utils';
 import MenuBar from 'Core/menuBar';
-import { Scrollbars } from "react-custom-scrollbars";
+import { Scrollbars } from "react-custom-scrollbars-2";
 import { AutoSizer } from "react-virtualized";
+import { writeConfigRequest, readConfigRequest, readConfigResponse } from "secure-electron-store";
+import CloseButton from 'Components/close-button/CloseButton';
 
 const OverflowContainer = styled(Box)`
   position: absolute;
@@ -37,7 +32,7 @@ const OverflowContainer = styled(Box)`
 
 const RepoContainer = styled(Box)`
   width: 250px;
-  background: ${themeGet('colors.bg.primary')};
+  background: ${themeGet('colors.canvas.subtle')};
   pointer-events: auto;
   display: flex;
   flex-direction: column;
@@ -45,7 +40,7 @@ const RepoContainer = styled(Box)`
 
 const BlackFill = styled(Box)`
   flex: 1;
-  background: ${themeGet('colors.bg.backdrop')};
+  background: ${themeGet('colors.selectMenu.tapHighlight')};
   pointer-events: auto;
 `;
 
@@ -57,6 +52,15 @@ const FilterRow = styled(Box)`
   & > span {
     margin: 0;
     margin-right: ${themeGet('space.2')};
+  }
+
+  & svg {
+    margin-left: ${themeGet('space.2')};
+    margin-right: 0;
+  }
+
+  & input {
+    padding-left: 0;
   }
 `;
 
@@ -71,18 +75,23 @@ const EmptyReposBox = styled(Box)`
   }
 `;
 
+const Flex = styled(Box)`
+  display: flex;
+`;
+
 const SideNavElement = styled(SideNav)`
   border-radius: 0;
   border: 0;
-  border-top: 1px solid ${themeGet('colors.border.secondary')} !important;
+  border-top: 1px solid ${themeGet('colors.border.subtle')} !important;
 `;
 
 const SideNavLink = styled(SideNav.Link)`
-  border-bottom: 1px solid ${themeGet('colors.border.secondary')} !important;
+  border-bottom: 1px solid ${themeGet('colors.border.subtle')} !important;
   border-top: 0 !important;
+  text-decoration:none;
 
   &.dragged {
-    border-top: 1px solid ${themeGet('colors.border.secondary')} !important;
+    border-top: 1px solid ${themeGet('colors.border.subtle')} !important;
   }
 
   &:first-child {
@@ -94,6 +103,10 @@ const SideNavLink = styled(SideNav.Link)`
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
+`;
+
+const StyledCloseButton = styled(CloseButton)`
+  color: ${themeGet('colors.btn.text')} !important;
 `;
 
 const StyledTrashIcon = styled(TrashIcon)`
@@ -109,7 +122,7 @@ function RepoSelector(props) {
   const isOpen = useSelector((state) => state.repos.selectorOpen);
   const repos = useSelector((state) => state.repos.list);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const reposRef = useRef([]);
 
   const [filter, setFilter] = useState('');
@@ -119,12 +132,12 @@ function RepoSelector(props) {
   }, [repos])
 
   useEffect(() => {
-    window.api.store.read("repos")
-      .then(rs => {
-        if (rs) {
-          dispatch(setRepos(rs));
-        }
-      });
+    window.api.store.onReceive(readConfigResponse, function(args){
+      if (args.success && args.key === "repos") {
+        dispatch(setRepos(args.value));
+      }
+    });
+    window.api.store.send(readConfigRequest, "repos");
 
     window.api.ipc.on('add-repo', (e, { path }) => {
       if (!path) {
@@ -144,7 +157,7 @@ function RepoSelector(props) {
             name,
           };
           const newArray = [...reposRef.current, repo];
-          window.api.store.write('repos', newArray);
+          window.api.store.send(writeConfigRequest, 'repos', newArray);
           dispatch(addRepo(repo));
         })
         .catch(err => {
@@ -180,7 +193,7 @@ function RepoSelector(props) {
     );
 
     dispatch(setRepos(items));
-    window.api.store.write('repos', items);
+    window.api.store.send(writeConfigRequest, 'repos', items);
   };
 
   let list;
@@ -220,18 +233,21 @@ function RepoSelector(props) {
                                     <Box p={3}>
                                       <Text id="label" fontFamily="sans-serif">{t('Are you sure you would like to remove this repository?')}</Text>
                                       <Flex mt={3} justifyContent="flex-end">
-                                        <Button mr={1} onClick={() => setIsOpen(false)}>{t('Cancel')}</Button>
-                                        <ButtonDanger onClick={() => {
-                                          dispatch(removeRepo(id));
-                                          window.api.store.write('repos', repos.filter(r => r.id !== id));
-                                          history.push('/');
-                                        }}>
+                                        <Button sx={{ marginRight: 1 }} onClick={() => setIsOpen(false)}>{t('Cancel')}</Button>
+                                        <Button
+                                          variant="danger"
+                                          onClick={() => {
+                                            dispatch(removeRepo(id));
+                                            window.api.store.send(writeConfigRequest, 'repos', repos.filter(r => r.id !== id));
+                                            navigate('/');
+                                          }}
+                                        >
                                           {t('Remove')}
-                                        </ButtonDanger>
+                                        </Button>
                                       </Flex>
                                     </Box>
                                   </Dialog>
-                                  <ButtonClose ref={returnFocusRef} onClick={() => setIsOpen(true)} />
+                                  <StyledCloseButton ref={returnFocusRef} onClick={() => setIsOpen(true)} />
                                 </>
                               )
                             }}

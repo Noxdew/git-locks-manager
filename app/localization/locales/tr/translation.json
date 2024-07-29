@@ -99,5 +99,8 @@
   "Unlocked Files": "Kilidi Açılmış Dosyalar",
   "Sorting": "Sıralama",
   "Name": "İsim",
-  "Path": "Yol"
+  "Path": "Yol",
+  "Force unlock": "Kilidi açmaya zorla",
+  "Do you want force unlock": "Kilit açmaya zorlamak istiyor musun",
+  "Before you do, make sure nobody is working on it!": "Bunu yapmadan önce kimsenin üzerinde çalışmadığından emin olun!"
 }

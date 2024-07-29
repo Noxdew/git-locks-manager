@@ -99,5 +99,8 @@
   "Unlocked Files": "Разблокированные файлы",
   "Sorting": "Сортировка",
   "Name": "Имя",
-  "Path": "Путь"
+  "Path": "Путь",
+  "Force unlock": "Принудительная разблокировка",
+  "Do you want force unlock": "Вы хотите принудительно разблокировать",
+  "Before you do, make sure nobody is working on it!": "Прежде чем сделать это, убедитесь, что никто над этим не работает!"
 }

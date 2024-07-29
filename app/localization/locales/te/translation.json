@@ -99,5 +99,8 @@
   "Unlocked Files": "అన్‌లాక్ చేయబడిన ఫైల్‌లు",
   "Sorting": "క్రమబద్ధీకరణ",
   "Name": "పేరు",
-  "Path": "మార్గం"
+  "Path": "మార్గం",
+  "Force unlock": "బలవంతంగా అన్‌లాక్ చేయండి",
+  "Do you want force unlock": "మీరు బలవంతంగా అన్‌లాక్ చేయాలనుకుంటున్నారా",
+  "Before you do, make sure nobody is working on it!": "మీరు చేసే ముందు, ఎవరూ దానిపై పని చేయడం లేదని నిర్ధారించుకోండి!"
 }

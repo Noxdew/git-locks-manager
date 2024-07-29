@@ -99,5 +99,8 @@
   "Unlocked Files": "קבצים לא נעולים",
   "Sorting": "מִיוּן",
   "Name": "שֵׁם",
-  "Path": "נָתִיב"
+  "Path": "נָתִיב",
+  "Force unlock": "ביטול נעילה בכוח",
+  "Do you want force unlock": "האם אתה רוצה פתיחה בכוח",
+  "Before you do, make sure nobody is working on it!": "לפני שתעשה זאת, וודא שאף אחד לא עובד על זה!"
 }

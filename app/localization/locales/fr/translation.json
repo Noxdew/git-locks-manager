@@ -99,5 +99,8 @@
   "Unlocked Files": "Fichiers déverrouillés",
   "Sorting": "Tri",
   "Name": "Nom",
-  "Path": "Chemin"
+  "Path": "Chemin",
+  "Force unlock": "Forcer le déverrouillage",
+  "Do you want force unlock": "Voulez-vous forcer le déverrouillage",
+  "Before you do, make sure nobody is working on it!": "Avant de le faire, assurez-vous que personne n’y travaille !"
 }

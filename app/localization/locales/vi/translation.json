@@ -99,5 +99,8 @@
   "Unlocked Files": "Tệp đã mở khóa",
   "Sorting": "Sắp xếp",
   "Name": "Tên",
-  "Path": "Con đường"
+  "Path": "Con đường",
+  "Force unlock": "Buộc mở khóa",
+  "Do you want force unlock": "Bạn có muốn buộc mở khóa không",
+  "Before you do, make sure nobody is working on it!": "Trước khi bạn làm điều đó, hãy chắc chắn rằng không có ai đang làm việc đó!"
 }

@@ -99,5 +99,8 @@
   "Unlocked Files": "Atbloķēti faili",
   "Sorting": "Šķirošana",
   "Name": "Vārds",
-  "Path": "Ceļš"
+  "Path": "Ceļš",
+  "Force unlock": "Piespiedu atbloķēšana",
+  "Do you want force unlock": "Vai vēlaties piespiedu atbloķēšanu?",
+  "Before you do, make sure nobody is working on it!": "Pirms to darāt, pārliecinieties, ka neviens pie tā nestrādā!"
 }

@@ -99,5 +99,8 @@
   "Unlocked Files": "Ξεκλείδωτα αρχεία",
   "Sorting": "Ταξινόμηση",
   "Name": "Ονομα",
-  "Path": "Μονοπάτι"
+  "Path": "Μονοπάτι",
+  "Force unlock": "Αναγκαστικό ξεκλείδωμα",
+  "Do you want force unlock": "Θέλετε αναγκαστικό ξεκλείδωμα",
+  "Before you do, make sure nobody is working on it!": "Πριν το κάνετε, βεβαιωθείτε ότι κανείς δεν ασχολείται με αυτό!"
 }

@@ -99,5 +99,8 @@
   "Unlocked Files": "Arquivos Desbloqueados",
   "Sorting": "Ordenação",
   "Name": "Nome",
-  "Path": "Caminho"
+  "Path": "Caminho",
+  "Force unlock": "Forçar desbloqueio",
+  "Do you want force unlock": "Você quer forçar o desbloqueio",
+  "Before you do, make sure nobody is working on it!": "Antes de fazer isso, certifique-se de que ninguém esteja trabalhando nisso!"
 }

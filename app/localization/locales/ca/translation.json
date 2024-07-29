@@ -99,5 +99,8 @@
   "Unlocked Files": "Fitxers desbloquejats",
   "Sorting": "Classificació",
   "Name": "Nom",
-  "Path": "Camí"
+  "Path": "Camí",
+  "Force unlock": "Força el desbloqueig",
+  "Do you want force unlock": "Vols desbloquejar forçat?",
+  "Before you do, make sure nobody is working on it!": "Abans de fer-ho, assegureu-vos que ningú hi treballi!"
 }

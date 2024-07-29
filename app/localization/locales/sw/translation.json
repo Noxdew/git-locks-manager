@@ -99,5 +99,8 @@
   "Unlocked Files": "Faili Zilizofunguliwa",
   "Sorting": "Inapanga",
   "Name": "Jina",
-  "Path": "Njia"
+  "Path": "Njia",
+  "Force unlock": "Lazimisha kufungua",
+  "Do you want force unlock": "Je! unataka kufungua kwa nguvu",
+  "Before you do, make sure nobody is working on it!": "Kabla ya kufanya hivyo, hakikisha hakuna mtu anayeifanyia kazi!"
 }
