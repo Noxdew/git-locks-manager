@@ -99,5 +99,8 @@
   "Unlocked Files": "Fișiere deblocate",
   "Sorting": "Triere",
   "Name": "Nume",
-  "Path": "cale"
+  "Path": "cale",
+  "Force unlock": "Deblocare forțată",
+  "Do you want force unlock": "Vrei deblocare forțată",
+  "Before you do, make sure nobody is working on it!": "Înainte de a face asta, asigură-te că nimeni nu lucrează la asta!"
 }

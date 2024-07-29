@@ -99,5 +99,8 @@
   "Unlocked Files": "Ulåste filer",
   "Sorting": "Sortering",
   "Name": "Navn",
-  "Path": "Sti"
+  "Path": "Sti",
+  "Force unlock": "Tving opplåsing",
+  "Do you want force unlock": "Vil du tvinge opplåsing",
+  "Before you do, make sure nobody is working on it!": "Før du gjør det, sørg for at ingen jobber med det!"
 }

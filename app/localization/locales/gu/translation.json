@@ -99,5 +99,8 @@
   "Unlocked Files": "અનલૉક કરેલી ફાઇલો",
   "Sorting": "વર્ગીકરણ",
   "Name": "નામ",
-  "Path": "પાથ"
+  "Path": "પાથ",
+  "Force unlock": "ફોર્સ અનલૉક",
+  "Do you want force unlock": "શું તમે ફોર્સ અનલૉક કરવા માંગો છો",
+  "Before you do, make sure nobody is working on it!": "તમે કરો તે પહેલાં, ખાતરી કરો કે કોઈ તેના પર કામ કરી રહ્યું નથી!"
 }

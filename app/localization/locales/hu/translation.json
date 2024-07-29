@@ -99,5 +99,8 @@
   "Unlocked Files": "Feloldott fájlok",
   "Sorting": "Válogatás",
   "Name": "Név",
-  "Path": "Pálya"
+  "Path": "Pálya",
+  "Force unlock": "Feloldás kényszerítése",
+  "Do you want force unlock": "Kényszer feloldást szeretne?",
+  "Before you do, make sure nobody is working on it!": "Mielőtt megtenné, győződjön meg róla, hogy senki sem dolgozik rajta!"
 }

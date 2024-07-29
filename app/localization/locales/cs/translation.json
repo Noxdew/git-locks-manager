@@ -99,5 +99,8 @@
   "Unlocked Files": "Odemčené soubory",
   "Sorting": "Řazení",
   "Name": "název",
-  "Path": "Cesta"
+  "Path": "Cesta",
+  "Force unlock": "Vynucené odemknutí",
+  "Do you want force unlock": "Chcete vynutit odemknutí",
+  "Before you do, make sure nobody is working on it!": "Než to uděláte, ujistěte se, že na tom nikdo nepracuje!"
 }

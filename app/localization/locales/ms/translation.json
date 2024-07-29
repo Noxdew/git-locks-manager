@@ -99,5 +99,8 @@
   "Unlocked Files": "Fail Tidak Berkunci",
   "Sorting": "Menyusun",
   "Name": "Nama",
-  "Path": "Laluan"
+  "Path": "Laluan",
+  "Force unlock": "Paksa buka kunci",
+  "Do you want force unlock": "Adakah anda mahu buka kunci secara paksa",
+  "Before you do, make sure nobody is working on it!": "Sebelum anda melakukannya, pastikan tiada siapa yang mengusahakannya!"
 }

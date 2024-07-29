@@ -99,5 +99,8 @@
   "Unlocked Files": "Lukustamata failid",
   "Sorting": "Sorteerimine",
   "Name": "Nimi",
-  "Path": "Tee"
+  "Path": "Tee",
+  "Force unlock": "Sundlukustus",
+  "Do you want force unlock": "Kas soovite sundlukustamist?",
+  "Before you do, make sure nobody is working on it!": "Enne seda veenduge, et keegi sellega ei tegeleks!"
 }

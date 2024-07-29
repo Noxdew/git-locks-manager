@@ -99,5 +99,8 @@
   "Unlocked Files": "അൺലോക്ക് ചെയ്ത ഫയലുകൾ",
   "Sorting": "അടുക്കുന്നു",
   "Name": "പേര്",
-  "Path": "പാത"
+  "Path": "പാത",
+  "Force unlock": "നിർബന്ധിത അൺലോക്ക്",
+  "Do you want force unlock": "നിങ്ങൾക്ക് നിർബന്ധിത അൺലോക്ക് വേണോ",
+  "Before you do, make sure nobody is working on it!": "നിങ്ങൾ ചെയ്യുന്നതിനുമുമ്പ്, ആരും അതിൽ പ്രവർത്തിക്കുന്നില്ലെന്ന് ഉറപ്പാക്കുക!"
 }

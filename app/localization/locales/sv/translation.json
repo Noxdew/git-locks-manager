@@ -99,5 +99,8 @@
   "Unlocked Files": "Olåsta filer",
   "Sorting": "Sortering",
   "Name": "namn",
-  "Path": "Väg"
+  "Path": "Väg",
+  "Force unlock": "Tvinga upplåsning",
+  "Do you want force unlock": "Vill du tvinga upplåsning",
+  "Before you do, make sure nobody is working on it!": "Innan du gör det, se till att ingen arbetar med det!"
 }

@@ -28,12 +28,12 @@ const {
 
   In order to use this file effectively, which is run with the command 'npm run translate', you would
   create translated strings like in menu.js or localization.jsx. You would then run the app and change
-  languages in order that the keys for these translated strings are populated in the various other 
+  languages in order that the keys for these translated strings are populated in the various other
   languages' missing.json files. Once this is done for all languages you'd like to create translations for, you may run `npm run translate` in order that the missing translation files be translated with
   the Google Translate API.
 
   Note - it is important that 'fromLanguage' be updated to the language that the keys are in the various
-  translation[.missing].json files. It is this variable that's used by Google to determine the source 
+  translation[.missing].json files. It is this variable that's used by Google to determine the source
   language from which to translate.
 */
 console.log("The translateMissing.js file must be updated before it can be ran.");
@@ -46,11 +46,45 @@ const translate = new Translate({
   projectId
 });
 
+// Spread the missing from the from language to all other languages
+async function spreadMissingStrings() {
+  const root = "./app/localization/locales";
+  const fromLanguage = "en";
+
+  let [googleLanguages] = await translate.getLanguages(); // ie. { code: "en", name: "English" }
+  googleLanguages = googleLanguages.map(gl => gl.code.replace("-", "_"))
+
+  const getDirectories = p => readdirSync(p).filter(f => statSync(join(p, f)).isDirectory());
+  const languageDirectories = getDirectories(root).filter(d => googleLanguages.includes(d));
+
+  const missingTranslationFileFromLanguage = `${root}/${fromLanguage}/translation.missing.json`;
+  const missing = JSON.parse(fs.readFileSync(missingTranslationFileFromLanguage, {
+    encoding: "utf8"
+  }));
+
+  for (const languageDirectory of languageDirectories) {
+    if (languageDirectory === fromLanguage) {
+      continue;
+    }
+
+    const missingTranslationFile = `${root}/${languageDirectory}/translation.missing.json`;
+    const missingInLang = JSON.parse(fs.readFileSync(missingTranslationFile, {
+      encoding: "utf8"
+    }));
+
+    for (const missingKey of Object.keys(missing)) {
+      missingInLang[missingKey] = missing[missingKey];
+    }
+
+    fs.writeFileSync(missingTranslationFile, JSON.stringify(missingInLang, null, 2));
+  }
+}
+
 async function updateTranslations() {
   try {
     const root = "./app/localization/locales";
     const fromLanguage = "en";
-    
+
     // Get valid languages from Google Translate API
     let [googleLanguages] = await translate.getLanguages(); // ie. { code: "en", name: "English" }
     googleLanguages = googleLanguages.map(gl => gl.code.replace("-", "_"))
@@ -89,9 +123,13 @@ async function updateTranslations() {
           // Only translate files with actual values
           const missingKeys = Object.keys(missing);
           if (missingKeys.length > 0){
-
             // Translate each of the missing keys to the target language
-            for (const missingKey of missingKeys){
+            for (const missingKey of missingKeys) {
+              if (languageDirectory === fromLanguage) {
+                translations[missingKey] = missingKey;
+                continue;
+              }
+
               const googleTranslation = await translate.translate(missingKey, {
                 from: fromLanguage,
                 to: languageDirectory
@@ -102,11 +140,11 @@ async function updateTranslations() {
                 translations[missingKey] = googleTranslation[0];
               }
             }
-  
+
             // Write output back to file
             fs.writeFileSync(translationFile, JSON.stringify(translations, null, 2));
             fs.writeFileSync(missingTranslationFile, JSON.stringify({}, null, 2));
-  
+
             console.log(`Successfully updated translations for ${languageDirectory}`);
           } else {
             console.log(`Skipped creating translations for ${languageDirectory}; none found!`);
@@ -130,4 +168,5 @@ async function updateTranslations() {
   }
 }
 
+// spreadMissingStrings();
 updateTranslations();

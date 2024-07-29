@@ -99,5 +99,8 @@
   "Unlocked Files": "अनलॉक केलेल्या फायली",
   "Sorting": "वर्गीकरण",
   "Name": "नाव",
-  "Path": "मार्ग"
+  "Path": "मार्ग",
+  "Force unlock": "जबरदस्तीने अनलॉक करा",
+  "Do you want force unlock": "तुम्हाला फोर्स अनलॉक करायचे आहे का?",
+  "Before you do, make sure nobody is working on it!": "आपण करण्यापूर्वी, कोणीही त्यावर काम करत नाही याची खात्री करा!"
 }

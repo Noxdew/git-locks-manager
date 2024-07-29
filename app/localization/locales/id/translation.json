@@ -99,5 +99,8 @@
   "Unlocked Files": "File Tidak Terkunci",
   "Sorting": "Penyortiran",
   "Name": "Nama",
-  "Path": "Jalur"
+  "Path": "Jalur",
+  "Force unlock": "Paksa buka kunci",
+  "Do you want force unlock": "Apakah Anda ingin membuka paksa",
+  "Before you do, make sure nobody is working on it!": "Sebelum Anda melakukannya, pastikan tidak ada orang yang mengerjakannya!"
 }

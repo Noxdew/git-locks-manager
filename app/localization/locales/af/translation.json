@@ -99,5 +99,8 @@
   "Unlocked Files": "Ontsluit lêers",
   "Sorting": "Sorteer",
   "Name": "Naam",
-  "Path": "Pad"
+  "Path": "Pad",
+  "Force unlock": "Forseer ontsluiting",
+  "Do you want force unlock": "Wil jy dwing ontsluit",
+  "Before you do, make sure nobody is working on it!": "Voordat jy dit doen, maak seker dat niemand daaraan werk nie!"
 }

@@ -99,5 +99,8 @@
   "Unlocked Files": "فایل های قفل شده",
   "Sorting": "مرتب سازی",
   "Name": "نام",
-  "Path": "مسیر"
+  "Path": "مسیر",
+  "Force unlock": "باز کردن قفل اجباری",
+  "Do you want force unlock": "آیا قفل اجباری می خواهید؟",
+  "Before you do, make sure nobody is working on it!": "قبل از انجام این کار، مطمئن شوید که هیچ کس روی آن کار نمی کند!"
 }

@@ -99,5 +99,8 @@
   "Unlocked Files": "ロック解除されたファイル",
   "Sorting": "並べ替え",
   "Name": "名前",
-  "Path": "道"
+  "Path": "道",
+  "Force unlock": "強制ロック解除",
+  "Do you want force unlock": "強制的にロックを解除しますか",
+  "Before you do, make sure nobody is working on it!": "実行する前に、誰も作業していないことを確認してください。"
 }

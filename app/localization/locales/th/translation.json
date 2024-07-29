@@ -99,5 +99,8 @@
   "Unlocked Files": "ปลดล็อคไฟล์",
   "Sorting": "การเรียงลำดับ",
   "Name": "ชื่อ",
-  "Path": "เส้นทาง"
+  "Path": "เส้นทาง",
+  "Force unlock": "บังคับปลดล็อค",
+  "Do you want force unlock": "คุณต้องการบังคับปลดล็อค",
+  "Before you do, make sure nobody is working on it!": "ก่อนที่คุณจะทำ ตรวจสอบให้แน่ใจว่าไม่มีใครกำลังดำเนินการอยู่!"
 }
