@@ -48,13 +48,12 @@
       ]
     },
     "mac": {
-      "target": [
-        "dmg"
-      ],
-      "arch": [
-        "x64",
-        "arm64"
-      ]
+      "target": [{
+        "target": "dmg",
+        "arch": [
+          "universal"
+        ]
+      }]
     }
   },
   "repository": {
