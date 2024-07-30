@@ -20,7 +20,7 @@ const Toolbar = styled(Box)`
   }
 
   & > *:not(:first-child) {
-    border-left: 1px solid transparent;
+    border-left: 1px solid transparent !important;
   }
 
   & > div {
@@ -36,7 +36,7 @@ const Toolbar = styled(Box)`
   }
 
   & > button:hover {
-    border: 1px solid ${themeGet('colors.btn.hoverBorder')} !important;
+    border: 1px solid ${themeGet('colors.header.divider')} !important;
   }
 `;
 
@@ -56,7 +56,7 @@ const StyledButton = styled(Button)`
   }
 
   &:hover:not(:disabled) {
-    background-color: #30363d;
+    background-color: ${themeGet('colors.headerSearch.border')} !important;
   }
 
   &:not(:disabled) > svg {
@@ -81,20 +81,8 @@ const StyledButton = styled(Button)`
       fill: ${themeGet('colors.btn.text')};
     }
 
-    &:active, &:focus, &:hover, &:disabled {
-      border-bottom: 1px solid ${themeGet('colors.bg.primary')};
-    }
-
-    & div.description {
-      color: ${themeGet('colors.btn.text')};
-    }
-
-    & div.title {
-      color: ${themeGet('colors.btn.text')};
-    }
-
     &:hover {
-      background-color: ${themeGet('colors.btn.hoverBg')};
+      background-color: ${themeGet('colors.headerSearch.border')};
     }
   }
 `;
@@ -126,7 +114,7 @@ const TwoRowText = styled.div`
   }
 
   & > div.title {
-    color: ${themeGet('colors.globalNav.text')};
+    color: ${themeGet('colors.header.text')};
     font-size: 12px;
     text-overflow: ellipsis;
     line-height: initial;
