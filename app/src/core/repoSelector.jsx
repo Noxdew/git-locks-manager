@@ -134,7 +134,7 @@ function RepoSelector(props) {
   useEffect(() => {
     window.api.store.onReceive(readConfigResponse, function(args){
       if (args.success && args.key === "repos") {
-        dispatch(setRepos(args.value));
+        dispatch(setRepos(args.value || []));
       }
     });
     window.api.store.send(readConfigRequest, "repos");
