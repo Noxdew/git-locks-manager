@@ -6,7 +6,7 @@ import { LockIcon, UnlockIcon, AlertIcon, FileIcon, FilterIcon, CheckIcon, Passk
 import { withTranslation } from "react-i18next";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { startFetching, stopFetching, setFiles } from 'Redux/components/files/filesSlice';
+import { startFetching, stopFetching, setFiles, lockFileLocal, unlockFileLocal } from 'Redux/components/files/filesSlice';
 import { addError } from 'Redux/components/errors/errorsSlice';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
@@ -313,17 +313,21 @@ function Files(props) {
 
   const onLock = (filePath) => {
     window.api.git.lockFile(repo.path, filePath)
-      .catch(err => dispatch(addError(err.message || err)))
-      .finally(() => refreshFiles());
+      .then(() => window.api.git.getLockByPath(repo.path, filePath))
+      .then(lock => dispatch(lockFileLocal({
+        filePath,
+        lock: lock[0],
+      })))
+      .catch(err => dispatch(addError(err.message || err)));
   };
 
   const onUnlock = (filePath, force) => {
     return window.api.git.unlockFile(repo.path, filePath, force)
+      .then(() => dispatch(unlockFileLocal(filePath)))
       .catch(err => {
         dispatch(addError(err.message || err));
         throw err;
-      })
-      .finally(() => refreshFiles());
+      });
   };
 
   const applyHardFilter = files => {

@@ -265,11 +265,28 @@ function unlockFile(repo, file, force) {
   });
 }
 
+function getLockByPath(repo, path) {
+  return new Promise((resolve, reject) => {
+    exec(`git lfs locks --path="${path}" --json`, {
+      cwd: repoRoot(repo),
+    }, (err, stdout, stderr) => {
+      if (stderr) {
+        reject(stderr);
+      } else if (err) {
+        reject(err);
+      } else {
+        resolve(JSON.parse(stdout));
+      }
+    });
+  });
+}
+
 module.exports = {
   getRepoName,
   listLockableFiles,
   lockFile,
   unlockFile,
+  getLockByPath,
   remotes,
   readLfsconfig,
   createLfsconfig,
