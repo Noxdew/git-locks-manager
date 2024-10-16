@@ -102,5 +102,8 @@
   "Path": "مسیر",
   "Force unlock": "باز کردن قفل اجباری",
   "Do you want force unlock": "آیا قفل اجباری می خواهید؟",
-  "Before you do, make sure nobody is working on it!": "قبل از انجام این کار، مطمئن شوید که هیچ کس روی آن کار نمی کند!"
+  "Before you do, make sure nobody is working on it!": "قبل از انجام این کار، مطمئن شوید که هیچ کس روی آن کار نمی کند!",
+  "Selected files": "فایل های انتخاب شده",
+  "Unlock all": "همه را باز کنید",
+  "Lock all": "همه را قفل کنید"
 }

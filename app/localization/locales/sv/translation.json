@@ -102,5 +102,8 @@
   "Path": "Väg",
   "Force unlock": "Tvinga upplåsning",
   "Do you want force unlock": "Vill du tvinga upplåsning",
-  "Before you do, make sure nobody is working on it!": "Innan du gör det, se till att ingen arbetar med det!"
+  "Before you do, make sure nobody is working on it!": "Innan du gör det, se till att ingen arbetar med det!",
+  "Selected files": "Valda filer",
+  "Unlock all": "Lås upp alla",
+  "Lock all": "Lås alla"
 }

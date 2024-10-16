@@ -102,5 +102,8 @@
   "Path": "길",
   "Force unlock": "강제 잠금 해제",
   "Do you want force unlock": "강제로 잠금 해제하시겠습니까?",
-  "Before you do, make sure nobody is working on it!": "시작하기 전에 작업 중인 사람이 없는지 확인하세요!"
+  "Before you do, make sure nobody is working on it!": "시작하기 전에 작업 중인 사람이 없는지 확인하세요!",
+  "Selected files": "선택된 파일",
+  "Unlock all": "모두 잠금 해제",
+  "Lock all": "모두 잠금"
 }

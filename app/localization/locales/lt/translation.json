@@ -102,5 +102,8 @@
   "Path": "Kelias",
   "Force unlock": "Priverstinis atrakinimas",
   "Do you want force unlock": "Ar norite priverstinio atrakinimo",
-  "Before you do, make sure nobody is working on it!": "Prieš darydami įsitikinkite, kad niekas nedirba!"
+  "Before you do, make sure nobody is working on it!": "Prieš darydami įsitikinkite, kad niekas nedirba!",
+  "Selected files": "Pasirinkti failai",
+  "Unlock all": "Atrakinti viską",
+  "Lock all": "Užrakinti viską"
 }

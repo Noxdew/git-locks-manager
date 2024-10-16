@@ -102,5 +102,8 @@
   "Path": "Polku",
   "Force unlock": "Pakota lukitus",
   "Do you want force unlock": "Haluatko pakottaa lukituksen",
-  "Before you do, make sure nobody is working on it!": "Ennen kuin teet sen, varmista, että kukaan ei työskentele sen parissa!"
+  "Before you do, make sure nobody is working on it!": "Ennen kuin teet sen, varmista, että kukaan ei työskentele sen parissa!",
+  "Selected files": "Valitut tiedostot",
+  "Unlock all": "Avaa kaikki",
+  "Lock all": "Lukitse kaikki"
 }

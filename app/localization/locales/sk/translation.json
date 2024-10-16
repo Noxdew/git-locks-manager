@@ -102,5 +102,8 @@
   "Path": "Cesta",
   "Force unlock": "Vynútené odomknutie",
   "Do you want force unlock": "Chcete vynútiť odomknutie",
-  "Before you do, make sure nobody is working on it!": "Skôr ako to urobíte, uistite sa, že na tom nikto nepracuje!"
+  "Before you do, make sure nobody is working on it!": "Skôr ako to urobíte, uistite sa, že na tom nikto nepracuje!",
+  "Selected files": "Vybrané súbory",
+  "Unlock all": "Odomknúť všetky",
+  "Lock all": "Zamknúť všetko"
 }

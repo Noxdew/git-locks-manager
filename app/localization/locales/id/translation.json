@@ -102,5 +102,8 @@
   "Path": "Jalur",
   "Force unlock": "Paksa buka kunci",
   "Do you want force unlock": "Apakah Anda ingin membuka paksa",
-  "Before you do, make sure nobody is working on it!": "Sebelum Anda melakukannya, pastikan tidak ada orang yang mengerjakannya!"
+  "Before you do, make sure nobody is working on it!": "Sebelum Anda melakukannya, pastikan tidak ada orang yang mengerjakannya!",
+  "Selected files": "File yang dipilih",
+  "Unlock all": "Buka kunci semuanya",
+  "Lock all": "Kunci semuanya"
 }

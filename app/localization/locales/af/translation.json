@@ -102,5 +102,8 @@
   "Path": "Pad",
   "Force unlock": "Forseer ontsluiting",
   "Do you want force unlock": "Wil jy dwing ontsluit",
-  "Before you do, make sure nobody is working on it!": "Voordat jy dit doen, maak seker dat niemand daaraan werk nie!"
+  "Before you do, make sure nobody is working on it!": "Voordat jy dit doen, maak seker dat niemand daaraan werk nie!",
+  "Selected files": "Geselekteerde lêers",
+  "Unlock all": "Ontsluit alles",
+  "Lock all": "Sluit alles"
 }

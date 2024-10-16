@@ -102,5 +102,8 @@
   "Path": "เส้นทาง",
   "Force unlock": "บังคับปลดล็อค",
   "Do you want force unlock": "คุณต้องการบังคับปลดล็อค",
-  "Before you do, make sure nobody is working on it!": "ก่อนที่คุณจะทำ ตรวจสอบให้แน่ใจว่าไม่มีใครกำลังดำเนินการอยู่!"
+  "Before you do, make sure nobody is working on it!": "ก่อนที่คุณจะทำ ตรวจสอบให้แน่ใจว่าไม่มีใครกำลังดำเนินการอยู่!",
+  "Selected files": "ไฟล์ที่เลือก",
+  "Unlock all": "ปลดล็อคทั้งหมด",
+  "Lock all": "ล็อคทั้งหมด"
 }

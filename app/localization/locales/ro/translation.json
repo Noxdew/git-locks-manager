@@ -102,5 +102,8 @@
   "Path": "cale",
   "Force unlock": "Deblocare forțată",
   "Do you want force unlock": "Vrei deblocare forțată",
-  "Before you do, make sure nobody is working on it!": "Înainte de a face asta, asigură-te că nimeni nu lucrează la asta!"
+  "Before you do, make sure nobody is working on it!": "Înainte de a face asta, asigură-te că nimeni nu lucrează la asta!",
+  "Selected files": "Fișierele selectate",
+  "Unlock all": "Deblochează toate",
+  "Lock all": "Blocați totul"
 }

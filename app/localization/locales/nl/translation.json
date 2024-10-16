@@ -102,5 +102,8 @@
   "Path": "Pad",
   "Force unlock": "Forceer ontgrendeling",
   "Do you want force unlock": "Wil je geforceerd ontgrendelen",
-  "Before you do, make sure nobody is working on it!": "Voordat u dat doet, zorg ervoor dat niemand eraan werkt!"
+  "Before you do, make sure nobody is working on it!": "Voordat u dat doet, zorg ervoor dat niemand eraan werkt!",
+  "Selected files": "Geselecteerde bestanden",
+  "Unlock all": "Ontgrendel alles",
+  "Lock all": "Alles vergrendelen"
 }

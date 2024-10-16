@@ -102,5 +102,8 @@
   "Path": "Sti",
   "Force unlock": "Tving opplåsing",
   "Do you want force unlock": "Vil du tvinge opplåsing",
-  "Before you do, make sure nobody is working on it!": "Før du gjør det, sørg for at ingen jobber med det!"
+  "Before you do, make sure nobody is working on it!": "Før du gjør det, sørg for at ingen jobber med det!",
+  "Selected files": "Valgte filer",
+  "Unlock all": "Lås opp alle",
+  "Lock all": "Lås alle"
 }

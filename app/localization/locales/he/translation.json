@@ -102,5 +102,8 @@
   "Path": "נָתִיב",
   "Force unlock": "ביטול נעילה בכוח",
   "Do you want force unlock": "האם אתה רוצה פתיחה בכוח",
-  "Before you do, make sure nobody is working on it!": "לפני שתעשה זאת, וודא שאף אחד לא עובד על זה!"
+  "Before you do, make sure nobody is working on it!": "לפני שתעשה זאת, וודא שאף אחד לא עובד על זה!",
+  "Selected files": "קבצים נבחרים",
+  "Unlock all": "פתח הכל",
+  "Lock all": "נעל הכל"
 }

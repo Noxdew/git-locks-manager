@@ -6,7 +6,7 @@ import { LockIcon, UnlockIcon, AlertIcon, FileIcon, FilterIcon, CheckIcon, Passk
 import { withTranslation } from "react-i18next";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { startFetching, stopFetching, setFiles } from 'Redux/components/files/filesSlice';
+import { startFetching, stopFetching, setFiles, lockFileLocal, unlockFileLocal, toggleSelectedFile } from 'Redux/components/files/filesSlice';
 import { addError } from 'Redux/components/errors/errorsSlice';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
@@ -19,6 +19,7 @@ import { Scrollbars } from "react-custom-scrollbars-2";
 import { AutoSizer } from "react-virtualized";
 import { writeConfigRequest } from "secure-electron-store";
 import State from 'Components/state/State';
+import MultiFileAction from 'Core/multiFileAction';
 
 const Background = styled(Box)`
   flex: 1;
@@ -102,6 +103,15 @@ const StyledFilteredSearch = styled(FilteredSearch)`
   }
 `;
 
+const SelectionMarker = styled(Box)`
+  background-color: var(--color-checks-text-link,#2f81f7);
+  width: ${themeGet('space.1')};
+  border-radius: ${themeGet('radii.1')};
+  position: absolute;
+  height: 30px;
+  left: 8px;
+`;
+
 const StyledForceUnlockIcon = styled(PasskeyFillIcon)`
   align-self: center;
   margin-right: ${themeGet('space.2')};
@@ -110,14 +120,43 @@ const StyledForceUnlockIcon = styled(PasskeyFillIcon)`
 const FileRow = withTranslation()(function FileRow(props) {
   const [working, setWorking] = useState(false);
   const [errorUnlocking, setErrorUnlocking] = useState(false);
+  const dispatch = useDispatch();
+  const selectedFiles = useSelector((state) => state.files.selectedFiles);
+
+  const lockFile = (e) => {
+    e.stopPropagation();
+    if (working) return;
+    setWorking(true);
+    props.onLock(props.rawPath);
+  };
+
+  const unlockFile = (e) => {
+    e && e.stopPropagation();
+    if (working) return;
+    setWorking(true);
+    props.onUnlock(props.rawPath)
+      .then(() => setErrorUnlocking(false))
+      .catch(() => setErrorUnlocking(true))
+      .finally(() => setWorking(false));
+  };
 
   useEffect(() => {
     setWorking(false);
   }, [props.lockOwner, props.lastUpdated]);
 
+  useEffect(() => {
+    document.addEventListener(`lock-${props.path}`, lockFile);
+    document.addEventListener(`unlock-${props.path}`, unlockFile);
+    return () => {
+      document.removeEventListener(`lock-${props.path}`, lockFile);
+      document.removeEventListener(`unlock-${props.path}`, unlockFile);
+    };
+  }, []);
+
   const { t } = props;
   return (
-    <FileBox>
+    <FileBox onClick={() => dispatch(toggleSelectedFile(props.path))}>
+      {selectedFiles.includes(props.path) ? <SelectionMarker/> : null}
       <FileBoxSection>
         {props.isMissing ? (
           <Tooltip wrap noDelay direction="e" aria-label={t("This file is not in your branch. Once unlocked this row will disappear.")}>
@@ -135,12 +174,7 @@ const FileRow = withTranslation()(function FileRow(props) {
               {props.lockOwner}
               <LockIcon size={16} />
             </Tooltip>
-            <Button variant="danger" disabled={working} onClick={() => {
-              setWorking(true);
-              props.onUnlock(props.rawPath)
-                .then(() => setErrorUnlocking(false))
-                .catch(() => setErrorUnlocking(true));
-            }}>{t('Unlock')}</Button>
+            <Button variant="danger" disabled={working} onClick={unlockFile}>{t('Unlock')}</Button>
             {errorUnlocking ? (
               <State default={false}>
               {([isOpen, setIsOpen]) => {
@@ -159,7 +193,8 @@ const FileRow = withTranslation()(function FileRow(props) {
                           <Button sx={{ marginRight: 1 }} onClick={() => setIsOpen(false)}>{t('Cancel')}</Button>
                           <Button
                             variant="danger"
-                            onClick={() => {
+                            onClick={(e) => {
+                              e && e.stopPropagation();
                               setIsOpen(false);
                               setWorking(true);
                               props.onUnlock(props.rawPath, true)
@@ -182,10 +217,7 @@ const FileRow = withTranslation()(function FileRow(props) {
         ) : (
           <>
             <UnlockIcon size={16} />
-            <Button variant="outline" disabled={working} onClick={() => {
-              setWorking(true);
-              props.onLock(props.rawPath);
-            }}>{t('Lock')}</Button>
+            <Button variant="outline" disabled={working} onClick={lockFile}>{t('Lock')}</Button>
           </>
         )}
       </FileBoxSection>
@@ -233,6 +265,7 @@ function Files(props) {
   const filesLastUpdated = useSelector((state) => state.files.lastUpdated);
   const isRepoSelectorOpen = useSelector((state) => state.repos.selectorOpen);
   const reposLoaded = useSelector((state) => state.repos.initialLoad);
+  const selectedFiles = useSelector((state) => state.files.selectedFiles);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const searchLib = useRef(new QuickScore([], quickScoreOptions));
@@ -313,17 +346,21 @@ function Files(props) {
 
   const onLock = (filePath) => {
     window.api.git.lockFile(repo.path, filePath)
-      .catch(err => dispatch(addError(err.message || err)))
-      .finally(() => refreshFiles());
+      .then(() => window.api.git.getLockByPath(repo.path, filePath))
+      .then(lock => dispatch(lockFileLocal({
+        filePath,
+        lock: lock[0],
+      })))
+      .catch(err => dispatch(addError(err.message || err)));
   };
 
   const onUnlock = (filePath, force) => {
     return window.api.git.unlockFile(repo.path, filePath, force)
+      .then(() => dispatch(unlockFileLocal(filePath)))
       .catch(err => {
         dispatch(addError(err.message || err));
         throw err;
-      })
-      .finally(() => refreshFiles());
+      });
   };
 
   const applyHardFilter = files => {
@@ -384,77 +421,80 @@ function Files(props) {
   }
 
   return (
-    <Background bg="bg.primary">
-      <FilterBox>
-        <StyledFilteredSearch>
+    <>
+      <Background bg="bg.primary">
+        <FilterBox>
+          <StyledFilteredSearch>
+            <ActionMenu>
+              <ActionMenu.Button as="summary">{hardFilterText}</ActionMenu.Button>
+              <ActionMenu.Overlay>
+                <ActionList>
+                  <ActionList.Item onClick={() => {
+                    setHardFilter('all');
+                    window.api.store.send(writeConfigRequest, 'hardFilter', 'all');
+                  }}>
+                    {t("All Files")} {hardFilter == 'all' ? <CheckIcon /> : null}
+                  </ActionList.Item>
+                  <ActionList.Item onClick={() => {
+                    setHardFilter('locked');
+                    window.api.store.send(writeConfigRequest, 'hardFilter', 'locked');
+                  }}>
+                    {t("Locked Files")} {hardFilter == 'locked' ? <CheckIcon /> : null}
+                  </ActionList.Item>
+                  <ActionList.Item onClick={() => {
+                    setHardFilter('unlocked');
+                    window.api.store.send(writeConfigRequest, 'hardFilter', 'unlocked');
+                  }}>
+                    {t("Unlocked Files")} {hardFilter == 'unlocked' ? <CheckIcon /> : null}
+                  </ActionList.Item>
+                </ActionList>
+              </ActionMenu.Overlay>
+            </ActionMenu>
+            <FilterTextInput
+              ref={filterField}
+              aria-label={t("Filter")}
+              name="filter"
+              placeholder={t("Filter")}
+              icon={FilterIcon}
+              onChange={({ target: { value } }) => setFilter(value)}
+            />
+          </StyledFilteredSearch>
           <ActionMenu>
-            <ActionMenu.Button as="summary">{hardFilterText}</ActionMenu.Button>
+            <ActionMenu.Button as="summary">{t("Sorting")}</ActionMenu.Button>
             <ActionMenu.Overlay>
               <ActionList>
                 <ActionList.Item onClick={() => {
-                  setHardFilter('all');
-                  window.api.store.send(writeConfigRequest, 'hardFilter', 'all');
+                  setSort('path');
+                  window.api.store.send(writeConfigRequest, 'sort', 'path');
                 }}>
-                  {t("All Files")} {hardFilter == 'all' ? <CheckIcon /> : null}
+                  {t("Path")} {sort == 'path' ? <CheckIcon /> : null}
                 </ActionList.Item>
                 <ActionList.Item onClick={() => {
-                  setHardFilter('locked');
-                  window.api.store.send(writeConfigRequest, 'hardFilter', 'locked');
+                  setSort('locked');
+                  window.api.store.send(writeConfigRequest, 'sort', 'locked');
                 }}>
-                  {t("Locked Files")} {hardFilter == 'locked' ? <CheckIcon /> : null}
-                </ActionList.Item>
-                <ActionList.Item onClick={() => {
-                  setHardFilter('unlocked');
-                  window.api.store.send(writeConfigRequest, 'hardFilter', 'unlocked');
-                }}>
-                  {t("Unlocked Files")} {hardFilter == 'unlocked' ? <CheckIcon /> : null}
+                  {t("Locked")} {sort == 'locked' ? <CheckIcon /> : null}
                 </ActionList.Item>
               </ActionList>
             </ActionMenu.Overlay>
           </ActionMenu>
-          <FilterTextInput
-            ref={filterField}
-            aria-label={t("Filter")}
-            name="filter"
-            placeholder={t("Filter")}
-            icon={FilterIcon}
-            onChange={({ target: { value } }) => setFilter(value)}
-          />
-        </StyledFilteredSearch>
-        <ActionMenu>
-          <ActionMenu.Button as="summary">{t("Sorting")}</ActionMenu.Button>
-          <ActionMenu.Overlay>
-            <ActionList>
-              <ActionList.Item onClick={() => {
-                setSort('path');
-                window.api.store.send(writeConfigRequest, 'sort', 'path');
-              }}>
-                {t("Path")} {sort == 'path' ? <CheckIcon /> : null}
-              </ActionList.Item>
-              <ActionList.Item onClick={() => {
-                setSort('locked');
-                window.api.store.send(writeConfigRequest, 'sort', 'locked');
-              }}>
-                {t("Locked")} {sort == 'locked' ? <CheckIcon /> : null}
-              </ActionList.Item>
-            </ActionList>
-          </ActionMenu.Overlay>
-        </ActionMenu>
-      </FilterBox>
-      <Flex>
-        {isEmpty(renderedFiles) ? null : (
-          <AutoSizer>
-            {({ width, height }) => (
-              <Scrollbars style={{ width, height }}>
-                <FilesBox>
-                  {renderedFiles}
-                </FilesBox>
-              </Scrollbars>
-            )}
-          </AutoSizer>
-        )}
-      </Flex>
-    </Background>
+        </FilterBox>
+        <Flex>
+          {isEmpty(renderedFiles) ? null : (
+            <AutoSizer>
+              {({ width, height }) => (
+                <Scrollbars style={{ width, height }}>
+                  <FilesBox>
+                    {renderedFiles}
+                  </FilesBox>
+                </Scrollbars>
+              )}
+            </AutoSizer>
+          )}
+        </Flex>
+      </Background>
+      {selectedFiles.length > 0 ? <MultiFileAction /> : null}
+    </>
   );
 }
 

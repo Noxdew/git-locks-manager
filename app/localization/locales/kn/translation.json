@@ -102,5 +102,8 @@
   "Path": "ಮಾರ್ಗ",
   "Force unlock": "ಫೋರ್ಸ್ ಅನ್‌ಲಾಕ್",
   "Do you want force unlock": "ನೀವು ಬಲವಂತವಾಗಿ ಅನ್ಲಾಕ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ",
-  "Before you do, make sure nobody is working on it!": "ನೀವು ಮಾಡುವ ಮೊದಲು, ಯಾರೂ ಅದರಲ್ಲಿ ಕೆಲಸ ಮಾಡುತ್ತಿಲ್ಲ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ!"
+  "Before you do, make sure nobody is working on it!": "ನೀವು ಮಾಡುವ ಮೊದಲು, ಯಾರೂ ಅದರಲ್ಲಿ ಕೆಲಸ ಮಾಡುತ್ತಿಲ್ಲ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ!",
+  "Selected files": "ಆಯ್ದ ಫೈಲ್‌ಗಳು",
+  "Unlock all": "ಎಲ್ಲವನ್ನೂ ಅನ್ಲಾಕ್ ಮಾಡಿ",
+  "Lock all": "ಎಲ್ಲವನ್ನೂ ಲಾಕ್ ಮಾಡಿ"
 }

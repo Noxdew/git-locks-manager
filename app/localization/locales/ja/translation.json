@@ -102,5 +102,8 @@
   "Path": "道",
   "Force unlock": "強制ロック解除",
   "Do you want force unlock": "強制的にロックを解除しますか",
-  "Before you do, make sure nobody is working on it!": "実行する前に、誰も作業していないことを確認してください。"
+  "Before you do, make sure nobody is working on it!": "実行する前に、誰も作業していないことを確認してください。",
+  "Selected files": "選択したファイル",
+  "Unlock all": "すべてをアンロック",
+  "Lock all": "すべてをロック"
 }
