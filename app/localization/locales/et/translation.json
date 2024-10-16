@@ -102,5 +102,8 @@
   "Path": "Tee",
   "Force unlock": "Sundlukustus",
   "Do you want force unlock": "Kas soovite sundlukustamist?",
-  "Before you do, make sure nobody is working on it!": "Enne seda veenduge, et keegi sellega ei tegeleks!"
+  "Before you do, make sure nobody is working on it!": "Enne seda veenduge, et keegi sellega ei tegeleks!",
+  "Selected files": "Valitud failid",
+  "Unlock all": "Avage kõik",
+  "Lock all": "Lukusta kõik"
 }

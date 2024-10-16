@@ -102,5 +102,8 @@
   "Path": "Пут",
   "Force unlock": "Присилно откључавање",
   "Do you want force unlock": "Да ли желите принудно откључавање",
-  "Before you do, make sure nobody is working on it!": "Пре него што то урадите, уверите се да нико не ради на томе!"
+  "Before you do, make sure nobody is working on it!": "Пре него што то урадите, уверите се да нико не ради на томе!",
+  "Selected files": "Изабране датотеке",
+  "Unlock all": "Откључај све",
+  "Lock all": "Закључај све"
 }

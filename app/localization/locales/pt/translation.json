@@ -102,5 +102,8 @@
   "Path": "Caminho",
   "Force unlock": "Forçar desbloqueio",
   "Do you want force unlock": "Você quer forçar o desbloqueio",
-  "Before you do, make sure nobody is working on it!": "Antes de fazer isso, certifique-se de que ninguém esteja trabalhando nisso!"
+  "Before you do, make sure nobody is working on it!": "Antes de fazer isso, certifique-se de que ninguém esteja trabalhando nisso!",
+  "Selected files": "Arquivos selecionados",
+  "Unlock all": "Desbloquear tudo",
+  "Lock all": "Bloquear tudo"
 }

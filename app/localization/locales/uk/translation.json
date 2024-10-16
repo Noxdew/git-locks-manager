@@ -102,5 +102,8 @@
   "Path": "шлях",
   "Force unlock": "Примусове розблокування",
   "Do you want force unlock": "Хочете примусово розблокувати",
-  "Before you do, make sure nobody is working on it!": "Перш ніж це зробити, переконайтеся, що над цим ніхто не працює!"
+  "Before you do, make sure nobody is working on it!": "Перш ніж це зробити, переконайтеся, що над цим ніхто не працює!",
+  "Selected files": "Вибрані файли",
+  "Unlock all": "Розблокувати все",
+  "Lock all": "Заблокувати все"
 }

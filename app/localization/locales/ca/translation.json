@@ -102,5 +102,8 @@
   "Path": "Camí",
   "Force unlock": "Força el desbloqueig",
   "Do you want force unlock": "Vols desbloquejar forçat?",
-  "Before you do, make sure nobody is working on it!": "Abans de fer-ho, assegureu-vos que ningú hi treballi!"
+  "Before you do, make sure nobody is working on it!": "Abans de fer-ho, assegureu-vos que ningú hi treballi!",
+  "Selected files": "Fitxers seleccionats",
+  "Unlock all": "Desbloqueja-ho tot",
+  "Lock all": "Bloqueja-ho tot"
 }

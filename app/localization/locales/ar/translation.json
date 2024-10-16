@@ -102,5 +102,8 @@
   "Path": "طريق",
   "Force unlock": "فتح القوة",
   "Do you want force unlock": "هل تريد فتح القوة",
-  "Before you do, make sure nobody is working on it!": "قبل أن تفعل ذلك، تأكد من أن لا أحد يعمل على ذلك!"
+  "Before you do, make sure nobody is working on it!": "قبل أن تفعل ذلك، تأكد من أن لا أحد يعمل على ذلك!",
+  "Selected files": "الملفات المحددة",
+  "Unlock all": "افتح الكل",
+  "Lock all": "قفل الكل"
 }

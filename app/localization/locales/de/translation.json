@@ -102,5 +102,8 @@
   "Path": "Weg",
   "Force unlock": "Entsperren erzwingen",
   "Do you want force unlock": "Möchten Sie die Entsperrung erzwingen?",
-  "Before you do, make sure nobody is working on it!": "Stellen Sie vorher sicher, dass niemand daran arbeitet!"
+  "Before you do, make sure nobody is working on it!": "Stellen Sie vorher sicher, dass niemand daran arbeitet!",
+  "Selected files": "Ausgewählte Dateien",
+  "Unlock all": "Alle freischalten",
+  "Lock all": "Alle sperren"
 }

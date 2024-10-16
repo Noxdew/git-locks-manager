@@ -102,5 +102,8 @@
   "Path": "Con đường",
   "Force unlock": "Buộc mở khóa",
   "Do you want force unlock": "Bạn có muốn buộc mở khóa không",
-  "Before you do, make sure nobody is working on it!": "Trước khi bạn làm điều đó, hãy chắc chắn rằng không có ai đang làm việc đó!"
+  "Before you do, make sure nobody is working on it!": "Trước khi bạn làm điều đó, hãy chắc chắn rằng không có ai đang làm việc đó!",
+  "Selected files": "Các tập tin đã chọn",
+  "Unlock all": "Mở khóa tất cả",
+  "Lock all": "Khóa tất cả"
 }

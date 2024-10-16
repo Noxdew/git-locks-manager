@@ -102,5 +102,8 @@
   "Path": "Staza",
   "Force unlock": "Prisilno otključavanje",
   "Do you want force unlock": "Želite li prisilno otključati",
-  "Before you do, make sure nobody is working on it!": "Prije nego što to učinite, uvjerite se da nitko ne radi na tome!"
+  "Before you do, make sure nobody is working on it!": "Prije nego što to učinite, uvjerite se da nitko ne radi na tome!",
+  "Selected files": "Odabrane datoteke",
+  "Unlock all": "Otključaj sve",
+  "Lock all": "Zaključaj sve"
 }

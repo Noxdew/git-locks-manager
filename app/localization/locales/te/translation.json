@@ -102,5 +102,8 @@
   "Path": "మార్గం",
   "Force unlock": "బలవంతంగా అన్‌లాక్ చేయండి",
   "Do you want force unlock": "మీరు బలవంతంగా అన్‌లాక్ చేయాలనుకుంటున్నారా",
-  "Before you do, make sure nobody is working on it!": "మీరు చేసే ముందు, ఎవరూ దానిపై పని చేయడం లేదని నిర్ధారించుకోండి!"
+  "Before you do, make sure nobody is working on it!": "మీరు చేసే ముందు, ఎవరూ దానిపై పని చేయడం లేదని నిర్ధారించుకోండి!",
+  "Selected files": "ఎంచుకున్న ఫైల్‌లు",
+  "Unlock all": "అన్నింటినీ అన్‌లాక్ చేయండి",
+  "Lock all": "అన్నింటినీ లాక్ చేయండి"
 }

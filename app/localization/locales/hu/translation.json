@@ -102,5 +102,8 @@
   "Path": "Pálya",
   "Force unlock": "Feloldás kényszerítése",
   "Do you want force unlock": "Kényszer feloldást szeretne?",
-  "Before you do, make sure nobody is working on it!": "Mielőtt megtenné, győződjön meg róla, hogy senki sem dolgozik rajta!"
+  "Before you do, make sure nobody is working on it!": "Mielőtt megtenné, győződjön meg róla, hogy senki sem dolgozik rajta!",
+  "Selected files": "Kiválasztott fájlok",
+  "Unlock all": "Az összes feloldása",
+  "Lock all": "Zárja az összeset"
 }

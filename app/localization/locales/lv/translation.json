@@ -102,5 +102,8 @@
   "Path": "Ceļš",
   "Force unlock": "Piespiedu atbloķēšana",
   "Do you want force unlock": "Vai vēlaties piespiedu atbloķēšanu?",
-  "Before you do, make sure nobody is working on it!": "Pirms to darāt, pārliecinieties, ka neviens pie tā nestrādā!"
+  "Before you do, make sure nobody is working on it!": "Pirms to darāt, pārliecinieties, ka neviens pie tā nestrādā!",
+  "Selected files": "Atlasītie faili",
+  "Unlock all": "Atbloķēt visu",
+  "Lock all": "Bloķēt visu"
 }

@@ -102,5 +102,8 @@
   "Path": "मार्ग",
   "Force unlock": "जबरदस्तीने अनलॉक करा",
   "Do you want force unlock": "तुम्हाला फोर्स अनलॉक करायचे आहे का?",
-  "Before you do, make sure nobody is working on it!": "आपण करण्यापूर्वी, कोणीही त्यावर काम करत नाही याची खात्री करा!"
+  "Before you do, make sure nobody is working on it!": "आपण करण्यापूर्वी, कोणीही त्यावर काम करत नाही याची खात्री करा!",
+  "Selected files": "निवडलेल्या फायली",
+  "Unlock all": "सर्व अनलॉक करा",
+  "Lock all": "सर्व लॉक करा"
 }

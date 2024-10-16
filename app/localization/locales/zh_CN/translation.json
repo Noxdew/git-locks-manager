@@ -102,5 +102,8 @@
   "Path": "小路",
   "Force unlock": "强制解锁",
   "Do you want force unlock": "您要强制解锁吗",
-  "Before you do, make sure nobody is working on it!": "在执行此操作之前，请确保没有人在操作它！"
+  "Before you do, make sure nobody is working on it!": "在执行此操作之前，请确保没有人在操作它！",
+  "Selected files": "选定的文件",
+  "Unlock all": "解锁全部",
+  "Lock all": "全部锁定"
 }
