@@ -6,12 +6,14 @@ const filesSlice = createSlice({
     list: [],
     lastUpdated: undefined,
     fetching: false,
+    selectedFiles: [],
   },
   reducers: {
     setFiles(state, action) {
       state.list = action.payload;
       state.lastUpdated = Date.now();
       state.fetching = false;
+      state.selectedFiles = state.selectedFiles.filter(f => state.list.find(lf => lf.path === f));
     },
     startFetching(state) {
       state.fetching = true;
@@ -54,12 +56,26 @@ const filesSlice = createSlice({
           ...state.list.slice(fileIndex + 1)
         ];
       }
+    },
+    toggleSelectedFile(state, action) {
+      const fileIndex = state.selectedFiles.findIndex(f => f === action.payload);
+      if (fileIndex === -1) {
+        state.selectedFiles.push(action.payload);
+      } else {
+        state.selectedFiles = [
+          ...state.selectedFiles.slice(0, fileIndex),
+          ...state.selectedFiles.slice(fileIndex + 1)
+        ];
+      }
+    },
+    clearSelectedFiles(state) {
+      state.selectedFiles = [];
     }
   }
 });
 
 // Export actions
-export const { setFiles, startFetching, stopFetching, lockFileLocal, unlockFileLocal } = filesSlice.actions;
+export const { setFiles, startFetching, stopFetching, lockFileLocal, unlockFileLocal, toggleSelectedFile, clearSelectedFiles } = filesSlice.actions;
 
 // Export reducer
 export default filesSlice.reducer;
